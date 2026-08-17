@@ -1,5 +1,9 @@
-#include <iostream>
-#include "Beneficio.cpp"
+#ifndef NODOBENEFICIO_H
+#define NODOBENEFICIO_H
+
+
+#include <string>
+#include "Beneficio.h"
 
 struct NodoBeneficio {
     Beneficio* beneficio;
@@ -13,3 +17,5 @@ struct NodoBeneficio {
         delete beneficio;
     }
 };
+
+#endif // NODOBENEFICIO_H

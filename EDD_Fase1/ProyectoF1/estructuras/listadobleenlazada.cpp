@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "../modelos/NodoBeneficio.cpp"
+#include "../modelos/NodoBeneficio.h"
 
 using namespace std;
 

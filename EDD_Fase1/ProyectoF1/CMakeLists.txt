@@ -20,12 +20,33 @@ set(PROJECT_SOURCES
     ventanas/login.cpp
     ventanas/login.h
     ui/login.ui
-    ventanas/crearpelicula.cpp
-    ventanas/crearpelicula.h
-    ui/crearpelicula.ui
+    ventanas/crearpeli.cpp
+    ventanas/crearpeli.h
+    ui/crearpeli.ui
     ventanas/admin.cpp
     ventanas/admin.h
     ui/admin.ui
+    modelos/Beneficio.h
+    modelos/NodoBeneficio.h
+    modelos/NodoPelicula.h
+    modelos/NodoPromocion.h
+    modelos/NodoSolicitud.h
+    modelos/Pelicula.h
+    modelos/Promocion.h
+    modelos/Solicitud.h
+    estructuras/ArbolBinario.cpp
+    estructuras/ArbolBinario.h
+    estructuras/ListaCircular.cpp
+    estructuras/ListaCircular.h
+    estructuras/listacirculardobleenlazada.cpp
+    estructuras/listadobleenlazada.cpp
+    estructuras/matrizdispersa.cpp
+    controladores/admincontroller.cpp
+    controladores/clientecontroller.cpp
+    servicios/autentificacionService.cpp
+    servicios/guardarDatosService.cpp
+    servicios/guardarDatosService.h
+    servicios/graphvizService.cpp
     ${TS_FILES}
 )
 
@@ -33,6 +54,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Proyecto1
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ventanas/crearpeli.h ventanas/crearpeli.cpp ui/crearpeli.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Proyecto1 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

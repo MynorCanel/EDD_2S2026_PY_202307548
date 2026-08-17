@@ -1,4 +1,7 @@
-#include <iostream>
+#ifndef PROMOCION_H
+#define PROMOCION_H
+
+#include <string>
 
 struct Promocion {
     std::string codigo;
@@ -9,3 +12,5 @@ struct Promocion {
     Promocion(const std::string& c, const std::string& n, const std::string& v, const std::string& d) // Constructor
         : codigo(c), nombre(n), vigencia(v), diasAplicables(d) {}
 };
+
+#endif // PROMOCION_H

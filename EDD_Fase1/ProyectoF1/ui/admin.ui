@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
-    <height>588</height>
+    <width>1088</width>
+    <height>674</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,12 +31,12 @@
     <rect>
      <x>20</x>
      <y>40</y>
-     <width>921</width>
-     <height>531</height>
+     <width>1051</width>
+     <height>611</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_1">
     <attribute name="title">
@@ -56,14 +56,66 @@
      </property>
     </widget>
     <widget class="QTableWidget" name="tablaPeliculas">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>30</x>
        <y>130</y>
-       <width>801</width>
-       <height>331</height>
+       <width>981</width>
+       <height>411</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>true</bool>
+     </property>
+     <property name="supportedDragActions">
+      <set>Qt::DropAction::CopyAction|Qt::DropAction::MoveAction</set>
+     </property>
+     <column>
+      <property name="text">
+       <string>Codigo</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Titulo</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Genero</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Duracion</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Clasificacion</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Idioma</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fecha de estreno</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fecha fin de cartelera</string>
+      </property>
+     </column>
     </widget>
     <widget class="QPushButton" name="botonAgregar">
      <property name="geometry">
@@ -81,7 +133,7 @@
     <widget class="QPushButton" name="botonCargarCSV">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>870</x>
        <y>80</y>
        <width>141</width>
        <height>41</height>
@@ -127,8 +179,8 @@
       <rect>
        <x>50</x>
        <y>140</y>
-       <width>821</width>
-       <height>321</height>
+       <width>961</width>
+       <height>401</height>
       </rect>
      </property>
     </widget>
@@ -142,7 +194,7 @@
       <rect>
        <x>320</x>
        <y>10</y>
-       <width>261</width>
+       <width>311</width>
        <height>61</height>
       </rect>
      </property>
@@ -160,8 +212,8 @@
       <rect>
        <x>30</x>
        <y>90</y>
-       <width>841</width>
-       <height>361</height>
+       <width>991</width>
+       <height>451</height>
       </rect>
      </property>
      <row>
@@ -198,8 +250,8 @@
       <rect>
        <x>40</x>
        <y>200</y>
-       <width>841</width>
-       <height>271</height>
+       <width>981</width>
+       <height>341</height>
       </rect>
      </property>
      <row>

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "../modelos/NodoSolicitud.cpp"
+#include "../modelos/NodoSolicitud.h"
 
 using namespace std;
 

@@ -1,5 +1,8 @@
-#include <iostream>
-#include "Promocion.cpp" 
+#ifndef NODOPROMOCION_H
+#define NODOPROMOCION_H
+
+#include <string>
+#include "Promocion.h" 
 #include "../estructuras/listadobleenlazada.cpp"
 
 
@@ -18,3 +21,5 @@ struct NodoPromocion {
     }
 
 };
+
+#endif // NODOPROMOCION_H

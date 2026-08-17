@@ -1,5 +1,9 @@
-#include <iostream>
-#include "Solicitud.cpp"
+#ifndef NODOSOLICITUD_H
+#define NODOSOLICITUD_H
+
+
+#include <string>
+#include "Solicitud.h"
 
 struct NodoSolicitud {
     Solicitud* solicitud;
@@ -13,3 +17,5 @@ struct NodoSolicitud {
         delete solicitud;
     }
 };
+
+#endif // NODOSOLICITUD_H
