@@ -42,6 +42,47 @@ bool guardarDatosService::eliminarPelicula(const std::string& codigo) {
 
     return true;
 }
+
+bool guardarDatosService::guardarPromocion(const std::string& codigo, const std::string& nombre, const std::string& fechaInicio, const std::string& fechaFin, const std::string& diasAplicables) {
+    // Inserta la promoción en la lista circular
+    if (listaPromociones.codigoExiste(codigo)) {
+        std::cout << "Error: Ya existe una promoción con el código " << codigo << std::endl;
+        return false;
+    }
+    listaPromociones.insertar(codigo, nombre, fechaInicio, fechaFin, diasAplicables);
+    // Genera la visualización de la lista completa
+    listaPromociones.graficar();
+    std::cout << "Promoción guardada correctamente: " << nombre << std::endl;
+    return true;
+}
+
+
+
+bool guardarDatosService::guardarBeneficioAux(const std::string& codigoPromo) {
+    if (!listaPromociones.codigoExiste(codigoPromo)) {
+        std::cout << "Error: No existe una promoción con el código " << codigoPromo << std::endl;
+        return false;
+    }
+    return true;
+}
+
+
+bool guardarDatosService::guardarBeneficioAPromocion(const std::string& codigoPromo, std::string tipo, std::string descripcion, std::string valor) {
+    // Agrega un beneficio a la promoción correspondiente
+    if (!listaPromociones.codigoExiste(codigoPromo)) {
+        std::cout << "Error: No existe una promoción con el código " << codigoPromo << std::endl;
+        return false;
+    }
+    if (listaPromociones.agregarBeneficioAPromocion(codigoPromo, tipo, descripcion, valor)) {
+        // Genera la visualización de la lista completa
+        listaPromociones.graficar();
+        std::cout << "Beneficio agregado correctamente a la promoción: " << codigoPromo << std::endl;
+        return true;
+    } else {
+        std::cout << "Error al agregar el beneficio a la promoción: " << codigoPromo << std::endl;
+        return false;
+    }
+}
         
 
   

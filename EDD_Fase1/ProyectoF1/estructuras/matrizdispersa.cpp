@@ -809,9 +809,9 @@ bool MatrizDispersaTipoDirector::ObtenerGraphviz() {
 
     // compilamos el .dot a PNG con Graphviz (si esta instalado)
 #ifdef _WIN32
-    int dotResult = system("dot -Tpng Matriz/MatrizDispersa.dot -o Matriz/MatrizDispersa.png");
+    int dotResult = system("dot -Tpng MatrizDispersa.dot -o MatrizDispersa.png");
 #else
-    int dotResult = system("dot -Tpng Matriz/MatrizDispersa.dot -o Matriz/MatrizDispersa.png 2>/dev/null");
+    int dotResult = system("dot -Tpng MatrizDispersa.dot -o MatrizDispersa.png 2>/dev/null");
 #endif
     if (dotResult != 0) {
         cout << "Se genero el archivo MatrizDispersa.dot." << endl;
@@ -820,13 +820,4 @@ bool MatrizDispersaTipoDirector::ObtenerGraphviz() {
         return true;
     }
 
-#ifdef _WIN32
-    // en Windows abrimos la imagen con el visor predeterminado
-    system("start Matriz/MatrizDispersa.png");
-#else
-    // en Linux no se abre un visor, solo se indica donde quedo el PNG
-    cout << "Imagen generada en Matriz/MatrizDispersa.png" << endl;
-#endif
-    return true;
-}
 

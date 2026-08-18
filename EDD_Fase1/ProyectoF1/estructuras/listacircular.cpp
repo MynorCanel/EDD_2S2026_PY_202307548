@@ -1,57 +1,82 @@
 #include <iostream>
 #include <fstream>
-#include <stdexcept>
-#include "../modelos/NodoPromocion.h"
 #include "ListaCircular.h"
 
 using namespace std;
 
-// Constructor
 ListaCircular::ListaCircular() {
     cabeza = nullptr;
 }
 
-// inserta un nuevo nodo al final de la lista
-// el ultimo nodo siempre apunta a la cabeza para mantener el ciclo
-void ListaCircular::insertar(string codigo, string nombre, string vigencia, string diasAplicables) {
-    NodoPromocion* nuevo = new NodoPromocion(new Promocion(codigo, nombre, vigencia, diasAplicables));
+bool ListaCircular::codigoExiste(const string& codigo) {
+    if (cabeza == nullptr) return false;
+
+    NodoPromocion* actual = cabeza;
+    do {
+        if (actual->promocion->codigo == codigo) {
+            return true;
+        }
+        actual = actual->siguiente;
+    } while (actual != cabeza);
+
+    return false;
+}
+
+void ListaCircular::insertar(string codigo, string nombre, string fechaInicio, string fechaFin, string diasAplicables) {
+    NodoPromocion* nuevo = new NodoPromocion(new Promocion(codigo, nombre, fechaInicio, fechaFin, diasAplicables));
 
     if (cabeza == nullptr) {
-        // si esta vacia, el nuevo nodo se apunta a si mismo
         cabeza = nuevo;
         nuevo->siguiente = cabeza;
     } else {
-        // recorremos hasta el ultimo nodo (el que apunta a cabeza)
         NodoPromocion* actual = cabeza;
         while (actual->siguiente != cabeza) {
             actual = actual->siguiente;
         }
-        // conectamos el ultimo con el nuevo, y el nuevo con la cabeza
         actual->siguiente = nuevo;
         nuevo->siguiente = cabeza;
     }
 }
 
-// reconecta los punteros para mantener el ciclo cerrado
-void ListaCircular::eliminar(string nombre) {
+bool ListaCircular::agregarBeneficioAPromocion(const string& codigoPromo, string tipo, string descripcion, string valor) {
+    if (cabeza == nullptr) return false;
+
+    NodoPromocion* actual = cabeza;
+    do {
+        if (actual->promocion->codigo == codigoPromo) {
+            actual->listaBeneficios.agregar(tipo, descripcion, valor);
+            return true;
+        }
+        actual = actual->siguiente;
+    } while (actual != cabeza);
+
+    return false; // Promoción no encontrada
+}
+
+void ListaCircular::recorrer(const std::function<void(const Promocion*, const ListaDoble&)>& funcion) const {
     if (cabeza == nullptr) {
-        cout << "La lista esta vacia." << endl;
         return;
     }
 
-    // recorremos el ciclo buscando el nombre
+    NodoPromocion* actual = cabeza;
+    do {
+        funcion(actual->promocion, actual->listaBeneficios);
+        actual = actual->siguiente;
+    } while (actual != cabeza);
+}
+
+void ListaCircular::eliminar(string nombre) {
+    if (cabeza == nullptr) return;
+
     NodoPromocion* actual = cabeza;
     NodoPromocion* anterior = nullptr;
 
     do {
-        if (actual->promocion -> nombre == nombre) {
+        if (actual->promocion->nombre == nombre) {
             if (actual == cabeza) {
-                // caso especial eliminar la cabeza
                 if (actual->siguiente == cabeza) {
-                    // unico nodo en la lista
                     cabeza = nullptr;
                 } else {
-                    // buscamos el ultimo nodo para reconectar el ciclo
                     NodoPromocion* ultimo = cabeza;
                     while (ultimo->siguiente != cabeza) {
                         ultimo = ultimo->siguiente;
@@ -60,73 +85,78 @@ void ListaCircular::eliminar(string nombre) {
                     ultimo->siguiente = cabeza;
                 }
             } else {
-                // saltamos el nodo actual
                 anterior->siguiente = actual->siguiente;
             }
+            delete actual->promocion;
             delete actual;
             return;
         }
-        // avanzamos al siguiente nodo
         anterior = actual;
         actual = actual->siguiente;
     } while (actual != cabeza);
 }
 
-// genera un archivo .dot y lo compila a png con graphviz
-// dibuja los nodos en orden y una flecha del ultimo al primero
 void ListaCircular::graficar() {
     if (cabeza == nullptr) {
         cout << "La lista esta vacia, no hay nada que graficar." << endl;
         return;
     }
 
-    ofstream archivo("simple/lista_circular.dot");
-    archivo << "digraph ListaCircular {" << endl;
-    archivo << "    rankdir=LR;" << endl;
-    archivo << "    node [shape=record, style=filled, fillcolor=\"#eaff06\"];" << endl;
+    ofstream archivo("lista_unificada.dot");
+    archivo << "digraph EstratificacionPromociones {\n";
+    archivo << "    splines=true;\n";
 
     NodoPromocion* actual = cabeza;
     int i = 0;
 
-    // creamos los nodos del grafo recorriendo el ciclo
+    // Declaración e impresión de nodos de la Lista Circular (Nivel Superior)
+    archivo << "    { rank=same; ";
     do {
-        archivo << "    nodo" << i << " [label=\"{"
-                << actual->promocion->codigo << " | "
-                << actual->promocion->nombre << " | "
-                << actual->promocion->vigencia << " | "
-                << actual->promocion->diasAplicables << " | "
-                << "}\"];" << endl;
+        string promoId = "promo" + to_string(i);
+        archivo << promoId << " ";
         actual = actual->siguiente;
         i++;
     } while (actual != cabeza);
+    archivo << "}\n\n";
 
-    // flechas entre nodos consecutivos
-    for (int j = 0; j < i - 1; j++) {
-        archivo << "    nodo" << j << " -> nodo" << j + 1 << ";" << endl;
+    actual = cabeza;
+    int index = 0;
+    do {
+        string promoId = "promo" + to_string(index);
+        archivo << "    " << promoId << " [label=\"" << actual->promocion->nombre 
+                << "\", shape=box, style=\"filled,rounded\", fillcolor=\"#d4f8f4\", penwidth=2];\n";
+        
+        // Delegar a la ListaDoble la escritura de sus nodos y conexiones
+        actual->listaBeneficios.generarDotUnificado(archivo, promoId);
+
+        actual = actual->siguiente;
+        index++;
+    } while (actual != cabeza);
+
+    // Conexiones de la lista circular
+    for (int j = 0; j < index; j++) {
+        int siguienteIndex = (j + 1) % index;
+        archivo << "    promo" << j << " -> promo" << siguienteIndex << ";\n";
     }
-    // flecha del ultimo nodo al primero 
-    archivo << "    nodo" << i - 1 << " -> nodo0;" << endl;
 
-    archivo << "}" << endl;
+    archivo << "}\n";
     archivo.close();
 
-    int resultado = system("dot -Tpng simple/lista_circular.dot -o simple/lista_circular.png");
+    int resultado = system("dot -Tpng lista_unificada.dot -o lista_unificada.png");
     if (resultado == 0) {
-        cout << "Grafico generado: lista_circular.png" << endl;
+        cout << "Grafico unificado generado: lista_unificada.png" << endl;
     } else {
-        cout << "Error: no se pudo generar el grafico. Verifica que Graphviz este instalado." << endl;
+        cout << "Error al compilar con Graphviz." << endl;
     }
 }
 
-// libera toda la memoria recorriendo el ciclo
-ListaCircular::~ListaCircular(){
+ListaCircular::~ListaCircular() {
     if (cabeza == nullptr) return;
     NodoPromocion* actual = cabeza;
-    NodoPromocion* temp;
     do {
-        temp = actual;
+        NodoPromocion* temp = actual;
         actual = actual->siguiente;
-        delete temp->promocion; // liberar memoria de la promoción
-        delete temp; // Liberar memoria del nodo
+        delete temp->promocion;
+        delete temp;
     } while (actual != cabeza);
 }

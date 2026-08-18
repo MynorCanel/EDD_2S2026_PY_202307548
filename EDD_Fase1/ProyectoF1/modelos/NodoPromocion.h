@@ -1,25 +1,16 @@
-#ifndef NODOPROMOCION_H
-#define NODOPROMOCION_H
 
-#include <string>
-#include "Promocion.h" 
-#include "../estructuras/listadobleenlazada.cpp"
+#ifndef NODO_PROMOCION_H
+#define NODO_PROMOCION_H
 
-
+#include "Promocion.h"
+#include "../estructuras/ListaDoble.h"
 
 struct NodoPromocion {
     Promocion* promocion;
-    ListaDoble beneficios; // Puntero a la lista doblemente enlazada de beneficios
+    ListaDoble listaBeneficios; // Instancia de la Lista Doble asociada a este nodo
     NodoPromocion* siguiente;
 
-    NodoPromocion(Promocion* p) // Constructor
-        : promocion(p), siguiente(nullptr) {}
-    
-    ~NodoPromocion() {
-        delete promocion;
-        // No es necesario borrar la lista de beneficios, ya que se elimina automáticamente con el destructor de ListaDoble
-    }
-
+    NodoPromocion(Promocion* p) : promocion(p), siguiente(nullptr) {}
 };
 
-#endif // NODOPROMOCION_H
+#endif

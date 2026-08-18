@@ -1,8 +1,11 @@
 #include "admin.h"
 #include "ui_admin.h"
 #include "crearpeli.h"
+#include "agregarbeneficio.h"
+#include "agregarpromocion.h"
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QTreeWidgetItem>
 #include "../servicios/guardarDatosService.h"
 
 admin::admin(QWidget *parent)
@@ -10,12 +13,19 @@ admin::admin(QWidget *parent)
     , ui(new Ui::Dialog)
     , crearPeli(nullptr)
     , guardar()
+    , ventanaPromocion(nullptr)
+    , ventanaBeneficio(nullptr)
 {
     ui->setupUi(this);
     // Crear la instancia única de CrearPeli pasando la referencia a guardarDatosService
     crearPeli = new CrearPeli(&guardar);
+    ventanaPromocion = new agregarPromocion(&guardar);
+    ventanaBeneficio = new agregarBeneficio(&guardar);
     connect(crearPeli, &CrearPeli::peliculaGuardada, this, &admin::actualizarTabla);
+    connect(ventanaPromocion, &agregarPromocion::promocionGuardada, this, &admin::actualizarTreePromociones);
+    connect(ventanaBeneficio, &agregarBeneficio::beneficioGuardado, this, &admin::actualizarTreePromociones);
     actualizarTabla();
+    actualizarTreePromociones();
 }
 
 admin::~admin()
@@ -23,7 +33,17 @@ admin::~admin()
     if (crearPeli != nullptr) {
         delete crearPeli;
     }
+
+    if (ventanaPromocion !=nullptr){
+        delete ventanaPromocion;
+    }
+
+    if (ventanaBeneficio !=nullptr){
+        delete ventanaBeneficio;
+    }
+
     delete ui;
+
 }
 
 void admin::on_botonAgregar_clicked()
@@ -96,3 +116,69 @@ void admin::actualizarTabla() {
         ui->tablaPeliculas->setItem(fila, 7, new QTableWidgetItem(QString::fromStdString(p->fechaFinCartelera)));
     });
 }
+
+void admin::on_botonAgregarBeneficio_clicked()
+{
+    bool ok;
+    QString codigo = QInputDialog::getText(
+        this,
+        "Ingresar codigo",
+        "Ingresa el codigo de la promocion a la que quieres agregar un beneficio:",
+        QLineEdit::Normal,
+        "",
+        &ok
+        );
+    std::string codigoPromo = codigo.toStdString();
+    if (ok && guardar.guardarBeneficioAux(codigoPromo)){
+        QMessageBox::information(this,"Agregar Beneficio", "Ingrese los datos del beneficio en la siguiente ventana");
+        if (ventanaBeneficio == nullptr) {
+            ventanaBeneficio = new agregarBeneficio(&guardar);
+            connect(ventanaBeneficio, &agregarBeneficio::beneficioGuardado, this, &admin::actualizarTreePromociones);
+        }
+        ventanaBeneficio->setCodigoPromocion(codigoPromo);
+        ventanaBeneficio->show();
+        ventanaBeneficio->raise();
+        ventanaBeneficio->activateWindow();
+        return;
+    } else{
+        QMessageBox::information(this, "Error","Codigo no valido");
+    }
+}
+
+
+void admin::on_botonAgregarPromocion_clicked()
+{
+    if (ventanaPromocion != nullptr) {
+        ventanaPromocion->show();
+    }
+}
+
+void admin::actualizarTreePromociones()
+{
+    ui->treeWidgetPromociones->clear();
+
+    guardar.listaPromociones.recorrer([this](const Promocion* promo, const ListaDoble& beneficios) {
+        QString tituloPromo = QString::fromStdString(promo->codigo + " - " + promo->nombre);
+        auto* itemPromo = new QTreeWidgetItem(ui->treeWidgetPromociones);
+        itemPromo->setText(0, tituloPromo);
+        itemPromo->setText(1, QString::fromStdString(promo->fechaInicio + " | " + promo->fechaFin));
+        itemPromo->setText(2, QString::fromStdString(promo->diasAplicables));
+
+        bool tieneBeneficios = false;
+        beneficios.recorrer([&](const Beneficio* beneficio) {
+            auto* itemBeneficio = new QTreeWidgetItem(itemPromo);
+            itemBeneficio->setText(0, QString::fromStdString("Beneficio: " + beneficio->tipoBeneficio));
+            itemBeneficio->setText(1, QString::fromStdString(beneficio->descripcion));
+            itemBeneficio->setText(2, QString::fromStdString(beneficio->valor));
+            tieneBeneficios = true;
+        });
+
+        if (!tieneBeneficios) {
+            auto* itemSinBeneficios = new QTreeWidgetItem(itemPromo);
+            itemSinBeneficios->setText(0, "Sin beneficios");
+        }
+    });
+
+    ui->treeWidgetPromociones->expandAll();
+}
+

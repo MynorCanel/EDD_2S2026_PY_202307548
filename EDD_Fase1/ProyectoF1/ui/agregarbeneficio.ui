@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>agregarBeneficio</class>
+ <widget class="QMainWindow" name="agregarBeneficio">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>802</width>
+    <height>581</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>210</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Descripcion del beneficio</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="botonRegresar">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>430</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Regresar</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>330</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Valor de el beneficio</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>140</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tipo de benefio</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="botonAgregarBeneficio">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>430</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Agregar</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="textoDescripcionBeneficio">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>200</y>
+      <width>321</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>30</y>
+      <width>291</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>AGREGAR BENEFICIO</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxTipoBeneficio">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>130</y>
+      <width>321</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Descuento</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2x1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Combo</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="comboBoxValorBeneficio">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>330</y>
+      <width>321</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>NA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5%</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10%</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>15%</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>20%</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>25%</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>30%</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>50%</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>802</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
