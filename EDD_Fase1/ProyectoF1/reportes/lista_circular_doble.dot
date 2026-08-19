@@ -1,0 +1,14 @@
+digraph ListaCircularDoble {
+    rankdir=LR;
+    label="Solicitudes (verde: aprobado, amarillo: en espera, rojo: rechazado)";
+    labelloc=t;
+    fontname="Arial";
+    node [shape=circle, style="filled", fontname="Arial", fontsize=10, margin="0.12,0.08"];
+    edge [dir=both, color="#5d6d7e"];
+    nodo0 [fillcolor="#2ecc71", label="Solicitud #9199\nJuan\nTel: 24123212\nTipo: Cumpleanios\nFiesta\nFecha: 2026-08-19\nEstado: Aprobado"];
+    nodo1 [fillcolor="#f1c40f", label="Solicitud #2026\nJuan\nTel: 24123212\nTipo: Cumpleanios\nFiesta 2\nFecha: 2026-08-19\nEstado: En espera"];
+    nodo2 [fillcolor="#f1c40f", label="Solicitud #8832\nJuan\nTel: 24123212\nTipo: Cumpleanios\nFiesta 3\nFecha: 2026-08-19\nEstado: En espera"];
+    nodo0 -> nodo1;
+    nodo1 -> nodo2;
+    nodo2 -> nodo0;
+}

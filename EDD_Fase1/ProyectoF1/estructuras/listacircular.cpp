@@ -1,8 +1,27 @@
 #include <iostream>
 #include <fstream>
 #include "ListaCircular.h"
+#include "../servicios/rutasReportes.h"
 
 using namespace std;
+
+namespace {
+string escaparHtml(const string& texto) {
+    string resultado;
+    resultado.reserve(texto.size());
+
+    for (char caracter : texto) {
+        switch (caracter) {
+            case '&': resultado += "&amp;"; break;
+            case '<': resultado += "&lt;"; break;
+            case '>': resultado += "&gt;"; break;
+            case '"': resultado += "&quot;"; break;
+            default: resultado += caracter; break;
+        }
+    }
+    return resultado;
+}
+}
 
 ListaCircular::ListaCircular() {
     cabeza = nullptr;
@@ -102,7 +121,10 @@ void ListaCircular::graficar() {
         return;
     }
 
-    ofstream archivo("lista_unificada.dot");
+    const auto directorio = rutasReportes::directorio();
+    const auto rutaDot = directorio + "/lista_unificada.dot";
+    const auto rutaPng = directorio + "/lista_unificada.png";
+    ofstream archivo(rutaDot);
     archivo << "digraph EstratificacionPromociones {\n";
     archivo << "    splines=true;\n";
 
@@ -123,11 +145,19 @@ void ListaCircular::graficar() {
     int index = 0;
     do {
         string promoId = "promo" + to_string(index);
-        archivo << "    " << promoId << " [label=\"" << actual->promocion->nombre 
-                << "\", shape=box, style=\"filled,rounded\", fillcolor=\"#d4f8f4\", penwidth=2];\n";
+        archivo << "    " << promoId
+            << " [shape=box, style=\"filled,rounded\", fillcolor=\"#d4f8f4\", penwidth=2, label=<"
+            << "<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLPADDING=\"2\">"
+            << "<TR><TD ALIGN=\"LEFT\"><B>Promocion</B></TD></TR>"
+            << "<TR><TD ALIGN=\"LEFT\">Codigo: " << escaparHtml(actual->promocion->codigo) << "</TD></TR>"
+            << "<TR><TD ALIGN=\"LEFT\">Nombre: " << escaparHtml(actual->promocion->nombre) << "</TD></TR>"
+            << "<TR><TD ALIGN=\"LEFT\">Inicio: " << escaparHtml(actual->promocion->fechaInicio) << "</TD></TR>"
+            << "<TR><TD ALIGN=\"LEFT\">Fin: " << escaparHtml(actual->promocion->fechaFin) << "</TD></TR>"
+            << "<TR><TD ALIGN=\"LEFT\">Dias: " << escaparHtml(actual->promocion->diasAplicables) << "</TD></TR>"
+            << "</TABLE>>];\n";
         
         // Delegar a la ListaDoble la escritura de sus nodos y conexiones
-        actual->listaBeneficios.generarDotUnificado(archivo, promoId);
+        actual->listaBeneficios.generarDotUnificado(archivo, promoId, actual->promocion->codigo);
 
         actual = actual->siguiente;
         index++;
@@ -142,9 +172,9 @@ void ListaCircular::graficar() {
     archivo << "}\n";
     archivo.close();
 
-    int resultado = system("dot -Tpng lista_unificada.dot -o lista_unificada.png");
+    int resultado = rutasReportes::convertirAPng(rutaDot, rutaPng);
     if (resultado == 0) {
-        cout << "Grafico unificado generado: lista_unificada.png" << endl;
+        cout << "Grafico unificado generado: reportes/lista_unificada.png" << endl;
     } else {
         cout << "Error al compilar con Graphviz." << endl;
     }

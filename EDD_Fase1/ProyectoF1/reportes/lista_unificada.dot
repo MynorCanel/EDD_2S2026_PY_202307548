@@ -1,0 +1,19 @@
+digraph EstratificacionPromociones {
+    splines=true;
+    { rank=same; promo0 promo1 }
+
+    promo0 [shape=box, style="filled,rounded", fillcolor="#d4f8f4", penwidth=2, label=<<TABLE BORDER="0" CELLBORDER="0" CELLPADDING="2"><TR><TD ALIGN="LEFT"><B>Promocion</B></TD></TR><TR><TD ALIGN="LEFT">Codigo: dsaasd</TD></TR><TR><TD ALIGN="LEFT">Nombre: sad</TD></TR><TR><TD ALIGN="LEFT">Inicio: 2026-08-15</TD></TR><TR><TD ALIGN="LEFT">Fin: 2026-08-15</TD></TR><TR><TD ALIGN="LEFT">Dias: sdaads</TD></TR></TABLE>>];
+    promo0_b0 [shape=box, style="filled,rounded", fillcolor="#fff4b8", label=<<TABLE BORDER="0" CELLBORDER="0" CELLPADDING="2"><TR><TD ALIGN="LEFT"><B>Beneficio 1</B></TD></TR><TR><TD ALIGN="LEFT">Promo: dsaasd</TD></TR><TR><TD ALIGN="LEFT">Tipo: Descuento</TD></TR><TR><TD ALIGN="LEFT">Descripcion: {PEPPE</TD></TR><TR><TD ALIGN="LEFT">Valor: NA</TD></TR></TABLE>>];
+    promo0 -> promo0_b0 [style=dashed, label="beneficios"];
+    promo0_null [label="null", shape=box, style=rounded];
+    promo0_b0 -> promo0_null;
+    promo1 [shape=box, style="filled,rounded", fillcolor="#d4f8f4", penwidth=2, label=<<TABLE BORDER="0" CELLBORDER="0" CELLPADDING="2"><TR><TD ALIGN="LEFT"><B>Promocion</B></TD></TR><TR><TD ALIGN="LEFT">Codigo: 01</TD></TR><TR><TD ALIGN="LEFT">Nombre: adsds</TD></TR><TR><TD ALIGN="LEFT">Inicio: 2026-08-15</TD></TR><TR><TD ALIGN="LEFT">Fin: 2026-08-15</TD></TR><TR><TD ALIGN="LEFT">Dias: dasdas</TD></TR></TABLE>>];
+    promo1_b0 [shape=box, style="filled,rounded", fillcolor="#fff4b8", label=<<TABLE BORDER="0" CELLBORDER="0" CELLPADDING="2"><TR><TD ALIGN="LEFT"><B>Beneficio 1</B></TD></TR><TR><TD ALIGN="LEFT">Promo: 01</TD></TR><TR><TD ALIGN="LEFT">Tipo: Descuento</TD></TR><TR><TD ALIGN="LEFT">Descripcion: CACC</TD></TR><TR><TD ALIGN="LEFT">Valor: NA</TD></TR></TABLE>>];
+    promo1 -> promo1_b0 [style=dashed, label="beneficios"];
+    promo1_b1 [shape=box, style="filled,rounded", fillcolor="#fff4b8", label=<<TABLE BORDER="0" CELLBORDER="0" CELLPADDING="2"><TR><TD ALIGN="LEFT"><B>Beneficio 2</B></TD></TR><TR><TD ALIGN="LEFT">Promo: 01</TD></TR><TR><TD ALIGN="LEFT">Tipo: Descuento</TD></TR><TR><TD ALIGN="LEFT">Descripcion: POLLLO</TD></TR><TR><TD ALIGN="LEFT">Valor: 5%</TD></TR></TABLE>>];
+    promo1_b0 -> promo1_b1 [dir=both];
+    promo1_null [label="null", shape=box, style=rounded];
+    promo1_b1 -> promo1_null;
+    promo0 -> promo1;
+    promo1 -> promo0;
+}

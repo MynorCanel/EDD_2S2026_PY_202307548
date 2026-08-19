@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab_1">
     <attribute name="title">
@@ -197,7 +197,7 @@
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>320</x>
+       <x>360</x>
        <y>10</y>
        <width>311</width>
        <height>61</height>
@@ -215,10 +215,10 @@
     <widget class="QTableWidget" name="tableWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>90</y>
-       <width>991</width>
-       <height>451</height>
+       <x>40</x>
+       <y>130</y>
+       <width>421</width>
+       <height>391</height>
       </rect>
      </property>
      <row>
@@ -231,6 +231,178 @@
        <string>A</string>
       </property>
      </column>
+    </widget>
+    <widget class="QLineEdit" name="textoClienteSolicitud">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>140</y>
+       <width>471</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>120</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nombre del Cliente</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonCrearSolicitud">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>440</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Crear Solicitud</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>50</y>
+       <width>311</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>CREAR SOLICITUD (Cliente)</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textoTelefonoSolicitud">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>200</y>
+       <width>471</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>180</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Numero de Contacto</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>240</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Tipo de Solicitud</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxTipoSolicitud">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>260</y>
+       <width>471</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Cumpleanios</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Aniversario</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Requerimiento especial</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Queja</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sugerencia</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_19">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>50</y>
+       <width>311</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>SOLICITUDES</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textoDescripcionSolicitud">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>320</y>
+       <width>471</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_44">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>300</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Descripcion</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">

@@ -6,7 +6,18 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QTreeWidgetItem>
+#include <QHBoxLayout>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QSizePolicy>
+#include <QtCore/QFileSystemWatcher>
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+#include <QtCore/QSignalBlocker>
 #include "../servicios/guardarDatosService.h"
+#include "../servicios/rutasReportes.h"
 
 admin::admin(QWidget *parent)
     : QDialog(parent)
@@ -15,6 +26,10 @@ admin::admin(QWidget *parent)
     , guardar()
     , ventanaPromocion(nullptr)
     , ventanaBeneficio(nullptr)
+    , watcherReportes(nullptr)
+    , comboReportes(nullptr)
+    , visorReporte(nullptr)
+    , scrollReporte(nullptr)
 {
     ui->setupUi(this);
     // Crear la instancia única de CrearPeli pasando la referencia a guardarDatosService
@@ -27,6 +42,8 @@ admin::admin(QWidget *parent)
     actualizarTabla();
     actualizarTreePromociones();
     actualizarTablaFuncion();
+    actualizarTablaSolicitudes();
+    inicializarTabReportes();
 }
 
 admin::~admin()
@@ -43,8 +60,169 @@ admin::~admin()
         delete ventanaBeneficio;
     }
 
+    if (watcherReportes != nullptr) {
+        delete watcherReportes;
+    }
+
     delete ui;
 
+}
+
+void admin::inicializarTabReportes()
+{
+    directorioReportes = QString::fromStdString(rutasReportes::directorio());
+
+    definicionesReportes = {
+        {"Arbol de peliculas", "arbol_binario_peliculas.png"},
+        {"Promociones y beneficios", "lista_unificada.png"},
+        {"Solicitudes (lista circular doble)", "lista_circular_doble.png"},
+        {"Matriz de asientos", "MatrizFuncion.png"}
+    };
+
+    auto* layoutPrincipal = new QVBoxLayout(ui->tab_4);
+    layoutPrincipal->setContentsMargins(12, 12, 12, 12);
+    layoutPrincipal->setSpacing(8);
+
+    auto* etiquetaSelector = new QLabel("Selecciona el reporte:", ui->tab_4);
+    layoutPrincipal->addWidget(etiquetaSelector);
+
+    comboReportes = new QComboBox(ui->tab_4);
+    for (const auto& definicion : definicionesReportes) {
+        comboReportes->addItem(definicion.first, definicion.second);
+    }
+    layoutPrincipal->addWidget(comboReportes);
+
+    scrollReporte = new QScrollArea(ui->tab_4);
+    scrollReporte->setWidgetResizable(true);
+    scrollReporte->setAlignment(Qt::AlignCenter);
+
+    visorReporte = new QLabel(scrollReporte);
+    visorReporte->setAlignment(Qt::AlignCenter);
+    visorReporte->setMinimumSize(320, 240);
+    visorReporte->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    visorReporte->setText("Genera un reporte para visualizarlo aqui");
+    scrollReporte->setWidget(visorReporte);
+
+    layoutPrincipal->addWidget(scrollReporte, 1);
+
+    watcherReportes = new QFileSystemWatcher(this);
+    connect(watcherReportes, &QFileSystemWatcher::fileChanged,
+            this, &admin::onArchivoReporteCambiado);
+    connect(watcherReportes, &QFileSystemWatcher::directoryChanged,
+            this, &admin::onDirectorioReportesCambiado);
+    connect(comboReportes, qOverload<int>(&QComboBox::currentIndexChanged),
+            this, &admin::onReporteSeleccionado);
+
+    actualizarVigilanciaReportes();
+    refrescarReporteActual();
+}
+
+void admin::actualizarVigilanciaReportes()
+{
+    if (watcherReportes == nullptr) {
+        return;
+    }
+
+    const QStringList rutasActuales = watcherReportes->files();
+    if (!rutasActuales.isEmpty()) {
+        watcherReportes->removePaths(rutasActuales);
+    }
+
+    const QStringList directoriosActuales = watcherReportes->directories();
+    if (!directoriosActuales.isEmpty()) {
+        watcherReportes->removePaths(directoriosActuales);
+    }
+
+    QDir directorio(directorioReportes);
+    if (directorio.exists()) {
+        watcherReportes->addPath(directorioReportes);
+    }
+
+    for (const auto& definicion : definicionesReportes) {
+        const QString rutaCompleta = directorio.absoluteFilePath(definicion.second);
+        if (QFileInfo::exists(rutaCompleta)) {
+            watcherReportes->addPath(rutaCompleta);
+        }
+    }
+}
+
+void admin::onReporteSeleccionado(int)
+{
+    refrescarReporteActual();
+}
+
+void admin::onArchivoReporteCambiado(const QString&)
+{
+    actualizarVigilanciaReportes();
+    refrescarReporteActual();
+}
+
+void admin::onDirectorioReportesCambiado(const QString&)
+{
+    actualizarVigilanciaReportes();
+    refrescarReporteActual();
+}
+
+void admin::refrescarReporteActual()
+{
+    if (comboReportes == nullptr || visorReporte == nullptr) {
+        return;
+    }
+
+    const QString archivoSeleccionado = comboReportes->currentData().toString();
+    QDir directorio(directorioReportes);
+    const QString rutaCompleta = directorio.absoluteFilePath(archivoSeleccionado);
+
+    QSignalBlocker bloqueador(comboReportes);
+    const int indiceActual = comboReportes->currentIndex();
+    comboReportes->clear();
+    for (const auto& definicion : definicionesReportes) {
+        const QString rutaDef = directorio.absoluteFilePath(definicion.second);
+        const bool existe = QFileInfo::exists(rutaDef);
+        const QString texto = existe
+            ? definicion.first
+            : definicion.first + " (pendiente)";
+        comboReportes->addItem(texto, definicion.second);
+    }
+    if (indiceActual >= 0 && indiceActual < comboReportes->count()) {
+        comboReportes->setCurrentIndex(indiceActual);
+    }
+
+    reporteOriginal = QPixmap();
+    if (!QFileInfo::exists(rutaCompleta) || !reporteOriginal.load(rutaCompleta)) {
+        visorReporte->setPixmap(QPixmap());
+        visorReporte->setText("No existe la imagen del reporte seleccionado.\nGenera el reporte para visualizarlo.");
+        return;
+    }
+
+    visorReporte->setText(QString());
+    ajustarEscalaReporte();
+}
+
+void admin::ajustarEscalaReporte()
+{
+    if (visorReporte == nullptr || scrollReporte == nullptr || reporteOriginal.isNull()) {
+        return;
+    }
+
+    QSize areaVisible = scrollReporte->viewport()->size();
+    if (areaVisible.width() < 16 || areaVisible.height() < 16) {
+        areaVisible = QSize(800, 520);
+    }
+
+    const QPixmap escalado = reporteOriginal.scaled(
+        areaVisible,
+        Qt::KeepAspectRatio,
+        Qt::SmoothTransformation);
+
+    visorReporte->setPixmap(escalado);
+    visorReporte->resize(escalado.size());
+}
+
+void admin::resizeEvent(QResizeEvent* event)
+{
+    QDialog::resizeEvent(event);
+    ajustarEscalaReporte();
 }
 
 void admin::on_botonAgregar_clicked()
@@ -302,5 +480,121 @@ void admin::actualizarTablaFuncion()
             ui->tablaFuncion->setItem(r, c - 1, new QTableWidgetItem(QString::fromStdString(valor)));
         }
     }
+}
+
+
+void admin::on_botonCrearSolicitud_clicked()
+{
+    QString nombreCliente = ui->textoClienteSolicitud->text();
+    QString telefonoCliente = ui->textoTelefonoSolicitud->text();
+    QString tipoSolicitud = ui->comboBoxTipoSolicitud->currentText();
+    QString descripcionSolicitud = ui->textoDescripcionSolicitud->text();
+
+    if (nombreCliente.isEmpty() || telefonoCliente.isEmpty() || descripcionSolicitud.isEmpty()){
+        QMessageBox::information(this, "Error", "Es necesario llenar todos los espacios");
+        return;
+    }
+
+    guardar.guardarSolicitud(nombreCliente.toStdString(),telefonoCliente.toStdString(), tipoSolicitud.toStdString(), descripcionSolicitud.toStdString());
+    actualizarTablaSolicitudes();
+    QMessageBox::information(this,"Exito", "Se ha creado la solicitud con exito");
+}
+
+void admin::actualizarTablaSolicitudes()
+{
+    ui->tableWidget->clear();
+    ui->tableWidget->setColumnCount(4);
+    ui->tableWidget->setHorizontalHeaderLabels({"Solicitud", "Cliente", "Estado", "Acciones"});
+    ui->tableWidget->setRowCount(0);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->setSelectionMode(QAbstractItemView::NoSelection);
+    ui->tableWidget->setWordWrap(true);
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+    ui->tableWidget->setColumnWidth(0, 70);
+    ui->tableWidget->setColumnWidth(1, 100);
+    ui->tableWidget->setColumnWidth(2, 85);
+
+    guardar.listaSolicitudes.recorrer([this](Solicitud* solicitud) {
+        int fila = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(fila);
+        ui->tableWidget->setRowHeight(fila, 58);
+
+        auto* itemNumero = new QTableWidgetItem(QString::number(solicitud->numeroSolicitud));
+        auto* itemCliente = new QTableWidgetItem(QString::fromStdString(solicitud->nombreCliente));
+        auto* itemEstado = new QTableWidgetItem(QString::fromStdString(textoDesdeEstado(solicitud->estadoSolicitud)));
+        itemCliente->setToolTip(QString::fromStdString(solicitud->descripcion));
+        itemEstado->setToolTip(QString::fromStdString(
+            "Tipo: " + solicitud->tipoSolicitud + "\nDescripcion: " + solicitud->descripcion));
+
+        if (solicitud->estadoSolicitud == EstadoSolicitud::Aprobado) {
+            itemEstado->setBackground(QColor("#2ecc71"));
+        } else if (solicitud->estadoSolicitud == EstadoSolicitud::Rechazado) {
+            itemEstado->setBackground(QColor("#e74c3c"));
+        } else {
+            itemEstado->setBackground(QColor("#f1c40f"));
+        }
+
+        ui->tableWidget->setItem(fila, 0, itemNumero);
+        ui->tableWidget->setItem(fila, 1, itemCliente);
+        ui->tableWidget->setItem(fila, 2, itemEstado);
+
+        auto* acciones = new QWidget(ui->tableWidget);
+        auto* layoutAcciones = new QHBoxLayout(acciones);
+        auto* botonAceptar = new QPushButton("Aceptar", acciones);
+        auto* botonRechazar = new QPushButton("Rechazar", acciones);
+        auto* botonDetalles = new QPushButton("Detalles", acciones);
+        layoutAcciones->setContentsMargins(2, 2, 2, 2);
+        layoutAcciones->addWidget(botonAceptar);
+        layoutAcciones->addWidget(botonRechazar);
+        layoutAcciones->addWidget(botonDetalles);
+        ui->tableWidget->setCellWidget(fila, 3, acciones);
+
+        bool pendiente = solicitud->estadoSolicitud == EstadoSolicitud::EnEspera;
+        botonAceptar->setEnabled(pendiente);
+        botonRechazar->setEnabled(pendiente);
+
+        int numeroSolicitud = solicitud->numeroSolicitud;
+        QString nombreCliente = QString::fromStdString(solicitud->nombreCliente);
+        QString telefonoContacto = QString::fromStdString(solicitud->telefonoContacto);
+        QString tipoSolicitud = QString::fromStdString(solicitud->tipoSolicitud);
+        QString descripcion = QString::fromStdString(solicitud->descripcion);
+        QString fechaSolicitud = QString::fromStdString(solicitud->fechaSolicitud);
+        QString estadoSolicitud = QString::fromStdString(textoDesdeEstado(solicitud->estadoSolicitud));
+
+        connect(botonDetalles, &QPushButton::clicked, this, [this, numeroSolicitud,
+                                                              nombreCliente, telefonoContacto,
+                                                              tipoSolicitud, descripcion,
+                                                              fechaSolicitud, estadoSolicitud]() {
+            QMessageBox detalles(this);
+            detalles.setWindowTitle("Detalles de la solicitud");
+            detalles.setIcon(QMessageBox::Information);
+            detalles.setText(QString("Solicitud #%1\n\n"
+                                      "Cliente: %2\n"
+                                      "Contacto: %3\n"
+                                      "Tipo: %4\n"
+                                      "Descripcion: %5\n"
+                                      "Fecha: %6\n"
+                                      "Estado: %7")
+                                  .arg(numeroSolicitud)
+                                  .arg(nombreCliente)
+                                  .arg(telefonoContacto)
+                                  .arg(tipoSolicitud)
+                                  .arg(descripcion)
+                                  .arg(fechaSolicitud)
+                                  .arg(estadoSolicitud));
+            detalles.exec();
+        });
+
+        connect(botonAceptar, &QPushButton::clicked, this, [this, numeroSolicitud]() {
+            if (guardar.listaSolicitudes.cambiarEstado(numeroSolicitud, EstadoSolicitud::Aprobado)) {
+                actualizarTablaSolicitudes();
+            }
+        });
+        connect(botonRechazar, &QPushButton::clicked, this, [this, numeroSolicitud]() {
+            if (guardar.listaSolicitudes.cambiarEstado(numeroSolicitud, EstadoSolicitud::Rechazado)) {
+                actualizarTablaSolicitudes();
+            }
+        });
+    });
 }
 

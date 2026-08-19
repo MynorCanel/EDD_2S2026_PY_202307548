@@ -1,0 +1,42 @@
+digraph MatrizCine {
+rankdir=TB;
+splines=ortho;
+bgcolor="#f8fafc";
+pad=0.6;
+nodesep=0.6;
+ranksep=0.9;
+label="Matriz de Asientos";
+labelloc=t;
+fontname="Arial";
+node [shape=box, style="rounded,filled", fontname="Arial", fontsize=11, color="#1f2937"];
+edge [color="#94a3b8", arrowsize=0.8, penwidth=1.2];
+Raiz [shape=diamond, label="Pequenos Gigantes", width=1.5, height=0.6, style="rounded,filled", fillcolor="#0f172a", fontcolor=white, fontsize=13, group=0, color="#020617", penwidth=2];
+{ rank=same; Raiz; Col1; Col2; Col3; Col4; }
+Col1 [label="1", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=1, color="#1d4ed8", penwidth=1.5];
+Col2 [label="2", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=2, color="#1d4ed8", penwidth=1.5];
+Col3 [label="3", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=3, color="#1d4ed8", penwidth=1.5];
+Col4 [label="4", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=4, color="#1d4ed8", penwidth=1.5];
+FilaA [label="A", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaB [label="B", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaC [label="C", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaD [label="D", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+{ rank=same; FilaA; }
+{ rank=same; FilaB; NodoB3 [label="Juan", style="rounded,filled", fillcolor="#fef3c7", fontcolor="#1f2937", group=3, color="#d97706", penwidth=1.4];
+NodoB3; }
+{ rank=same; FilaC; }
+{ rank=same; FilaD; }
+Raiz -> FilaA [color="#0f172a", penwidth=2, arrowhead=normal];
+Raiz -> Col1 [color="#0f172a", penwidth=2, arrowhead=normal];
+Col1 -> Col2 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col2 -> Col3 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col3 -> Col4 [color="#2563eb", penwidth=2, arrowhead=normal];
+FilaA -> FilaB [color="#059669", penwidth=2, arrowhead=normal];
+FilaB -> FilaC [color="#059669", penwidth=2, arrowhead=normal];
+FilaC -> FilaD [color="#059669", penwidth=2, arrowhead=normal];
+FilaB -> NodoB3 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB3 -> FilaB [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+Col3 -> NodoB3 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoB3 -> Col3 [color="#f97316", penwidth=1.5, arrowhead=normal];
+Informacion [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#64748b" BGCOLOR="#eef2ff"><TR><TD COLSPAN="2" BGCOLOR="#1e293b" ALIGN="CENTER"><FONT COLOR="white" FACE="Arial"><B>INFORMACION DE LA FUNCION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Pelicula</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Pequenos Gigantes</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Horario</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sat Jan 1 00:00:00 2000 GMT</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Sala</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sala 3</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos libres</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>15</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos ocupados</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>1</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Total asientos</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>16</B></FONT></TD></TR></TABLE>>, shape=plain];
+{ rank=same; Raiz; Informacion; }
+}

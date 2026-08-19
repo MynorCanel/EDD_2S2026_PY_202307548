@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cctype>
 #include <ctime>
+#include "../servicios/rutasReportes.h"
 
 ArbolBinario::ArbolBinario() {
     raiz = nullptr;
@@ -235,7 +236,10 @@ void ArbolBinario::generarDotAux(NodoPelicula* nodo, std::ofstream& archivo) {
 }
 
 void ArbolBinario::generarDot() {
-    std::ofstream archivo("arbol.dot");
+    const auto directorio = rutasReportes::directorio();
+    const auto rutaDot = directorio + "/arbol.dot";
+    const auto rutaPng = directorio + "/arbol_binario_peliculas.png";
+    std::ofstream archivo(rutaDot);
     archivo << "digraph ArbolBinarioDeBusqueda {\n";
     archivo << "bgcolor=lightblue;\n";
     archivo << "label=\"Arbol de peliculas (verde: +3 dias, amarillo: <=3 dias, rojo: cartelera vencida)\";\n";
@@ -247,7 +251,7 @@ void ArbolBinario::generarDot() {
     archivo << "}\n";
     archivo.close();
 
-    system("dot -Tpng arbol.dot -o arbol_binario_peliculas.png");
+    rutasReportes::convertirAPng(rutaDot, rutaPng);
 }
 
 ArbolBinario::~ArbolBinario() {

@@ -48,7 +48,6 @@ void ListaDoble::eliminar(string tipo) {
         }
     }
 
-    delete actual->beneficio;
     delete actual;
 }
 
@@ -80,7 +79,7 @@ string ListaDoble::escaparHtml(const string& texto) {
     return resultado;
 }
 
-void ListaDoble::generarDotUnificado(ofstream& archivo, const string& idPadre) const {
+void ListaDoble::generarDotUnificado(ofstream& archivo, const string& idPadre, const string& codigoPromocion) const {
     if (cabeza == nullptr) return;
 
     NodoBeneficio* actual = cabeza;
@@ -88,14 +87,19 @@ void ListaDoble::generarDotUnificado(ofstream& archivo, const string& idPadre) c
 
     while (actual != nullptr) {
         string nodeId = idPadre + "_b" + to_string(j);
-        
-        archivo << "    " << nodeId << " [label=\"" 
-                << escaparHtml(actual->beneficio->tipoBeneficio) << "\", "
-                << escaparHtml(actual->beneficio->descripcion) << "\", "
-                << escaparHtml(actual->beneficio->valor) << "\", shape=box, style=\"filled,rounded\", fillcolor=\"#ffffcc\"];\n";
+
+        archivo << "    " << nodeId
+                << " [shape=box, style=\"filled,rounded\", fillcolor=\"#fff4b8\", label=<"
+                << "<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLPADDING=\"2\">"
+                << "<TR><TD ALIGN=\"LEFT\"><B>Beneficio " << (j + 1) << "</B></TD></TR>"
+                << "<TR><TD ALIGN=\"LEFT\">Promo: " << escaparHtml(codigoPromocion) << "</TD></TR>"
+                << "<TR><TD ALIGN=\"LEFT\">Tipo: " << escaparHtml(actual->beneficio->tipoBeneficio) << "</TD></TR>"
+                << "<TR><TD ALIGN=\"LEFT\">Descripcion: " << escaparHtml(actual->beneficio->descripcion) << "</TD></TR>"
+                << "<TR><TD ALIGN=\"LEFT\">Valor: " << escaparHtml(actual->beneficio->valor) << "</TD></TR>"
+                << "</TABLE>>];\n";
 
         if (j == 0) {
-            archivo << "    " << idPadre << " -> " << nodeId << " [style=dashed];\n";
+            archivo << "    " << idPadre << " -> " << nodeId << " [style=dashed, label=\"beneficios\"];\n";
         } else {
             string prevId = idPadre + "_b" + to_string(j - 1);
             archivo << "    " << prevId << " -> " << nodeId << " [dir=both];\n";
@@ -132,7 +136,6 @@ ListaDoble::~ListaDoble() {
     while (actual != nullptr) {
         NodoBeneficio* temp = actual;
         actual = actual->siguiente;
-        delete temp->beneficio;
         delete temp;
     }
 }

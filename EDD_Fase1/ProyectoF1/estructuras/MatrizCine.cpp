@@ -1,6 +1,7 @@
 #include "MatrizCine.h"
 #include <cstdio>
 #include <cstdlib>
+#include "../servicios/rutasReportes.h"
 
 using namespace std;
 
@@ -182,7 +183,10 @@ bool MatrizCine::reservarAsiento(string nombre, string f, string c) {
 
 // Genera un diagrama de Graphviz de la matriz de asientos, mostrando solo los asientos ocupados
 bool MatrizCine::generarGraphviz() {
-    FILE* fp = fopen("MatrizFuncion.dot", "w");
+    const auto directorio = rutasReportes::directorio();
+    const auto rutaDot = directorio + "/MatrizFuncion.dot";
+    const auto rutaPng = directorio + "/MatrizFuncion.png";
+    FILE* fp = fopen(rutaDot.c_str(), "w");
     if (fp == nullptr) return false;
 
     fprintf(fp, "digraph MatrizCine {\n");
@@ -386,7 +390,7 @@ bool MatrizCine::generarGraphviz() {
 
     fprintf(fp, "}\n");
     fclose(fp);
-    int resultado = system("dot -Tpng MatrizFuncion.dot -o MatrizFuncion.png");
+    int resultado = rutasReportes::convertirAPng(rutaDot, rutaPng);
 
     return true;
 }

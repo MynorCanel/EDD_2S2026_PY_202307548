@@ -115,6 +115,11 @@ bool guardarDatosService::reservarAsiento(const std::string& nombreCliente, cons
         return false;
     }
 }
+
+void guardarDatosService::guardarSolicitud(const std::string& nombreCliente, const std::string& telefonoContacto, const std::string& tipoSolicitud, const std::string& descripcion) {
+    listaSolicitudes.insertarSolicitud(nombreCliente, telefonoContacto, tipoSolicitud, descripcion);
+    listaSolicitudes.graficar(); // Genera la visualización de la lista completa
+}
         
 
   

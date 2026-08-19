@@ -40,11 +40,13 @@ set(PROJECT_SOURCES
     modelos/Pelicula.h
     modelos/Promocion.h
     modelos/Solicitud.h
+    modelos/EstadoSolicitud.h
     estructuras/ArbolBinario.cpp
     estructuras/ArbolBinario.h
     estructuras/ListaCircular.cpp
     estructuras/ListaCircular.h
-    estructuras/listacirculardobleenlazada.cpp
+    estructuras/ListaCircularDoble.cpp
+    estructuras/ListaCircularDoble.h
     estructuras/ListaDoble.cpp
     estructuras/ListaDoble.h
     estructuras/MatrizCine.cpp
@@ -55,6 +57,7 @@ set(PROJECT_SOURCES
     servicios/guardarDatosService.cpp
     servicios/guardarDatosService.h
     servicios/graphvizService.cpp
+    servicios/rutasReportes.h
     ${TS_FILES}
 )
 
@@ -89,6 +92,7 @@ else()
 endif()
 
 target_link_libraries(Proyecto1 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_compile_definitions(Proyecto1 PRIVATE REPORTES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/reportes")
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

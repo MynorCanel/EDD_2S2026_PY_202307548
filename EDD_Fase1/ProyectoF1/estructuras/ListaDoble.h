@@ -23,7 +23,7 @@ public:
     void recorrer(const std::function<void(const Beneficio*)>& funcion) const;
 
     // Genera la sub-graficación de los beneficios para Graphviz
-    void generarDotUnificado(std::ofstream& archivo, const std::string& idPadre) const;
+    void generarDotUnificado(std::ofstream& archivo, const std::string& idPadre, const std::string& codigoPromocion) const;
 };
 
 #endif
