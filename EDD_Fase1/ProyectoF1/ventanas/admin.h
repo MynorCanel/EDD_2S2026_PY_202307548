@@ -37,6 +37,13 @@ private slots:
     void on_botonAgregarPromocion_clicked();
     void actualizarTreePromociones();
 
+    void on_botonAgregarPromocion_2_clicked();
+
+    void on_botonCrearFuncion_clicked();
+
+    void on_botonReservarAsiento_clicked();
+    void actualizarTablaFuncion();
+
 private:
     Ui::Dialog *ui;
     CrearPeli *crearPeli; // Instancia única persistente de CrearPeli

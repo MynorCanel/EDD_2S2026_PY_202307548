@@ -47,7 +47,8 @@ set(PROJECT_SOURCES
     estructuras/listacirculardobleenlazada.cpp
     estructuras/ListaDoble.cpp
     estructuras/ListaDoble.h
-    estructuras/matrizdispersa.cpp
+    estructuras/MatrizCine.cpp
+    estructuras/MatrizCine.h
     controladores/admincontroller.cpp
     controladores/clientecontroller.cpp
     servicios/autentificacionService.cpp

@@ -26,6 +26,7 @@ admin::admin(QWidget *parent)
     connect(ventanaBeneficio, &agregarBeneficio::beneficioGuardado, this, &admin::actualizarTreePromociones);
     actualizarTabla();
     actualizarTreePromociones();
+    actualizarTablaFuncion();
 }
 
 admin::~admin()
@@ -180,5 +181,126 @@ void admin::actualizarTreePromociones()
     });
 
     ui->treeWidgetPromociones->expandAll();
+}
+
+
+void admin::on_botonAgregarPromocion_2_clicked()
+{
+
+}
+
+
+void admin::on_botonCrearFuncion_clicked()  //Boton que crea la funcion, toma los datos de los textos en el panel de funciones y los envia a la funcion crearFuncion de guardarDatosService
+{
+    QString codigoPelicula = ui->textoCodigoPelicula->text();
+    QString filas = ui->textoFilas->text();
+    QString columnas = ui->textoColumnas->text();
+    QString sala = ui->comboBoxSala->currentText();
+    QString fechaHora = ui->tiempoHorarioFuncion->dateTime().toString();    
+
+    if (filas.isEmpty() || columnas.isEmpty() || sala.isEmpty() || fechaHora.isEmpty()) {
+        QMessageBox::information(this, "Error", "Es necesario llenar todos los campos.");
+        return;
+    }
+
+    bool ok;
+    int numFilas = filas.toInt(&ok);
+    if (!ok || numFilas <= 0) {
+        QMessageBox::information(this, "Error", "El número de filas debe ser un entero positivo.");
+        return;
+    }
+    int numColumnas = columnas.toInt(&ok);
+    if (!ok || numColumnas <= 0) {
+        QMessageBox::information(this, "Error", "El número de columnas debe ser un entero positivo.");
+        return;
+    }
+
+    if (!guardar.arbol.CodigoExiste(codigoPelicula.toStdString())) {
+        QMessageBox::information(this, "Error", "El código de película no existe.");
+        return;
+    }
+
+    if (guardar.crearFuncion(codigoPelicula.toStdString(), numFilas, numColumnas, fechaHora.toStdString(), sala.toStdString())) {
+        QMessageBox::information(this, "Éxito", "La función se ha creado correctamente.");
+        actualizarTablaFuncion();
+    } else {
+        QMessageBox::information(this, "Error", "No se pudo crear la función. Verifica los datos ingresados.");
+    }
+
+}
+
+
+void admin::on_botonReservarAsiento_clicked()
+{
+    QString filaReserva = ui->textoFilaReserva->text();
+    QString columnaReserva = ui->textoColumnaReserva->text();
+    QString nombreReserva = ui->textoNombreCliente->text();
+
+    if (filaReserva.isEmpty() || columnaReserva.isEmpty() || nombreReserva.isEmpty()) {
+        QMessageBox::information(this, "Error", "Es necesario llenar todos los campos.");
+        return;
+    }
+
+    bool ok;
+
+    // La matriz interna maneja filas como letras (A, B, C...).
+    std::string filaNormalizada;
+    QString filaTexto = filaReserva.trimmed().toUpper();
+    if (filaTexto.size() == 1 && filaTexto[0].isLetter()) {
+        filaNormalizada = filaTexto.toStdString();
+    } else {
+        int fila = filaReserva.toInt(&ok);
+        if (!ok || fila <= 0 || fila > 26) {
+            QMessageBox::information(this, "Error", "La fila debe ser una letra (A-Z) o un número entre 1 y 26.");
+            return;
+        }
+        char letraFila = static_cast<char>('A' + (fila - 1));
+        filaNormalizada = std::string(1, letraFila);
+    }
+
+    int columna = columnaReserva.toInt(&ok);
+    if (!ok || columna <= 0) {
+        QMessageBox::information(this, "Error", "El número de columna debe ser un entero positivo.");
+        return;
+    }
+
+    if (guardar.reservarAsiento(nombreReserva.toStdString(), filaNormalizada, std::to_string(columna))) {
+        QMessageBox::information(this, "Éxito", "El asiento se ha reservado correctamente.");
+        actualizarTablaFuncion();
+    } else {
+        QMessageBox::information(this, "Error", "El asiento esta ocupado o los datos son incorrectos");
+    }
+}
+
+void admin::actualizarTablaFuncion()
+{
+    int filas = guardar.matrizFunciones.obtenerTotalFilas();
+    int columnas = guardar.matrizFunciones.obtenerTotalColumnas();
+
+    ui->tablaFuncion->clear();
+    ui->tablaFuncion->setRowCount(filas);
+    ui->tablaFuncion->setColumnCount(columnas);
+    ui->tablaFuncion->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    QStringList headersColumnas;
+    for (int c = 1; c <= columnas; ++c) {
+        headersColumnas << QString::number(c);
+    }
+    ui->tablaFuncion->setHorizontalHeaderLabels(headersColumnas);
+
+    for (int r = 0; r < filas; ++r) {
+        char letraFila = static_cast<char>('A' + r);
+        QString filaEtiqueta(letraFila);
+        ui->tablaFuncion->setVerticalHeaderItem(r, new QTableWidgetItem(filaEtiqueta));
+
+        std::string filaStr(1, letraFila);
+        for (int c = 1; c <= columnas; ++c) {
+            std::string valor = guardar.matrizFunciones.obtenerValorAsiento(filaStr, std::to_string(c));
+            if (valor.empty()) {
+                valor = "--";
+            }
+            ui->tablaFuncion->setItem(r, c - 1, new QTableWidgetItem(QString::fromStdString(valor)));
+        }
+    }
 }
 

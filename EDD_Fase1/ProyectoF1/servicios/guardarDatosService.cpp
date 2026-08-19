@@ -83,6 +83,38 @@ bool guardarDatosService::guardarBeneficioAPromocion(const std::string& codigoPr
         return false;
     }
 }
+
+bool guardarDatosService::crearFuncion(const std::string& codigoPelicula, int filas, int columnas, const std::string& horario, const std::string& sala) {
+    // Verifica si la película existe en el árbol
+    Pelicula* pelicula = nullptr;
+    try {
+        pelicula = arbol.buscar(codigoPelicula);
+    } catch (const std::exception&) {
+        std::cout << "Error: No existe una película con el código " << codigoPelicula << std::endl;
+        return false;
+    }
+
+    if (pelicula == nullptr) {
+        std::cout << "Error: No existe una película con el código " << codigoPelicula << std::endl;
+        return false;
+    }
+
+    std::string tituloPelicula = pelicula->titulo; // Solo referencia, no liberar
+    matrizFunciones.inicializarSala(filas, columnas, tituloPelicula, horario, sala);
+    matrizFunciones.generarGraphviz();
+
+    return true;
+}
+
+bool guardarDatosService::reservarAsiento(const std::string& nombreCliente, const std::string& fila, const std::string& columna) {
+    if (matrizFunciones.reservarAsiento(nombreCliente, fila, columna)) {
+        matrizFunciones.generarGraphviz(); // Actualiza la visualización de la matriz
+        return true;
+    } else {
+        std::cout << "Error al reservar el asiento para " << nombreCliente << "." << std::endl;
+        return false;
+    }
+}
         
 
   
