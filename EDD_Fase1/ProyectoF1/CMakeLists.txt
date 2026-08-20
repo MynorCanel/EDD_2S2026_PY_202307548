@@ -32,6 +32,9 @@ set(PROJECT_SOURCES
     ventanas/agregarbeneficio.cpp
     ventanas/agregarbeneficio.h
     ui/agregarbeneficio.ui
+    ventanas/cliente.cpp
+    ventanas/cliente.h
+    ui/cliente.ui
     modelos/Beneficio.h
     modelos/NodoBeneficio.h
     modelos/NodoPelicula.h
@@ -68,6 +71,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ventanas/crearpeli.h ventanas/crearpeli.cpp ui/crearpeli.ui
         ventanas/agregarpromocion.h ventanas/agregarpromocion.cpp ui/agregarpromocion.ui
         ventanas/agregarbeneficio.h ventanas/agregarbeneficio.cpp ui/agregarbeneficio.ui
+        ventanas/cliente.h ventanas/cliente.cpp ui/cliente.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Proyecto1 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

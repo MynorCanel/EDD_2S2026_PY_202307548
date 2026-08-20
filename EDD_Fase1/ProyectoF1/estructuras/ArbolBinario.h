@@ -22,9 +22,7 @@ private:
     void generarDotAux(NodoPelicula* nodo, std::ofstream& archivo);
     void eliminarNodos(NodoPelicula* nodo);
     std::string quitarComillas(const std::string& campo);
-
-    std::string colorSegunFecha(const std::string& fechaFinCartelera); // Color del nodo segun cuanto falta para el fin de cartelera
-    long diferenciaEnDias(const std::string& fecha); // Dias entre "fecha" (AAAA-MM-DD) y la fecha de ejecucion del programa
+    std::string colorSegunFecha(const std::string& fechaInicioCartelera, const std::string& fechaFinCartelera); // Color del nodo segun la diferencia en dias entre inicio y fin
 
 public:
     ArbolBinario();

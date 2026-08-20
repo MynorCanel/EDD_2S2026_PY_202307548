@@ -10,33 +10,58 @@ labelloc=t;
 fontname="Arial";
 node [shape=box, style="rounded,filled", fontname="Arial", fontsize=11, color="#1f2937"];
 edge [color="#94a3b8", arrowsize=0.8, penwidth=1.2];
-Raiz [shape=diamond, label="Pequenos Gigantes", width=1.5, height=0.6, style="rounded,filled", fillcolor="#0f172a", fontcolor=white, fontsize=13, group=0, color="#020617", penwidth=2];
-{ rank=same; Raiz; Col1; Col2; Col3; Col4; }
+Raiz [shape=diamond, label="sdad", width=1.5, height=0.6, style="rounded,filled", fillcolor="#0f172a", fontcolor=white, fontsize=13, group=0, color="#020617", penwidth=2];
+{ rank=same; Raiz; Col1; Col2; Col3; Col4; Col5; Col6; Col7; Col8; Col9; Col10; }
 Col1 [label="1", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=1, color="#1d4ed8", penwidth=1.5];
 Col2 [label="2", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=2, color="#1d4ed8", penwidth=1.5];
 Col3 [label="3", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=3, color="#1d4ed8", penwidth=1.5];
 Col4 [label="4", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=4, color="#1d4ed8", penwidth=1.5];
+Col5 [label="5", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=5, color="#1d4ed8", penwidth=1.5];
+Col6 [label="6", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=6, color="#1d4ed8", penwidth=1.5];
+Col7 [label="7", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=7, color="#1d4ed8", penwidth=1.5];
+Col8 [label="8", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=8, color="#1d4ed8", penwidth=1.5];
+Col9 [label="9", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=9, color="#1d4ed8", penwidth=1.5];
+Col10 [label="10", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, fontsize=12, group=10, color="#1d4ed8", penwidth=1.5];
 FilaA [label="A", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 FilaB [label="B", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 FilaC [label="C", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 FilaD [label="D", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaE [label="E", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaF [label="F", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaG [label="G", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaH [label="H", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaI [label="I", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
+FilaJ [label="J", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 { rank=same; FilaA; }
-{ rank=same; FilaB; NodoB3 [label="Juan", style="rounded,filled", fillcolor="#fef3c7", fontcolor="#1f2937", group=3, color="#d97706", penwidth=1.4];
-NodoB3; }
+{ rank=same; FilaB; }
 { rank=same; FilaC; }
 { rank=same; FilaD; }
+{ rank=same; FilaE; }
+{ rank=same; FilaF; }
+{ rank=same; FilaG; }
+{ rank=same; FilaH; }
+{ rank=same; FilaI; }
+{ rank=same; FilaJ; }
 Raiz -> FilaA [color="#0f172a", penwidth=2, arrowhead=normal];
 Raiz -> Col1 [color="#0f172a", penwidth=2, arrowhead=normal];
 Col1 -> Col2 [color="#2563eb", penwidth=2, arrowhead=normal];
 Col2 -> Col3 [color="#2563eb", penwidth=2, arrowhead=normal];
 Col3 -> Col4 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col4 -> Col5 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col5 -> Col6 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col6 -> Col7 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col7 -> Col8 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col8 -> Col9 [color="#2563eb", penwidth=2, arrowhead=normal];
+Col9 -> Col10 [color="#2563eb", penwidth=2, arrowhead=normal];
 FilaA -> FilaB [color="#059669", penwidth=2, arrowhead=normal];
 FilaB -> FilaC [color="#059669", penwidth=2, arrowhead=normal];
 FilaC -> FilaD [color="#059669", penwidth=2, arrowhead=normal];
-FilaB -> NodoB3 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
-NodoB3 -> FilaB [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
-Col3 -> NodoB3 [color="#f97316", penwidth=1.5, arrowhead=normal];
-NodoB3 -> Col3 [color="#f97316", penwidth=1.5, arrowhead=normal];
-Informacion [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#64748b" BGCOLOR="#eef2ff"><TR><TD COLSPAN="2" BGCOLOR="#1e293b" ALIGN="CENTER"><FONT COLOR="white" FACE="Arial"><B>INFORMACION DE LA FUNCION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Pelicula</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Pequenos Gigantes</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Horario</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sat Jan 1 00:00:00 2000 GMT</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Sala</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sala 3</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos libres</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>15</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos ocupados</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>1</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Total asientos</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>16</B></FONT></TD></TR></TABLE>>, shape=plain];
+FilaD -> FilaE [color="#059669", penwidth=2, arrowhead=normal];
+FilaE -> FilaF [color="#059669", penwidth=2, arrowhead=normal];
+FilaF -> FilaG [color="#059669", penwidth=2, arrowhead=normal];
+FilaG -> FilaH [color="#059669", penwidth=2, arrowhead=normal];
+FilaH -> FilaI [color="#059669", penwidth=2, arrowhead=normal];
+FilaI -> FilaJ [color="#059669", penwidth=2, arrowhead=normal];
+Informacion [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#64748b" BGCOLOR="#eef2ff"><TR><TD COLSPAN="2" BGCOLOR="#1e293b" ALIGN="CENTER"><FONT COLOR="white" FACE="Arial"><B>INFORMACION DE LA FUNCION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Pelicula</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>sdad</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Horario</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>01:00 A. M.</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Sala</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sala 3</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos libres</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>100</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos ocupados</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>0</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Total asientos</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>100</B></FONT></TD></TR></TABLE>>, shape=plain];
 { rank=same; Raiz; Informacion; }
 }

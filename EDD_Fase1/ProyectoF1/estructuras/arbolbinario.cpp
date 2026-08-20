@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
+#include <iomanip>
 #include <cstdlib>
 #include <cctype>
 #include <ctime>
@@ -158,45 +159,35 @@ void ArbolBinario::inOrden(const std::function<void(Pelicula*)>& funcion) {
     inOrdenAux(raiz, funcion);
 }
 
-// Dias entre "fecha" (AAAA-MM-DD) y la fecha de ejecucion del programa.
-// Positivo si "fecha" es futura, negativo si ya paso.
-long ArbolBinario::diferenciaEnDias(const std::string& fecha) {
-    int anio = std::stoi(fecha.substr(0, 4));
-    int mes  = std::stoi(fecha.substr(5, 2));
-    int dia  = std::stoi(fecha.substr(8, 2));
 
-    std::tm fechaFin = {};
-    fechaFin.tm_year = anio - 1900;
-    fechaFin.tm_mon  = mes - 1;
-    fechaFin.tm_mday = dia;
-    fechaFin.tm_hour = 12; // mediodia, para no tener problemas con cambios de horario
 
-    std::time_t tiempoFin = std::mktime(&fechaFin);
+std::string ArbolBinario::colorSegunFecha(const std::string& fechaInicioCartelera, const std::string& fechaFinCartelera) {
+    // Convertir las fechas de string (AAAA-MM-DD) a std::time_t para calcular la diferencia en dias.
+    std::tm tmInicio = {};
+    std::tm tmFin = {};
+    std::istringstream ssInicio(fechaInicioCartelera);
+    std::istringstream ssFin(fechaFinCartelera);
+    ssInicio >> std::get_time(&tmInicio, "%Y-%m-%d");
+    ssFin >> std::get_time(&tmFin, "%Y-%m-%d");
 
-    std::time_t ahoraRaw = std::time(nullptr);
-    std::tm* hoyTmp = std::localtime(&ahoraRaw);
-    std::tm hoy = *hoyTmp; // se copia: localtime reutiliza un buffer interno
-    hoy.tm_hour = 12;
-    hoy.tm_min = 0;
-    hoy.tm_sec = 0;
-    std::time_t tiempoHoy = std::mktime(&hoy);
-
-    double segundos = std::difftime(tiempoFin, tiempoHoy);
-    return static_cast<long>(segundos / 86400.0 + (segundos >= 0 ? 0.5 : -0.5));
-}
-
-std::string ArbolBinario::colorSegunFecha(const std::string& fechaFinCartelera) {
-    long dias = diferenciaEnDias(fechaFinCartelera);
-
-    if (dias < 0) {
-        return "#e74c3c"; // rojo: la cartelera ya termino
+    if (ssInicio.fail() || ssFin.fail()) {
+        return "#f1c40f"; // amarillo por defecto si no se puede interpretar la fecha
     }
-    else if (dias <= 3) {
-        return "#f1c40f"; // amarillo: termina en 3 dias o menos
+
+    std::time_t tInicio = std::mktime(&tmInicio);
+    std::time_t tFin = std::mktime(&tmFin);
+    if (tInicio == static_cast<std::time_t>(-1) || tFin == static_cast<std::time_t>(-1)) {
+        return "#f1c40f";
     }
-    else {
-        return "#2ecc71"; // verde: falta mas de 3 dias
+
+    const double segundos = std::difftime(tFin, tInicio);
+    const double dias = segundos / (60.0 * 60.0 * 24.0);
+
+    if (dias <= 7.0) {
+        return "#f1c40f"; // amarillo: diferencia de 7 dias o menos
     }
+
+    return "#2ecc71"; // verde: diferencia mayor a 7 dias
 }
 
 void ArbolBinario::generarDotAux(NodoPelicula* nodo, std::ofstream& archivo) {
@@ -209,7 +200,7 @@ void ArbolBinario::generarDotAux(NodoPelicula* nodo, std::ofstream& archivo) {
 
     // ...luego se describe el nodo actual...
     std::string idNodo = "nodo_" + nodo->pelicula->id;
-    std::string color = colorSegunFecha(nodo->pelicula->fechaFinCartelera);
+    std::string color = colorSegunFecha(nodo->pelicula->fechaEstreno, nodo->pelicula->fechaFinCartelera);
 
     archivo << idNodo << " [label=\""
             << "ID: " << nodo->pelicula->id << "\\n"
@@ -242,7 +233,7 @@ void ArbolBinario::generarDot() {
     std::ofstream archivo(rutaDot);
     archivo << "digraph ArbolBinarioDeBusqueda {\n";
     archivo << "bgcolor=lightblue;\n";
-    archivo << "label=\"Arbol de peliculas (verde: +3 dias, amarillo: <=3 dias, rojo: cartelera vencida)\";\n";
+    archivo << "label=\"Arbol de peliculas (amarillo: <=7 dias entre inicio y fin, verde: >7 dias)\";\n";
     archivo << "labelloc=t;\n";
     archivo << "Node [shape=square, style=filled, fillcolor=beige, color=black, penwidth=2];\n";
     archivo << "edge [splines=polyline, arrowhead=curve];\n";

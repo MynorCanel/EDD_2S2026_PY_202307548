@@ -19,7 +19,8 @@
 #include "../servicios/guardarDatosService.h"
 #include "../servicios/rutasReportes.h"
 
-admin::admin(QWidget *parent)
+
+admin::admin(QWidget *parent) // Constructor de la clase admin
     : QDialog(parent)
     , ui(new Ui::Dialog)
     , crearPeli(nullptr)
@@ -30,7 +31,7 @@ admin::admin(QWidget *parent)
     , comboReportes(nullptr)
     , visorReporte(nullptr)
     , scrollReporte(nullptr)
-{
+{ // Inicializa la interfaz de usuario y las instancias de las ventanas secundarias
     ui->setupUi(this);
     // Crear la instancia única de CrearPeli pasando la referencia a guardarDatosService
     crearPeli = new CrearPeli(&guardar);
@@ -46,7 +47,7 @@ admin::admin(QWidget *parent)
     inicializarTabReportes();
 }
 
-admin::~admin()
+admin::~admin() // Destructor de la clase admin
 {
     if (crearPeli != nullptr) {
         delete crearPeli;
@@ -68,7 +69,7 @@ admin::~admin()
 
 }
 
-void admin::inicializarTabReportes()
+void admin::inicializarTabReportes()  // Inicializa la interfaz de usuario para la pestaña de reportes
 {
     directorioReportes = QString::fromStdString(rutasReportes::directorio());
 
@@ -117,7 +118,7 @@ void admin::inicializarTabReportes()
     refrescarReporteActual();
 }
 
-void admin::actualizarVigilanciaReportes()
+void admin::actualizarVigilanciaReportes()  // Actualiza la vigilancia de archivos y directorios para los reportes
 {
     if (watcherReportes == nullptr) {
         return;
@@ -163,7 +164,7 @@ void admin::onDirectorioReportesCambiado(const QString&)
     refrescarReporteActual();
 }
 
-void admin::refrescarReporteActual()
+void admin::refrescarReporteActual() // Refresca la visualización del reporte actualmente seleccionado en la interfaz de usuario
 {
     if (comboReportes == nullptr || visorReporte == nullptr) {
         return;
@@ -199,7 +200,7 @@ void admin::refrescarReporteActual()
     ajustarEscalaReporte();
 }
 
-void admin::ajustarEscalaReporte()
+void admin::ajustarEscalaReporte() //Se ajusta la escala del reporte visualizado para que se adapte al tamaño del área visible en la interfaz de usuario
 {
     if (visorReporte == nullptr || scrollReporte == nullptr || reporteOriginal.isNull()) {
         return;
@@ -277,7 +278,7 @@ void admin::on_botonCargarCSV_clicked()
 }
 
 
-void admin::actualizarTabla() {
+void admin::actualizarTabla() { // Actualiza la tabla de películas en la interfaz de usuario
     ui->tablaPeliculas->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tablaPeliculas->setRowCount(0); // limpia lo que hubiera antes de repoblar
 
@@ -374,7 +375,8 @@ void admin::on_botonCrearFuncion_clicked()  //Boton que crea la funcion, toma lo
     QString filas = ui->textoFilas->text();
     QString columnas = ui->textoColumnas->text();
     QString sala = ui->comboBoxSala->currentText();
-    QString fechaHora = ui->tiempoHorarioFuncion->dateTime().toString();    
+    QString fechaHora = ui->tiempoHorarioFuncion->text();
+  
 
     if (filas.isEmpty() || columnas.isEmpty() || sala.isEmpty() || fechaHora.isEmpty()) {
         QMessageBox::information(this, "Error", "Es necesario llenar todos los campos.");
