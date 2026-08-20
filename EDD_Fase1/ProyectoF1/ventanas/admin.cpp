@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QTreeWidgetItem>
 #include <QHBoxLayout>
+#include <QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QComboBox>
@@ -20,11 +21,11 @@
 #include "../servicios/rutasReportes.h"
 
 
-admin::admin(QWidget *parent) // Constructor de la clase admin
+admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de la clase admin
     : QDialog(parent)
     , ui(new Ui::Dialog)
     , crearPeli(nullptr)
-    , guardar()
+    , guardar(servicio)
     , ventanaPromocion(nullptr)
     , ventanaBeneficio(nullptr)
     , watcherReportes(nullptr)
@@ -33,6 +34,15 @@ admin::admin(QWidget *parent) // Constructor de la clase admin
     , scrollReporte(nullptr)
 { // Inicializa la interfaz de usuario y las instancias de las ventanas secundarias
     ui->setupUi(this);
+
+    QPushButton* botonSalir = findChild<QPushButton*>("botonSalir");
+    if (botonSalir == nullptr) {
+        botonSalir = new QPushButton("Salir", this);
+        botonSalir->setObjectName("botonSalir");
+        botonSalir->setGeometry(940, 8, 120, 30);
+    }
+    connect(botonSalir, &QPushButton::clicked, this, &admin::on_botonSalir_clicked);
+
     // Crear la instancia única de CrearPeli pasando la referencia a guardarDatosService
     crearPeli = new CrearPeli(&guardar);
     ventanaPromocion = new agregarPromocion(&guardar);
@@ -598,5 +608,28 @@ void admin::actualizarTablaSolicitudes()
             }
         });
     });
+}
+
+
+void admin::on_botonSalir_clicked()
+{
+    if (crearPeli != nullptr) {
+        crearPeli->close();
+    }
+    if (ventanaPromocion != nullptr) {
+        ventanaPromocion->close();
+    }
+    if (ventanaBeneficio != nullptr) {
+        ventanaBeneficio->close();
+    }
+
+    QWidget* loginWindow = parentWidget();
+    if (loginWindow != nullptr) {
+        loginWindow->show();
+        loginWindow->raise();
+        loginWindow->activateWindow();
+    }
+
+    this->close();
 }
 

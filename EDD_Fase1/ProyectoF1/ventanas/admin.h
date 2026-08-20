@@ -28,7 +28,7 @@ class admin : public QDialog
     Q_OBJECT
 
 public:
-    explicit admin(QWidget *parent = nullptr);
+    explicit admin(guardarDatosService& servicio, QWidget *parent = nullptr);
     ~admin();
     
 
@@ -55,6 +55,7 @@ private slots:
 
     void on_botonCrearSolicitud_clicked();
     void actualizarTablaSolicitudes();
+    void on_botonSalir_clicked();
 
     void onReporteSeleccionado(int index);
     void onArchivoReporteCambiado(const QString& ruta);
@@ -73,7 +74,7 @@ private:
     CrearPeli *crearPeli; // Instancia única persistente de CrearPeli
     agregarPromocion *ventanaPromocion;
     agregarBeneficio *ventanaBeneficio;
-    guardarDatosService guardar; // Instancia de la clase guardarDatosService compartida con CrearPeli
+    guardarDatosService& guardar; // Referencia a la instancia compartida de guardarDatosService
 
     QFileSystemWatcher* watcherReportes;
     QComboBox* comboReportes;

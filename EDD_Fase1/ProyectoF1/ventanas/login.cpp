@@ -1,10 +1,14 @@
 #include "login.h"
 #include "ui_login.h"
 #include "admin.h"
+#include "cliente.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , guardarCompartido()
+    , adminWindow(nullptr)
+    , clienteWindow(nullptr)
 {
     ui->setupUi(this);
 }
@@ -28,27 +32,40 @@ void MainWindow::on_botonIniciarSesion_clicked()
     if (correo=="admin@correo.com" && contra=="admin123"){
         // Iniciar sesión como administrador
         ui->statusbar->showMessage("Iniciando sesión como administrador...");
-        //Se abre la ventana de administrador
-        admin *adminWindow = new admin();
+        // Se abre la ventana de administrador usando la misma instancia compartida.
+        adminWindow = new admin(guardarCompartido, this);
+        adminWindow->setAttribute(Qt::WA_DeleteOnClose);
         adminWindow->show();
-        this->close(); // Cierra la ventana de inicio de sesión
+        this->hide(); // Se oculta para mantenerla viva como parent y poder volver con "Salir"
         return;
     }
 
      //Clientes de prueba
     if (correo=="cliente1@correo.com" && contra=="cliente123"){
         ui->statusbar->showMessage("Iniciando sesión como cliente...");
-        // Aquí puedes abrir la ventana de cliente o realizar otras acciones
+        clienteWindow = new cliente(guardarCompartido, this);
+        clienteWindow->setAttribute(Qt::WA_DeleteOnClose);
+        clienteWindow->setNombreCliente("Mynor");
+        clienteWindow->show();
+        this->hide();
         return;
     }
     else if (correo=="cliente2@correo.com" && contra=="cliente123"){
         ui->statusbar->showMessage("Iniciando sesión como cliente...");
-        // Aquí puedes abrir la ventana de cliente o realizar otras acciones
+        clienteWindow = new cliente(guardarCompartido, this);
+        clienteWindow->setAttribute(Qt::WA_DeleteOnClose);
+        clienteWindow->setNombreCliente("Juan");
+        clienteWindow->show();
+        this->hide();
         return;
     }
     else if (correo=="cliente3@correo.com" && contra=="cliente123"){
         ui->statusbar->showMessage("Iniciando sesión como cliente...");
-        // Aquí puedes abrir la ventana de cliente o realizar otras acciones
+        clienteWindow = new cliente(guardarCompartido, this);
+        clienteWindow->setAttribute(Qt::WA_DeleteOnClose);
+        clienteWindow->setNombreCliente("Pedro");
+        clienteWindow->show();
+        this->hide();
         return;
     }
     else{

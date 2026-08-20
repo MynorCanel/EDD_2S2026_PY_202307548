@@ -2,6 +2,10 @@
 #define LOGIN_H
 
 #include <QMainWindow>
+#include "../servicios/guardarDatosService.h"
+
+class admin;
+class cliente;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,5 +26,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    guardarDatosService guardarCompartido;
+    admin* adminWindow;
+    cliente* clienteWindow;
 };
 #endif // LOGIN_H

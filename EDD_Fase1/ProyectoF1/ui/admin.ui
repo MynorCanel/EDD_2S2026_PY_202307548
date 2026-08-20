@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab_1">
     <attribute name="title">
@@ -679,6 +679,19 @@
      <string>Reportes</string>
     </attribute>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="botonSalir">
+   <property name="geometry">
+    <rect>
+     <x>960</x>
+     <y>10</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Salir a login</string>
+   </property>
   </widget>
  </widget>
  <resources/>
