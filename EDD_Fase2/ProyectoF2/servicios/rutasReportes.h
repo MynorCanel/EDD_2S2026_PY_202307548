@@ -18,6 +18,17 @@ inline std::string directorio()
     return ruta;
 }
 
+inline std::string directorioAsientos()
+{
+#ifdef ASIENTOS_DIR
+    std::string ruta(ASIENTOS_DIR);
+#else
+    std::string ruta("asientos");
+#endif
+    _mkdir(ruta.c_str());
+    return ruta;
+}
+
 inline int convertirAPng(const std::string& dot, const std::string& png)
 {
     const std::string comando = "dot -Tpng \"" + dot + "\" -o \"" + png + "\"";

@@ -50,11 +50,15 @@ public:
 
     // 3. Generación del reporte visual adaptado al diseño de la imagen
     bool generarGraphviz();
+    bool guardarAsientosJson(const std::string& ruta) const;
 
     // 4. Métodos auxiliares para proyectar la matriz en UI
     int obtenerTotalFilas() const;
     int obtenerTotalColumnas() const;
     std::string obtenerValorAsiento(const std::string& fila, const std::string& columna);
+    const std::string& obtenerPelicula() const;
+    const std::string& obtenerHorario() const;
+    const std::string& obtenerSala() const;
 };
 
 #endif

@@ -20,7 +20,6 @@
 #include "../servicios/guardarDatosService.h"
 #include "../servicios/rutasReportes.h"
 
-
 admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de la clase admin
     : QDialog(parent)
     , ui(new Ui::Dialog)
@@ -34,6 +33,14 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
     , scrollReporte(nullptr)
 { // Inicializa la interfaz de usuario y las instancias de las ventanas secundarias
     ui->setupUi(this);
+    setWindowFlags(Qt::Window
+                   | Qt::WindowTitleHint
+                   | Qt::WindowSystemMenuHint
+                   | Qt::WindowMinimizeButtonHint
+                   | Qt::WindowMaximizeButtonHint
+                   | Qt::WindowCloseButtonHint);
+    setWindowModality(Qt::NonModal);
+    connect(ui->tablaFunciones, &QTableWidget::itemSelectionChanged, this, &admin::actualizarTablaFuncion);
 
     QPushButton* botonSalir = findChild<QPushButton*>("botonSalir");
     if (botonSalir == nullptr) {
@@ -52,7 +59,7 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
     connect(ventanaBeneficio, &agregarBeneficio::beneficioGuardado, this, &admin::actualizarTreePromociones);
     actualizarTabla();
     actualizarTreePromociones();
-    actualizarTablaFuncion();
+    actualizarTablaFunciones();
     actualizarTablaSolicitudes();
     inicializarTabReportes();
 }
@@ -83,12 +90,7 @@ void admin::inicializarTabReportes()  // Inicializa la interfaz de usuario para 
 {
     directorioReportes = QString::fromStdString(rutasReportes::directorio());
 
-    definicionesReportes = {
-        {"Arbol de peliculas", "arbol_binario_peliculas.png"},
-        {"Promociones y beneficios", "lista_unificada.png"},
-        {"Solicitudes (lista circular doble)", "lista_circular_doble.png"},
-        {"Matriz de asientos", "MatrizFuncion.png"}
-    };
+    actualizarDefinicionesReportes();
 
     auto* layoutPrincipal = new QVBoxLayout(ui->tab_4);
     layoutPrincipal->setContentsMargins(12, 12, 12, 12);
@@ -102,6 +104,28 @@ void admin::inicializarTabReportes()  // Inicializa la interfaz de usuario para 
         comboReportes->addItem(definicion.first, definicion.second);
     }
     layoutPrincipal->addWidget(comboReportes);
+
+    auto* botonTodos = new QPushButton("Generar todos", ui->tab_4);
+    auto* botonPeliculas = new QPushButton("Generar peliculas", ui->tab_4);
+    auto* botonAVL = new QPushButton("Generar AVL", ui->tab_4);
+    auto* botonFuncion = new QPushButton("Generar funcion seleccionada", ui->tab_4);
+    auto* layoutBotones = new QHBoxLayout();
+    layoutBotones->addWidget(botonTodos);
+    layoutBotones->addWidget(botonPeliculas);
+    layoutBotones->addWidget(botonAVL);
+    layoutBotones->addWidget(botonFuncion);
+    layoutPrincipal->addLayout(layoutBotones);
+    connect(botonTodos, &QPushButton::clicked, this, [this]() { guardar.graficarReportes(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
+    connect(botonPeliculas, &QPushButton::clicked, this, [this]() { guardar.arbol.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
+    connect(botonAVL, &QPushButton::clicked, this, [this]() { guardar.arbolFunciones.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
+    connect(botonFuncion, &QPushButton::clicked, this, [this]() {
+        const int fila = ui->tablaFunciones->currentRow();
+        if (fila >= 0 && ui->tablaFunciones->item(fila, 0) != nullptr) {
+            MatrizCine* matriz = guardar.arbolFunciones.buscar(ui->tablaFunciones->item(fila, 0)->text().toStdString());
+            if (matriz != nullptr) matriz->generarGraphviz();
+            actualizarVigilanciaReportes();
+        }
+    });
 
     scrollReporte = new QScrollArea(ui->tab_4);
     scrollReporte->setWidgetResizable(true);
@@ -180,6 +204,7 @@ void admin::refrescarReporteActual() // Refresca la visualización del reporte a
         return;
     }
 
+    actualizarDefinicionesReportes();
     const QString archivoSeleccionado = comboReportes->currentData().toString();
     QDir directorio(directorioReportes);
     const QString rutaCompleta = directorio.absoluteFilePath(archivoSeleccionado);
@@ -215,7 +240,6 @@ void admin::ajustarEscalaReporte() //Se ajusta la escala del reporte visualizado
     if (visorReporte == nullptr || scrollReporte == nullptr || reporteOriginal.isNull()) {
         return;
     }
-
     QSize areaVisible = scrollReporte->viewport()->size();
     if (areaVisible.width() < 16 || areaVisible.height() < 16) {
         areaVisible = QSize(800, 520);
@@ -267,24 +291,24 @@ void admin::on_botonEliminar_clicked()
 }
 
 
+void admin::actualizarDefinicionesReportes()
+{
+    definicionesReportes = {
+        {"Arbol de peliculas", "arbol_binario_peliculas.png"},
+        {"Arbol AVL de funciones", "arbol_avl.png"},
+        {"Promociones y beneficios", "lista_unificada.png"},
+        {"Solicitudes (lista circular doble)", "lista_circular_doble.png"}
+    };
+    guardar.arbolFunciones.inOrden([this](MatrizCine* funcion) {
+        definicionesReportes.push_back({
+            "Funcion " + QString::fromStdString(funcion->codigoFuncion),
+            QString::fromStdString(funcion->codigoFuncion) + ".png"});
+    });
+}
+
 void admin::on_botonCargarCSV_clicked()
 {
-    bool ok;
-    QString ruta = QInputDialog::getText(
-        this,
-        "Intruducir ruta",
-        "Ingresa la ruta del archivo CSV:",
-        QLineEdit::Normal,
-        "",
-        &ok
-        );
-    if (ok && guardar.cargarCSV(ruta.toStdString())){
-        QMessageBox::information(this, "Accion Completada","Se ha cargado el archivo CSV con exito");
-        actualizarTabla();
-        return;
-    } else{
-        QMessageBox::information(this, "Error","Archivo no encontrado");
-    }
+    on_botonCargarJSON_clicked();
 }
 
 
@@ -381,6 +405,7 @@ void admin::on_botonAgregarPromocion_2_clicked()
 
 void admin::on_botonCrearFuncion_clicked()  //Boton que crea la funcion, toma los datos de los textos en el panel de funciones y los envia a la funcion crearFuncion de guardarDatosService
 {
+    QString codigoFuncion = ui->textCodigoFuncion->text().trimmed();
     QString codigoPelicula = ui->textoCodigoPelicula->text();
     QString filas = ui->textoFilas->text();
     QString columnas = ui->textoColumnas->text();
@@ -388,7 +413,7 @@ void admin::on_botonCrearFuncion_clicked()  //Boton que crea la funcion, toma lo
     QString fechaHora = ui->tiempoHorarioFuncion->text();
   
 
-    if (filas.isEmpty() || columnas.isEmpty() || sala.isEmpty() || fechaHora.isEmpty()) {
+    if (codigoFuncion.isEmpty() || filas.isEmpty() || columnas.isEmpty() || sala.isEmpty() || fechaHora.isEmpty()) {
         QMessageBox::information(this, "Error", "Es necesario llenar todos los campos.");
         return;
     }
@@ -410,9 +435,12 @@ void admin::on_botonCrearFuncion_clicked()  //Boton que crea la funcion, toma lo
         return;
     }
 
-    if (guardar.crearFuncion(codigoPelicula.toStdString(), numFilas, numColumnas, fechaHora.toStdString(), sala.toStdString())) {
+    if (guardar.crearFuncion(codigoFuncion.toStdString(), codigoPelicula.toStdString(), numFilas, numColumnas, fechaHora.toStdString(), sala.toStdString())) {
         QMessageBox::information(this, "Éxito", "La función se ha creado correctamente.");
-        actualizarTablaFuncion();
+        actualizarTablaFunciones();
+        actualizarDefinicionesReportes();
+        actualizarVigilanciaReportes();
+        refrescarReporteActual();
     } else {
         QMessageBox::information(this, "Error", "No se pudo crear la función. Verifica los datos ingresados.");
     }
@@ -422,11 +450,13 @@ void admin::on_botonCrearFuncion_clicked()  //Boton que crea la funcion, toma lo
 
 void admin::on_botonReservarAsiento_clicked()
 {
-    QString filaReserva = ui->textoFilaReserva->text();
-    QString columnaReserva = ui->textoColumnaReserva->text();
+    bool okFila = false;
+    bool okColumna = false;
+    QString filaReserva = QInputDialog::getText(this, "Reservar asiento", "Fila (A-Z):", QLineEdit::Normal, "", &okFila);
+    QString columnaReserva = QInputDialog::getText(this, "Reservar asiento", "Columna:", QLineEdit::Normal, "", &okColumna);
     QString nombreReserva = ui->textoNombreCliente->text();
 
-    if (filaReserva.isEmpty() || columnaReserva.isEmpty() || nombreReserva.isEmpty()) {
+    if (!okFila || !okColumna || filaReserva.isEmpty() || columnaReserva.isEmpty() || nombreReserva.isEmpty()) {
         QMessageBox::information(this, "Error", "Es necesario llenar todos los campos.");
         return;
     }
@@ -454,7 +484,14 @@ void admin::on_botonReservarAsiento_clicked()
         return;
     }
 
-    if (guardar.reservarAsiento(nombreReserva.toStdString(), filaNormalizada, std::to_string(columna))) {
+    int filaSeleccionada = ui->tablaFunciones->currentRow();
+    QString codigoFuncion = filaSeleccionada >= 0 && ui->tablaFunciones->item(filaSeleccionada, 0) != nullptr
+        ? ui->tablaFunciones->item(filaSeleccionada, 0)->text() : QString();
+    if (codigoFuncion.isEmpty()) {
+        QMessageBox::information(this, "Error", "Selecciona una funcion en la tabla.");
+        return;
+    }
+    if (guardar.reservarAsientoFuncion(codigoFuncion.toStdString(), nombreReserva.toStdString(), filaNormalizada, std::to_string(columna))) {
         QMessageBox::information(this, "Éxito", "El asiento se ha reservado correctamente.");
         actualizarTablaFuncion();
     } else {
@@ -464,8 +501,12 @@ void admin::on_botonReservarAsiento_clicked()
 
 void admin::actualizarTablaFuncion()
 {
-    int filas = guardar.matrizFunciones.obtenerTotalFilas();
-    int columnas = guardar.matrizFunciones.obtenerTotalColumnas();
+    int filaSeleccionada = ui->tablaFunciones->currentRow();
+    if (filaSeleccionada < 0 || ui->tablaFunciones->item(filaSeleccionada, 0) == nullptr) return;
+    MatrizCine* matriz = guardar.arbolFunciones.buscar(ui->tablaFunciones->item(filaSeleccionada, 0)->text().toStdString());
+    if (matriz == nullptr) return;
+    int filas = matriz->obtenerTotalFilas();
+    int columnas = matriz->obtenerTotalColumnas();
 
     ui->tablaFuncion->clear();
     ui->tablaFuncion->setRowCount(filas);
@@ -485,12 +526,33 @@ void admin::actualizarTablaFuncion()
 
         std::string filaStr(1, letraFila);
         for (int c = 1; c <= columnas; ++c) {
-            std::string valor = guardar.matrizFunciones.obtenerValorAsiento(filaStr, std::to_string(c));
+            std::string valor = matriz->obtenerValorAsiento(filaStr, std::to_string(c));
             if (valor.empty()) {
                 valor = "--";
             }
-            ui->tablaFuncion->setItem(r, c - 1, new QTableWidgetItem(QString::fromStdString(valor)));
+            auto* item = new QTableWidgetItem(QString::fromStdString(valor));
+            item->setBackground(valor == "--" ? QColor("#c8f7c5") : QColor("#ffd8a8"));
+            ui->tablaFuncion->setItem(r, c - 1, item);
         }
+    }
+}
+
+void admin::actualizarTablaFunciones()
+{
+    ui->tablaFunciones->setRowCount(0);
+    guardar.arbolFunciones.inOrden([this](MatrizCine* funcion) {
+        const int fila = ui->tablaFunciones->rowCount();
+        ui->tablaFunciones->insertRow(fila);
+        ui->tablaFunciones->setItem(fila, 0, new QTableWidgetItem(QString::fromStdString(funcion->codigoFuncion)));
+        ui->tablaFunciones->setItem(fila, 1, new QTableWidgetItem(QString::fromStdString(funcion->obtenerPelicula())));
+        ui->tablaFunciones->setItem(fila, 2, new QTableWidgetItem(QString::fromStdString(funcion->obtenerHorario())));
+        ui->tablaFunciones->setItem(fila, 3, new QTableWidgetItem(QString::fromStdString(funcion->obtenerSala())));
+        ui->tablaFunciones->setItem(fila, 4, new QTableWidgetItem(QString::number(funcion->obtenerTotalFilas())));
+        ui->tablaFunciones->setItem(fila, 5, new QTableWidgetItem(QString::number(funcion->obtenerTotalColumnas())));
+    });
+    if (ui->tablaFunciones->rowCount() > 0) {
+        ui->tablaFunciones->selectRow(0);
+        actualizarTablaFuncion();
     }
 }
 
@@ -645,9 +707,13 @@ void admin::on_botonCargarJSON_clicked()
         "",
         &ok
         );
-    if (ok && guardar.cargarCSV(ruta.toStdString())){
-        QMessageBox::information(this, "Accion Completada","Se ha cargado el archivo CSV con exito");
+    if (ok && guardar.cargarJSONPeliculas(ruta.toStdString())){
+        QMessageBox::information(this, "Accion Completada","Se ha cargado el archivo JSON con exito");
         actualizarTabla();
+        actualizarTablaFunciones();
+        actualizarDefinicionesReportes();
+        actualizarVigilanciaReportes();
+        refrescarReporteActual();
         return;
     } else{
         QMessageBox::information(this, "Error","Archivo no encontrado");

@@ -1,7 +1,9 @@
 #include "guardarDatosService.h"
 #include <iostream>
 #include <fstream>
+#include <direct.h>
 #include "json.hpp" // Incluye la biblioteca nlohmann/json para manejar JSON
+#include "rutasReportes.h"
 
 using json = nlohmann::json;
 
@@ -20,15 +22,12 @@ bool guardarDatosService::guardarPelicula(const std::string& codigo, const std::
         return false;
     }
     arbol.insertar(codigo, titulo, genero, duracion, clasificacion, idioma, fechaEstreno, fechaFinCartelera);
-    // Genera la visualización del árbol completo
-    arbol.generarDot();
     std::cout << "Película guardada correctamente: " << titulo << std::endl;
     return true;
 }
 
 bool guardarDatosService::cargarCSV(const std::string& ruta) {
     if (arbol.cargarCSV(ruta)){
-        arbol.generarDot();
         return true;
     } else {
         std::cout << "Error al cargar el archivo CSV: " << ruta << std::endl;
@@ -42,7 +41,6 @@ bool guardarDatosService::eliminarPelicula(const std::string& codigo) {
         return false;
     }
     arbol.eliminarConCodigo(codigo);
-    arbol.generarDot();
 
     return true;
 }
@@ -54,8 +52,6 @@ bool guardarDatosService::guardarPromocion(const std::string& codigo, const std:
         return false;
     }
     listaPromociones.insertar(codigo, nombre, fechaInicio, fechaFin, diasAplicables);
-    // Genera la visualización de la lista completa
-    listaPromociones.graficar();
     std::cout << "Promoción guardada correctamente: " << nombre << std::endl;
     return true;
 }
@@ -78,8 +74,6 @@ bool guardarDatosService::guardarBeneficioAPromocion(const std::string& codigoPr
         return false;
     }
     if (listaPromociones.agregarBeneficioAPromocion(codigoPromo, tipo, descripcion, valor)) {
-        // Genera la visualización de la lista completa
-        listaPromociones.graficar();
         std::cout << "Beneficio agregado correctamente a la promoción: " << codigoPromo << std::endl;
         return true;
     } else {
@@ -103,26 +97,65 @@ bool guardarDatosService::crearFuncion(const std::string& codigoPelicula, int fi
         return false;
     }
 
-    std::string tituloPelicula = pelicula->titulo; // Solo referencia, no liberar
-    matrizFunciones.inicializarSala(filas, columnas, tituloPelicula, horario, sala);
-    matrizFunciones.generarGraphviz();
+    int siguiente = 1;
+    std::string codigo;
+    do {
+        codigo = "F" + std::to_string(siguiente++);
+    } while (arbolFunciones.CodigoExiste(codigo));
+    return crearFuncion(codigo, codigoPelicula, filas, columnas, horario, sala);
+}
 
+bool guardarDatosService::crearFuncion(const std::string& codigoFuncion, const std::string& codigoPelicula, int filas, int columnas, const std::string& horario, const std::string& sala, const std::string& archivoAsientos) {
+    Pelicula* pelicula = nullptr;
+    try { pelicula = arbol.buscar(codigoPelicula); } catch (...) { return false; }
+    if (pelicula == nullptr || filas <= 0 || columnas <= 0 || codigoFuncion.empty() || arbolFunciones.CodigoExiste(codigoFuncion)) return false;
+    arbolFunciones.insertar(codigoFuncion, filas, columnas, pelicula->titulo, horario, sala);
+    const std::string nombreArchivo = archivoAsientos.empty() ? codigoFuncion + "_funcion.json" : archivoAsientos;
+    const std::string rutaAsientos = rutasReportes::directorioAsientos() + "/" + nombreArchivo;
+    std::ifstream existente(rutaAsientos);
+    if (!existente.good()) {
+        std::ofstream archivo(rutaAsientos);
+        if (!archivo.is_open()) return false;
+        archivo << "{\n  \"codigo_funcion\": \"" << codigoFuncion << "\",\n  \"asientos_ocupados\": []\n}\n";
+    }
+    cargarAsientos(codigoFuncion, nombreArchivo);
+    MatrizCine* matriz = arbolFunciones.buscar(codigoFuncion);
+    if (matriz != nullptr) matriz->generarGraphviz();
+    arbolFunciones.generarDot();
     return true;
 }
 
 bool guardarDatosService::reservarAsiento(const std::string& nombreCliente, const std::string& fila, const std::string& columna) {
-    if (matrizFunciones.reservarAsiento(nombreCliente, fila, columna)) {
-        matrizFunciones.generarGraphviz(); // Actualiza la visualización de la matriz
-        return true;
-    } else {
-        std::cout << "Error al reservar el asiento para " << nombreCliente << "." << std::endl;
-        return false;
+    return reservarAsientoFuncion("F1", nombreCliente, fila, columna);
+}
+
+bool guardarDatosService::reservarAsientoFuncion(const std::string& codigoFuncion, const std::string& nombreCliente, const std::string& fila, const std::string& columna) {
+    MatrizCine* matriz = arbolFunciones.buscar(codigoFuncion);
+    if (matriz == nullptr || !matriz->reservarAsiento(nombreCliente, fila, columna)) return false;
+    matriz->guardarAsientosJson(rutasReportes::directorioAsientos() + "/" + codigoFuncion + "_funcion.json");
+    return true;
+}
+
+void guardarDatosService::cargarAsientos(const std::string& codigoFuncion, const std::string& archivoAsientos) {
+    MatrizCine* matriz = arbolFunciones.buscar(codigoFuncion);
+    if (matriz == nullptr) return;
+    const std::string nombreArchivo = archivoAsientos.empty() ? codigoFuncion + "_funcion.json" : archivoAsientos;
+    std::ifstream archivo(rutasReportes::directorioAsientos() + "/" + nombreArchivo);
+    if (!archivo.is_open()) return;
+    json datos;
+    try { archivo >> datos; } catch (...) { return; }
+    if (!datos.contains("asientos_ocupados") || !datos["asientos_ocupados"].is_array()) return;
+    for (const auto& asiento : datos["asientos_ocupados"]) {
+        const int fila = asiento.value("fila", 0);
+        const int columna = asiento.value("columna", 0);
+        if (fila > 0 && columna > 0) {
+            matriz->reservarAsiento(asiento.value("codigo_reserva", ""), std::string(1, static_cast<char>('A' + fila - 1)), std::to_string(columna));
+        }
     }
 }
 
 void guardarDatosService::guardarSolicitud(const std::string& nombreCliente, const std::string& telefonoContacto, const std::string& tipoSolicitud, const std::string& descripcion) {
     listaSolicitudes.insertarSolicitud(nombreCliente, telefonoContacto, tipoSolicitud, descripcion);
-    listaSolicitudes.graficar(); // Genera la visualización de la lista completa
 }
 
 
@@ -143,21 +176,31 @@ bool guardarDatosService::cargarJSONPeliculas(const std::string& ruta) {
         return false;
     }
 
-    for (const auto& peliculaJson : datosJson) {
-        std::string id = peliculaJson.value("id", "");
+    if (!datosJson.is_object() || !datosJson.contains("peliculas") || !datosJson["peliculas"].is_array()) return false;
+    for (const auto& peliculaJson : datosJson["peliculas"]) {
+        std::string id = peliculaJson.value("codigo", "");
         std::string titulo = peliculaJson.value("titulo", "");
         std::string genero = peliculaJson.value("genero", "");
-        std::string duracion = peliculaJson.value("duracion", "");
-        std::string director = peliculaJson.value("clasificacion", "");
+        int duracion = peliculaJson.value("duracion", 0);
+        std::string clasificacion = peliculaJson.value("clasificacion", "");
         std::string idioma = peliculaJson.value("idioma", "");
+        std::string fechaEstreno = peliculaJson.value("fecha_estreno", "");
+        std::string fechaFin = peliculaJson.value("fecha_fin", "");
         
-        if (id.empty() || titulo.empty() || genero.empty() || duracion.empty() || director.empty()) {
+        if (id.empty() || titulo.empty() || genero.empty() || duracion <= 0 || clasificacion.empty()) {
             std::cout << "Error: Datos incompletos para una película en el archivo JSON." << std::endl;
             continue; // O manejar el error según sea necesario
         }
 
-        arbol.insertar(id, titulo, genero, std::stoi(duracion), director, "", "", "");
-        // Aquí puedes agregar el nuevoCliente a la estructura de datos correspondiente
+        if (!arbol.CodigoExiste(id)) arbol.insertar(id, titulo, genero, duracion, clasificacion, idioma, fechaEstreno, fechaFin);
+        if (peliculaJson.contains("funciones") && peliculaJson["funciones"].is_array()) {
+            for (const auto& funcion : peliculaJson["funciones"]) {
+                crearFuncion(funcion.value("codigo_funcion", ""), id,
+                    funcion.value("filas", 0), funcion.value("columnas", 0),
+                    funcion.value("horario", ""), funcion.value("sala", ""),
+                    funcion.value("archivo_asientos", ""));
+            }
+        }
     }
 
     return true;
@@ -165,8 +208,9 @@ bool guardarDatosService::cargarJSONPeliculas(const std::string& ruta) {
         
 void guardarDatosService::graficarReportes() {
     arbol.generarDot();
+    arbolFunciones.generarDot();
     listaPromociones.graficar();
-    matrizFunciones.generarGraphviz();
+    arbolFunciones.inOrden([](MatrizCine* matriz) { matriz->generarGraphviz(); });
     listaSolicitudes.graficar();
 }
   

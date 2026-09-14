@@ -1,7 +1,9 @@
 #include "MatrizCine.h"
 #include <cstdio>
 #include <cstdlib>
+#include <fstream>
 #include "../servicios/rutasReportes.h"
+#include "../servicios/json.hpp"
 
 using namespace std;
 
@@ -185,8 +187,8 @@ bool MatrizCine::reservarAsiento(string nombre, string f, string c) {
 // Genera un diagrama de Graphviz de la matriz de asientos, mostrando solo los asientos ocupados
 bool MatrizCine::generarGraphviz() {
     const auto directorio = rutasReportes::directorio();
-    const auto rutaDot = directorio + "/MatrizFuncion.dot";
-    const auto rutaPng = directorio + "/MatrizFuncion.png";
+    const auto rutaDot = directorio + "/" + codigoFuncion + ".dot";
+    const auto rutaPng = directorio + "/" + codigoFuncion + ".png";
     FILE* fp = fopen(rutaDot.c_str(), "w");
     if (fp == nullptr) return false;
 
@@ -420,4 +422,31 @@ std::string MatrizCine::obtenerValorAsiento(const std::string& fila, const std::
     }
 
     return "--";
+}
+
+const std::string& MatrizCine::obtenerPelicula() const { return pelicula; }
+const std::string& MatrizCine::obtenerHorario() const { return horario; }
+const std::string& MatrizCine::obtenerSala() const { return sala; }
+
+bool MatrizCine::guardarAsientosJson(const std::string& ruta) const {
+    nlohmann::json datos;
+    datos["codigo_funcion"] = codigoFuncion;
+    datos["asientos_ocupados"] = nlohmann::json::array();
+    Nodo* fila = cabeza->abajo;
+    while (fila != nullptr) {
+        Nodo* asiento = fila->derecha;
+        while (asiento != nullptr) {
+            nlohmann::json ocupado;
+            ocupado["fila"] = static_cast<int>(asiento->fila[0] - 'A') + 1;
+            ocupado["columna"] = std::stoi(asiento->columna);
+            ocupado["codigo_reserva"] = asiento->valor;
+            datos["asientos_ocupados"].push_back(ocupado);
+            asiento = asiento->derecha;
+        }
+        fila = fila->abajo;
+    }
+    std::ofstream archivo(ruta);
+    if (!archivo.is_open()) return false;
+    archivo << datos.dump(2) << '\n';
+    return true;
 }

@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-d48452f75b39617cea70.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Proyecto1",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Proyecto1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Proyecto1-Release-e80c36882c626d3e7cb3.json",
+					"name" : "Proyecto1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Proyecto1_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Proyecto1_autogen-Release-c929ebd6fbd38aea1a16.json",
+					"name" : "Proyecto1_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Proyecto1_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Proyecto1_autogen_timestamp_deps-Release-c6bfb8e0702d1e68744f.json",
+					"name" : "Proyecto1_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/mynor/Downloads/Lab Estrucutras de Datos/Proyectos/EDD_2S2026_PY_202307548/EDD_Fase2/ProyectoF2",
+		"source" : "C:/Users/mynor/Downloads/Lab Estrucutras de Datos/Proyectos/EDD_2S2026_PY_202307548/EDD_Fase2/ProyectoF2"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

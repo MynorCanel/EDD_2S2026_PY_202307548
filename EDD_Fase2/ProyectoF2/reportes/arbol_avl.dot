@@ -1,0 +1,18 @@
+digraph ArbolAVL {
+node [shape=box, style=filled, fillcolor=lightblue];
+funcion_F030 [label="F030\nEl Viaje Espacial\n14:00\nSala 1\naltura: 3", shape=box];
+funcion_F030 -> funcion_F010;
+funcion_F030 -> funcion_F060;
+funcion_F010 [label="F010\nInterstellar\n16:00\nSala 2\naltura: 1", shape=box];
+funcion_F010 -> funcion_F020;
+funcion_F020 [label="F020\nLa Ciudad Perdida\n17:15\nSala 3\naltura: 0", shape=box];
+funcion_F060 [label="F060\nRobots del Futuro\n18:45\nSala 6\naltura: 2", shape=box];
+funcion_F060 -> funcion_F050;
+funcion_F060 -> funcion_F070;
+funcion_F050 [label="F050\nInterstellar\n19:30\nSala 5\naltura: 1", shape=box];
+funcion_F050 -> funcion_F040;
+funcion_F040 [label="F040\nAventuras en el Mar\n12:30\nSala 4\naltura: 0", shape=box];
+funcion_F070 [label="F070\nEl Viaje Espacial\n21:00\nSala 7\naltura: 1", shape=box];
+funcion_F070 -> funcion_F080;
+funcion_F080 [label="F080\nMisterio en la Noche\n22:00\nSala 8\naltura: 0", shape=box];
+}

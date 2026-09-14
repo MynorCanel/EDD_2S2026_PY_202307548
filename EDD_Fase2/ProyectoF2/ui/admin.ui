@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1088</width>
-    <height>674</height>
+    <width>1098</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,12 +31,12 @@
     <rect>
      <x>20</x>
      <y>40</y>
-     <width>1051</width>
-     <height>611</height>
+     <width>1061</width>
+     <height>691</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_1">
     <attribute name="title">
@@ -46,7 +46,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>80</y>
+       <y>40</y>
        <width>141</width>
        <height>41</height>
       </rect>
@@ -62,9 +62,9 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>130</y>
-       <width>981</width>
-       <height>411</height>
+       <y>90</y>
+       <width>1001</width>
+       <height>331</height>
       </rect>
      </property>
      <property name="editTriggers">
@@ -121,7 +121,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>80</y>
+       <y>40</y>
        <width>141</width>
        <height>41</height>
       </rect>
@@ -134,13 +134,85 @@
      <property name="geometry">
       <rect>
        <x>870</x>
-       <y>80</y>
+       <y>40</y>
        <width>141</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
       <string>Cargar Peliculas</string>
+     </property>
+    </widget>
+    <widget class="QListView" name="listaPeliculasPorSalirDeCartelera">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>480</y>
+       <width>441</width>
+       <height>151</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_63">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>450</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PELICULAS PROXIMAS A SALIR</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="textoOrdenamientos">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>480</y>
+       <width>451</width>
+       <height>151</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonBSTInorder">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>450</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Inorder</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonBSTPreorder">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>450</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Preorder</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonBSTPostorder">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>450</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Postorder</string>
      </property>
     </widget>
    </widget>
@@ -180,7 +252,7 @@
        <x>30</x>
        <y>150</y>
        <width>1001</width>
-       <height>401</height>
+       <height>451</height>
       </rect>
      </property>
      <column>
@@ -218,7 +290,7 @@
        <x>40</x>
        <y>130</y>
        <width>421</width>
-       <height>391</height>
+       <height>471</height>
       </rect>
      </property>
      <row>
@@ -412,8 +484,8 @@
     <widget class="QPushButton" name="botonCrearFuncion">
      <property name="geometry">
       <rect>
-       <x>410</x>
-       <y>110</y>
+       <x>200</x>
+       <y>520</y>
        <width>141</width>
        <height>41</height>
       </rect>
@@ -425,10 +497,10 @@
     <widget class="QTableWidget" name="tablaFuncion">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>190</y>
-       <width>531</width>
-       <height>351</height>
+       <x>570</x>
+       <y>370</y>
+       <width>471</width>
+       <height>271</height>
       </rect>
      </property>
      <row>
@@ -445,18 +517,18 @@
     <widget class="QLineEdit" name="textoFilas">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>60</y>
-       <width>113</width>
-       <height>24</height>
+       <x>60</x>
+       <y>190</y>
+       <width>401</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>40</y>
+       <x>60</x>
+       <y>170</y>
        <width>49</width>
        <height>16</height>
       </rect>
@@ -468,8 +540,8 @@
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>100</y>
+       <x>60</x>
+       <y>230</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -481,18 +553,18 @@
     <widget class="QLineEdit" name="textoColumnas">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>120</y>
-       <width>113</width>
-       <height>24</height>
+       <x>60</x>
+       <y>250</y>
+       <width>401</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QLabel" name="label_10">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>100</y>
+       <x>60</x>
+       <y>430</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -504,10 +576,10 @@
     <widget class="QComboBox" name="comboBoxSala">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>120</y>
-       <width>151</width>
-       <height>28</height>
+       <x>60</x>
+       <y>450</y>
+       <width>401</width>
+       <height>41</height>
       </rect>
      </property>
      <item>
@@ -535,14 +607,39 @@
        <string>Sala 5</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>Sala 6</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sala 7</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sala 8</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sala 9</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sala 10</string>
+      </property>
+     </item>
     </widget>
     <widget class="QLineEdit" name="textoCodigoPelicula">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>60</y>
-       <width>151</width>
-       <height>24</height>
+       <x>60</x>
+       <y>320</y>
+       <width>401</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -552,8 +649,8 @@
     <widget class="QLabel" name="label_5">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>40</y>
+       <x>60</x>
+       <y>300</y>
        <width>121</width>
        <height>16</height>
       </rect>
@@ -565,10 +662,10 @@
     <widget class="QTimeEdit" name="tiempoHorarioFuncion">
      <property name="geometry">
       <rect>
-       <x>410</x>
-       <y>60</y>
-       <width>141</width>
-       <height>29</height>
+       <x>60</x>
+       <y>380</y>
+       <width>401</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="displayFormat">
@@ -581,8 +678,8 @@
     <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
-       <x>410</x>
-       <y>40</y>
+       <x>60</x>
+       <y>360</y>
        <width>121</width>
        <height>16</height>
       </rect>
@@ -594,10 +691,10 @@
     <widget class="QTableWidget" name="tablaFunciones">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>190</y>
-       <width>421</width>
-       <height>351</height>
+       <x>570</x>
+       <y>40</y>
+       <width>471</width>
+       <height>291</height>
       </rect>
      </property>
      <column>
@@ -622,15 +719,322 @@
      </column>
      <column>
       <property name="text">
-       <string>Dimensiones</string>
+       <string>Filas</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Columnas</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="label_24">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>30</y>
+       <width>181</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>AGREGAR FUNCION</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_25">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>0</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Funciones Disponibles</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_26">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>330</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Visualizar Sala</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textCodigoFuncion">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>120</y>
+       <width>401</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_41">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>100</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Codigo de la funcion</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonRecorridoAVLInorder">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>620</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Recorrido AVL inorder</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonRecorridoAVLPostorder">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>620</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Recorrido AVL Postorder</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonRecorridoAVLPreorder">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>620</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Recorrido AVL Preorder</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_5">
     <attribute name="title">
      <string>Clientes</string>
     </attribute>
+    <widget class="QLabel" name="label_42">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>30</y>
+       <width>181</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>AGREGAR CLIENTE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonAgregarCliente">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>470</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Agregar Cliente</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_64">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>120</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ID del Cliente</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_65">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>250</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Correo del Cliente</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textoNombreCliente">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>210</y>
+       <width>401</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textoIDCliente">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>140</y>
+       <width>401</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_66">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>190</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nombre del Cliente</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_67">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>380</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Contrasenia</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textoCorreoCliente">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>270</y>
+       <width>401</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_68">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>320</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Telefono</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textoTelefonoCliente">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>340</y>
+       <width>401</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textoContraCliente">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>400</y>
+       <width>401</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>100</y>
+       <width>491</width>
+       <height>511</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_69">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>30</y>
+       <width>211</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>CLIENTES REGISTRADOS</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">

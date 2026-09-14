@@ -1,0 +1,151 @@
+{
+  "peliculas": [
+    {
+      "codigo": "P050",
+      "titulo": "Interstellar",
+      "genero": "Ciencia Ficcion",
+      "duracion": 169,
+      "clasificacion": "B",
+      "idioma": "Subtitulada",
+      "fecha_estreno": "2026-01-10",
+      "fecha_fin": "2026-04-10",
+      "funciones": [
+        {
+          "codigo_funcion": "F050",
+          "horario": "19:30",
+          "sala": "Sala 5",
+          "filas": 5,
+          "columnas": 8,
+          "archivo_asientos": ""
+        },
+        {
+          "codigo_funcion": "F010",
+          "horario": "16:00",
+          "sala": "Sala 2",
+          "filas": 4,
+          "columnas": 6,
+          "archivo_asientos": ""
+        }
+      ]
+    },
+    {
+      "codigo": "P010",
+      "titulo": "El Viaje Espacial",
+      "genero": "Aventura",
+      "duracion": 120,
+      "clasificacion": "A",
+      "idioma": "Espanol",
+      "fecha_estreno": "2026-02-01",
+      "fecha_fin": "2026-05-01",
+      "funciones": [
+        {
+          "codigo_funcion": "F030",
+          "horario": "14:00",
+          "sala": "Sala 1",
+          "filas": 3,
+          "columnas": 5,
+          "archivo_asientos": ""
+        },
+        {
+          "codigo_funcion": "F070",
+          "horario": "21:00",
+          "sala": "Sala 7",
+          "filas": 6,
+          "columnas": 10,
+          "archivo_asientos": ""
+        }
+      ]
+    },
+    {
+      "codigo": "P090",
+      "titulo": "La Ciudad Perdida",
+      "genero": "Accion",
+      "duracion": 110,
+      "clasificacion": "B12",
+      "idioma": "Subtitulada",
+      "fecha_estreno": "2026-03-05",
+      "fecha_fin": "2026-06-05",
+      "funciones": [
+        {
+          "codigo_funcion": "F020",
+          "horario": "17:15",
+          "sala": "Sala 3",
+          "filas": 4,
+          "columnas": 7,
+          "archivo_asientos": ""
+        }
+      ]
+    },
+    {
+      "codigo": "P030",
+      "titulo": "El Ultimo Bosque",
+      "genero": "Drama",
+      "duracion": 98,
+      "clasificacion": "A",
+      "idioma": "Espanol",
+      "fecha_estreno": "2026-01-20",
+      "fecha_fin": "2026-02-20",
+      "funciones": []
+    },
+    {
+      "codigo": "P070",
+      "titulo": "Robots del Futuro",
+      "genero": "Ciencia Ficcion",
+      "duracion": 105,
+      "clasificacion": "B",
+      "idioma": "Doblada",
+      "fecha_estreno": "2026-02-15",
+      "fecha_fin": "2026-05-15",
+      "funciones": [
+        {
+          "codigo_funcion": "F060",
+          "horario": "18:45",
+          "sala": "Sala 6",
+          "filas": 5,
+          "columnas": 9,
+          "archivo_asientos": ""
+        }
+      ]
+    },
+    {
+      "codigo": "P020",
+      "titulo": "Aventuras en el Mar",
+      "genero": "Animacion",
+      "duracion": 90,
+      "clasificacion": "AA",
+      "idioma": "Espanol",
+      "fecha_estreno": "2026-02-10",
+      "fecha_fin": "2026-04-10",
+      "funciones": [
+        {
+          "codigo_funcion": "F040",
+          "horario": "12:30",
+          "sala": "Sala 4",
+          "filas": 3,
+          "columnas": 6,
+          "archivo_asientos": ""
+        }
+      ]
+    },
+    {
+      "codigo": "P080",
+      "titulo": "Misterio en la Noche",
+      "genero": "Suspenso",
+      "duracion": 115,
+      "clasificacion": "B15",
+      "idioma": "Subtitulada",
+      "fecha_estreno": "2026-03-01",
+      "fecha_fin": "2026-06-01",
+      "funciones": [
+        {
+          "codigo_funcion": "F080",
+          "horario": "22:00",
+          "sala": "Sala 8",
+          "filas": 6,
+          "columnas": 8,
+          "archivo_asientos": ""
+        }
+      ]
+    }
+  ]
+}

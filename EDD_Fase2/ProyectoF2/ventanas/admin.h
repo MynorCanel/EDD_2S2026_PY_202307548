@@ -52,6 +52,7 @@ private slots:
 
     void on_botonReservarAsiento_clicked();
     void actualizarTablaFuncion();
+    void actualizarTablaFunciones();
 
     void on_botonCrearSolicitud_clicked();
     void actualizarTablaSolicitudes();
@@ -68,6 +69,7 @@ protected:
 
 private:
     void inicializarTabReportes();
+    void actualizarDefinicionesReportes();
     void actualizarVigilanciaReportes();
     void refrescarReporteActual();
     void ajustarEscalaReporte();

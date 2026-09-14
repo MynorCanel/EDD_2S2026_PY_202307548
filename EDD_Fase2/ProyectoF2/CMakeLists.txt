@@ -104,6 +104,7 @@ endif()
 
 target_link_libraries(Proyecto1 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_compile_definitions(Proyecto1 PRIVATE REPORTES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/reportes")
+target_compile_definitions(Proyecto1 PRIVATE ASIENTOS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/asientos")
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
