@@ -1,0 +1,123 @@
+digraph TablaHashReservas {
+rankdir=TB;
+splines=ortho;
+nodesep=0.45;
+ranksep=0.35;
+node [fontname=Arial, color="#374151"];
+label="Tabla Hash de Reservas\nTamano: 17 | Reservas: 32 | Cubetas ocupadas: 17 | Colisiones: 15";
+labelloc=t;
+{ rank=same; bucket16 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 16"];
+reserva16_0 [shape=box, style=filled, fillcolor="#ffffff", label="R007\nCliente: U107\nFuncion: F010"];
+bucket16 -> reserva16_0 [constraint=false];
+}
+bucket16 -> bucket15 [style=invis, weight=100];
+{ rank=same; bucket15 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 15"];
+reserva15_0 [shape=box, style=filled, fillcolor="#ffffff", label="R006\nCliente: U106\nFuncion: F010"];
+bucket15 -> reserva15_0 [constraint=false];
+reserva15_1 [shape=box, style=filled, fillcolor="#ffffff", label="R019\nCliente: U103\nFuncion: F020"];
+reserva15_0 -> reserva15_1 [constraint=false];
+}
+bucket15 -> bucket14 [style=invis, weight=100];
+{ rank=same; bucket14 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 14"];
+reserva14_0 [shape=box, style=filled, fillcolor="#ffffff", label="R005\nCliente: U105\nFuncion: F010"];
+bucket14 -> reserva14_0 [constraint=false];
+reserva14_1 [shape=box, style=filled, fillcolor="#ffffff", label="R018\nCliente: U102\nFuncion: F020"];
+reserva14_0 -> reserva14_1 [constraint=false];
+}
+bucket14 -> bucket13 [style=invis, weight=100];
+{ rank=same; bucket13 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 13"];
+reserva13_0 [shape=box, style=filled, fillcolor="#ffffff", label="R004\nCliente: U104\nFuncion: F010"];
+bucket13 -> reserva13_0 [constraint=false];
+reserva13_1 [shape=box, style=filled, fillcolor="#ffffff", label="R017\nCliente: U101\nFuncion: F020"];
+reserva13_0 -> reserva13_1 [constraint=false];
+}
+bucket13 -> bucket12 [style=invis, weight=100];
+{ rank=same; bucket12 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 12"];
+reserva12_0 [shape=box, style=filled, fillcolor="#ffffff", label="R016\nCliente: U108\nFuncion: F030"];
+bucket12 -> reserva12_0 [constraint=false];
+reserva12_1 [shape=box, style=filled, fillcolor="#ffffff", label="R029\nCliente: U105\nFuncion: F050"];
+reserva12_0 -> reserva12_1 [constraint=false];
+reserva12_2 [shape=box, style=filled, fillcolor="#ffffff", label="R003\nCliente: U103\nFuncion: F010"];
+reserva12_1 -> reserva12_2 [constraint=false];
+}
+bucket12 -> bucket11 [style=invis, weight=100];
+{ rank=same; bucket11 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 11"];
+reserva11_0 [shape=box, style=filled, fillcolor="#ffffff", label="R015\nCliente: U107\nFuncion: F030"];
+bucket11 -> reserva11_0 [constraint=false];
+reserva11_1 [shape=box, style=filled, fillcolor="#ffffff", label="R028\nCliente: U104\nFuncion: F050"];
+reserva11_0 -> reserva11_1 [constraint=false];
+reserva11_2 [shape=box, style=filled, fillcolor="#ffffff", label="R002\nCliente: U102\nFuncion: F010"];
+reserva11_1 -> reserva11_2 [constraint=false];
+}
+bucket11 -> bucket10 [style=invis, weight=100];
+{ rank=same; bucket10 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 10"];
+reserva10_0 [shape=box, style=filled, fillcolor="#ffffff", label="R014\nCliente: U106\nFuncion: F030"];
+bucket10 -> reserva10_0 [constraint=false];
+reserva10_1 [shape=box, style=filled, fillcolor="#ffffff", label="R027\nCliente: U103\nFuncion: F050"];
+reserva10_0 -> reserva10_1 [constraint=false];
+reserva10_2 [shape=box, style=filled, fillcolor="#ffffff", label="R001\nCliente: U101\nFuncion: F010"];
+reserva10_1 -> reserva10_2 [constraint=false];
+}
+bucket10 -> bucket9 [style=invis, weight=100];
+{ rank=same; bucket9 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 9"];
+reserva9_0 [shape=box, style=filled, fillcolor="#ffffff", label="R013\nCliente: U105\nFuncion: F030"];
+bucket9 -> reserva9_0 [constraint=false];
+reserva9_1 [shape=box, style=filled, fillcolor="#ffffff", label="R026\nCliente: U102\nFuncion: F050"];
+reserva9_0 -> reserva9_1 [constraint=false];
+}
+bucket9 -> bucket8 [style=invis, weight=100];
+{ rank=same; bucket8 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 8"];
+reserva8_0 [shape=box, style=filled, fillcolor="#ffffff", label="R012\nCliente: U104\nFuncion: F030"];
+bucket8 -> reserva8_0 [constraint=false];
+reserva8_1 [shape=box, style=filled, fillcolor="#ffffff", label="R025\nCliente: U101\nFuncion: F050"];
+reserva8_0 -> reserva8_1 [constraint=false];
+}
+bucket8 -> bucket7 [style=invis, weight=100];
+{ rank=same; bucket7 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 7"];
+reserva7_0 [shape=box, style=filled, fillcolor="#ffffff", label="R024\nCliente: U108\nFuncion: F020"];
+bucket7 -> reserva7_0 [constraint=false];
+reserva7_1 [shape=box, style=filled, fillcolor="#ffffff", label="R011\nCliente: U103\nFuncion: F030"];
+reserva7_0 -> reserva7_1 [constraint=false];
+}
+bucket7 -> bucket6 [style=invis, weight=100];
+{ rank=same; bucket6 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 6"];
+reserva6_0 [shape=box, style=filled, fillcolor="#ffffff", label="R023\nCliente: U107\nFuncion: F020"];
+bucket6 -> reserva6_0 [constraint=false];
+reserva6_1 [shape=box, style=filled, fillcolor="#ffffff", label="R010\nCliente: U102\nFuncion: F030"];
+reserva6_0 -> reserva6_1 [constraint=false];
+}
+bucket6 -> bucket5 [style=invis, weight=100];
+{ rank=same; bucket5 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 5"];
+reserva5_0 [shape=box, style=filled, fillcolor="#ffffff", label="R022\nCliente: U106\nFuncion: F020"];
+bucket5 -> reserva5_0 [constraint=false];
+}
+bucket5 -> bucket4 [style=invis, weight=100];
+{ rank=same; bucket4 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 4"];
+reserva4_0 [shape=box, style=filled, fillcolor="#ffffff", label="R021\nCliente: U105\nFuncion: F020"];
+bucket4 -> reserva4_0 [constraint=false];
+}
+bucket4 -> bucket3 [style=invis, weight=100];
+{ rank=same; bucket3 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 3"];
+reserva3_0 [shape=box, style=filled, fillcolor="#ffffff", label="R020\nCliente: U104\nFuncion: F020"];
+bucket3 -> reserva3_0 [constraint=false];
+}
+bucket3 -> bucket2 [style=invis, weight=100];
+{ rank=same; bucket2 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 2"];
+reserva2_0 [shape=box, style=filled, fillcolor="#ffffff", label="R032\nCliente: U108\nFuncion: F050"];
+bucket2 -> reserva2_0 [constraint=false];
+}
+bucket2 -> bucket1 [style=invis, weight=100];
+{ rank=same; bucket1 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 1"];
+reserva1_0 [shape=box, style=filled, fillcolor="#ffffff", label="R031\nCliente: U107\nFuncion: F050"];
+bucket1 -> reserva1_0 [constraint=false];
+reserva1_1 [shape=box, style=filled, fillcolor="#ffffff", label="R009\nCliente: U101\nFuncion: F030"];
+reserva1_0 -> reserva1_1 [constraint=false];
+}
+bucket1 -> bucket0 [style=invis, weight=100];
+{ rank=same; bucket0 [shape=box, style=filled, fillcolor="#f8c471", label="Bucket 0"];
+reserva0_0 [shape=box, style=filled, fillcolor="#ffffff", label="R008\nCliente: U108\nFuncion: F010"];
+bucket0 -> reserva0_0 [constraint=false];
+reserva0_1 [shape=box, style=filled, fillcolor="#ffffff", label="R030\nCliente: U106\nFuncion: F050"];
+reserva0_0 -> reserva0_1 [constraint=false];
+}
+}

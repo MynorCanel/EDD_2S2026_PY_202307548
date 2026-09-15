@@ -84,7 +84,7 @@
       "clasificacion": "A",
       "idioma": "Espanol",
       "fecha_estreno": "2026-01-20",
-      "fecha_fin": "2026-02-20",
+      "fecha_fin": "2026-01-25",
       "funciones": []
     },
     {
@@ -115,7 +115,7 @@
       "clasificacion": "AA",
       "idioma": "Espanol",
       "fecha_estreno": "2026-02-10",
-      "fecha_fin": "2026-04-10",
+      "fecha_fin": "2026-02-15",
       "funciones": [
         {
           "codigo_funcion": "F040",
@@ -135,7 +135,7 @@
       "clasificacion": "B15",
       "idioma": "Subtitulada",
       "fecha_estreno": "2026-03-01",
-      "fecha_fin": "2026-06-01",
+      "fecha_fin": "2026-03-07",
       "funciones": [
         {
           "codigo_funcion": "F080",

@@ -6,6 +6,7 @@
 
 class admin;
 class cliente;
+class registroCliente;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,11 +24,13 @@ public:
 
 private slots:
     void on_botonIniciarSesion_clicked();
+    void on_botonRegistrarse_clicked();
 
 private:
     Ui::MainWindow *ui;
     guardarDatosService guardarCompartido;
     admin* adminWindow;
     cliente* clienteWindow;
+    registroCliente* registroWindow;
 };
 #endif // LOGIN_H

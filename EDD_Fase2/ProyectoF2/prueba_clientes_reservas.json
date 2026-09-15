@@ -1,0 +1,111 @@
+{
+  "clientes": [
+    {
+      "id": "U001",
+      "nombre": "Ana Lopez",
+      "correo": "ana.lopez@correo.com",
+      "telefono": "55550001",
+      "password": "ana123",
+      "tipo": "cliente",
+      "reservas": [
+        {
+          "codigo_reserva": "R001",
+          "codigo_funcion": "F010",
+          "fila": 1,
+          "columna": 2,
+          "fecha_reserva": "2026-09-14"
+        },
+        {
+          "codigo_reserva": "R002",
+          "codigo_funcion": "F030",
+          "fila": 2,
+          "columna": 4,
+          "fecha_reserva": "2026-09-14"
+        }
+      ]
+    },
+    {
+      "id": "U002",
+      "nombre": "Carlos Perez",
+      "correo": "carlos.perez@correo.com",
+      "telefono": "55550002",
+      "password": "carlos123",
+      "tipo": "cliente",
+      "reservas": [
+        {
+          "codigo_reserva": "R003",
+          "codigo_funcion": "F010",
+          "fila": 1,
+          "columna": 3,
+          "fecha_reserva": "2026-09-14"
+        }
+      ]
+    },
+    {
+      "id": "U003",
+      "nombre": "Maria Garcia",
+      "correo": "maria.garcia@correo.com",
+      "telefono": "55550003",
+      "password": "maria123",
+      "tipo": "cliente",
+      "reservas": []
+    },
+    {
+      "id": "U004",
+      "nombre": "Luis Hernandez",
+      "correo": "luis.hernandez@correo.com",
+      "telefono": "55550004",
+      "password": "luis123",
+      "tipo": "cliente",
+      "reservas": [
+        {
+          "codigo_reserva": "R004",
+          "codigo_funcion": "F050",
+          "fila": 3,
+          "columna": 5,
+          "fecha_reserva": "2026-09-15"
+        },
+        {
+          "codigo_reserva": "R005",
+          "codigo_funcion": "F070",
+          "fila": 4,
+          "columna": 6,
+          "fecha_reserva": "2026-09-15"
+        },
+        {
+          "codigo_reserva": "R006",
+          "codigo_funcion": "F080",
+          "fila": 2,
+          "columna": 3,
+          "fecha_reserva": "2026-09-16"
+        }
+      ]
+    },
+    {
+      "id": "U005",
+      "nombre": "Sofia Martinez",
+      "correo": "sofia.martinez@correo.com",
+      "telefono": "55550005",
+      "password": "sofia123",
+      "tipo": "cliente",
+      "reservas": [
+        {
+          "codigo_reserva": "R007",
+          "codigo_funcion": "F020",
+          "fila": 1,
+          "columna": 1,
+          "fecha_reserva": "2026-09-16"
+        }
+      ]
+    },
+    {
+      "id": "U006",
+      "nombre": "Diego Morales",
+      "correo": "diego.morales@correo.com",
+      "telefono": "55550006",
+      "password": "diego123",
+      "tipo": "cliente",
+      "reservas": []
+    }
+  ]
+}

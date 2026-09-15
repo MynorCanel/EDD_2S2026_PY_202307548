@@ -1,0 +1,116 @@
+{
+  "clientes": [
+    {
+      "id": "U101",
+      "nombre": "Cliente Uno",
+      "correo": "cliente.uno@correo.com",
+      "telefono": "55551001",
+      "password": "uno123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R001", "codigo_funcion": "F010", "fila": 1, "columna": 1, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R009", "codigo_funcion": "F030", "fila": 1, "columna": 1, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R017", "codigo_funcion": "F020", "fila": 1, "columna": 1, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R025", "codigo_funcion": "F050", "fila": 1, "columna": 1, "fecha_reserva": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "U102",
+      "nombre": "Cliente Dos",
+      "correo": "cliente.dos@correo.com",
+      "telefono": "55551002",
+      "password": "dos123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R002", "codigo_funcion": "F010", "fila": 1, "columna": 2, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R010", "codigo_funcion": "F030", "fila": 1, "columna": 2, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R018", "codigo_funcion": "F020", "fila": 1, "columna": 2, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R026", "codigo_funcion": "F050", "fila": 1, "columna": 2, "fecha_reserva": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "U103",
+      "nombre": "Cliente Tres",
+      "correo": "cliente.tres@correo.com",
+      "telefono": "55551003",
+      "password": "tres123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R003", "codigo_funcion": "F010", "fila": 1, "columna": 3, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R011", "codigo_funcion": "F030", "fila": 1, "columna": 3, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R019", "codigo_funcion": "F020", "fila": 1, "columna": 3, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R027", "codigo_funcion": "F050", "fila": 1, "columna": 3, "fecha_reserva": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "U104",
+      "nombre": "Cliente Cuatro",
+      "correo": "cliente.cuatro@correo.com",
+      "telefono": "55551004",
+      "password": "cuatro123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R004", "codigo_funcion": "F010", "fila": 1, "columna": 4, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R012", "codigo_funcion": "F030", "fila": 1, "columna": 4, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R020", "codigo_funcion": "F020", "fila": 1, "columna": 4, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R028", "codigo_funcion": "F050", "fila": 1, "columna": 4, "fecha_reserva": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "U105",
+      "nombre": "Cliente Cinco",
+      "correo": "cliente.cinco@correo.com",
+      "telefono": "55551005",
+      "password": "cinco123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R005", "codigo_funcion": "F010", "fila": 1, "columna": 5, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R013", "codigo_funcion": "F030", "fila": 1, "columna": 5, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R021", "codigo_funcion": "F020", "fila": 2, "columna": 1, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R029", "codigo_funcion": "F050", "fila": 1, "columna": 5, "fecha_reserva": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "U106",
+      "nombre": "Cliente Seis",
+      "correo": "cliente.seis@correo.com",
+      "telefono": "55551006",
+      "password": "seis123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R006", "codigo_funcion": "F010", "fila": 1, "columna": 6, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R014", "codigo_funcion": "F030", "fila": 2, "columna": 1, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R022", "codigo_funcion": "F020", "fila": 2, "columna": 2, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R030", "codigo_funcion": "F050", "fila": 1, "columna": 6, "fecha_reserva": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "U107",
+      "nombre": "Cliente Siete",
+      "correo": "cliente.siete@correo.com",
+      "telefono": "55551007",
+      "password": "siete123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R007", "codigo_funcion": "F010", "fila": 2, "columna": 1, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R015", "codigo_funcion": "F030", "fila": 2, "columna": 2, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R023", "codigo_funcion": "F020", "fila": 2, "columna": 3, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R031", "codigo_funcion": "F050", "fila": 1, "columna": 7, "fecha_reserva": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "U108",
+      "nombre": "Cliente Ocho",
+      "correo": "cliente.ocho@correo.com",
+      "telefono": "55551008",
+      "password": "ocho123",
+      "tipo": "cliente",
+      "reservas": [
+        { "codigo_reserva": "R008", "codigo_funcion": "F010", "fila": 2, "columna": 2, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R016", "codigo_funcion": "F030", "fila": 2, "columna": 3, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R024", "codigo_funcion": "F020", "fila": 2, "columna": 4, "fecha_reserva": "2026-09-15" },
+        { "codigo_reserva": "R032", "codigo_funcion": "F050", "fila": 1, "columna": 8, "fecha_reserva": "2026-09-15" }
+      ]
+    }
+  ]
+}

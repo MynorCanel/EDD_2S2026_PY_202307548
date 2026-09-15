@@ -167,27 +167,4 @@ específica
 
 
 
-Por implementar:
-Estructuras:
-- Arbol AVL
-- Arbol B
-- Matriz Dispersa
-- Carga de archivos Json
-- Generacionde archivos Json para almacenar funciones
-
-
-Mejoras:
-- Mejorar el arbol Binario de Peliculas (no se estan guardado correctamente las peliculas)
-- Mejorar la matriz dispersa (faltan mostrar los asientos no ocupados)
-- Mejorar la forma en la que un cliente puede reservar asiento (ya sea por fila o columna o dando click sobre una casilla vacia)
-- Mostrar advertencias cuando una pelicula ya esta por salir de cartelera
-
-Validaciones:
-- Si una funcion tiene un cliente con una reserva, no se puede eliminar la funcion
-- Verificar si un cliente ya esxiste registrado con un correo
-
-interfaz:
-- Agregar un boton para generar el reporte de cada funcion en lugar de generarlo cuando se agrega algo.
-- Registro de clientes
-- lista de funciones disponibles
 

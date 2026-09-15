@@ -1,4 +1,50 @@
 {
-  "codigo_funcion": "F050",
-  "asientos_ocupados": []
+  "asientos_ocupados": [
+    {
+      "codigo_reserva": "Cliente Uno",
+      "columna": 1,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Dos",
+      "columna": 2,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Tres",
+      "columna": 3,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Cuatro",
+      "columna": 4,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Cinco",
+      "columna": 5,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Seis",
+      "columna": 6,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Siete",
+      "columna": 7,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Ocho",
+      "columna": 8,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "U004",
+      "columna": 5,
+      "fila": 3
+    }
+  ],
+  "codigo_funcion": "F050"
 }

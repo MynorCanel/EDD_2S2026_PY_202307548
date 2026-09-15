@@ -165,7 +165,77 @@ bool guardarDatosService::guardarCliente(const std::string& id, const std::strin
 }
 
 bool guardarDatosService::cargarJSONClientes(const std::string& ruta) {
-    return arbolClientes.cargarJSON(ruta);
+    std::ifstream archivo(ruta);
+    if (!archivo.is_open()) return false;
+    json datos;
+    try { archivo >> datos; } catch (...) { return false; }
+    if (!datos.is_object() || !datos.contains("clientes") || !datos["clientes"].is_array()) return false;
+    if (!arbolClientes.cargarJSON(ruta)) return false;
+    for (const auto& clienteJson : datos["clientes"]) {
+        const std::string idCliente = clienteJson.value("id", "");
+        if (!clienteJson.contains("reservas") || !clienteJson["reservas"].is_array()) continue;
+        for (const auto& reservaJson : clienteJson["reservas"]) {
+            Reserva reserva(
+                reservaJson.value("codigo_reserva", ""), idCliente,
+                reservaJson.value("codigo_funcion", ""),
+                reservaJson.value("fila", 0), reservaJson.value("columna", 0),
+                reservaJson.value("fecha_reserva", ""));
+            if (guardarReserva(reserva)) {
+                arbolClientes.agregarReferenciaReserva(idCliente, reserva.codigoReserva);
+                if (reserva.fila > 0 && reserva.columna > 0) {
+                    MatrizCine* matriz = arbolFunciones.buscar(reserva.codigoFuncion);
+                    if (matriz != nullptr) {
+                        Cliente* cliente = arbolClientes.buscar(idCliente);
+                        matriz->reservarAsiento(cliente == nullptr ? idCliente : cliente->nombre, std::string(1, static_cast<char>('A' + reserva.fila - 1)), std::to_string(reserva.columna));
+                        matriz->guardarAsientosJson(rutasReportes::directorioAsientos() + "/" + reserva.codigoFuncion + "_funcion.json");
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
+bool guardarDatosService::guardarReserva(const Reserva& reserva) { return tablaReservas.insertar(reserva); }
+Reserva* guardarDatosService::buscarReserva(const std::string& codigoReserva) { return tablaReservas.buscar(codigoReserva); }
+bool guardarDatosService::eliminarReserva(const std::string& codigoReserva) { return tablaReservas.eliminar(codigoReserva); }
+
+bool guardarDatosService::reservarAsientoCliente(const std::string& idCliente, const std::string& codigoFuncion, const std::string& fila, const std::string& columna) {
+    MatrizCine* matriz = arbolFunciones.buscar(codigoFuncion);
+    Cliente* cliente = arbolClientes.buscar(idCliente);
+    if (matriz == nullptr || cliente == nullptr || !matriz->reservarAsiento(cliente->nombre, fila, columna)) return false;
+    const std::string codigo = "R" + std::to_string(tablaReservas.obtenerCantidad() + 1);
+    const int numeroFila = fila.empty() ? 0 : static_cast<int>(fila[0] - 'A') + 1;
+    Reserva reserva(codigo, idCliente, codigoFuncion, numeroFila, std::stoi(columna), "");
+    if (!guardarReserva(reserva)) return false;
+    arbolClientes.agregarReferenciaReserva(idCliente, codigo);
+    matriz->guardarAsientosJson(rutasReportes::directorioAsientos() + "/" + codigoFuncion + "_funcion.json");
+    return true;
+}
+
+bool guardarDatosService::cancelarAsientoCliente(const std::string& idCliente, const std::string& codigoFuncion, const std::string& fila, const std::string& columna) {
+    Cliente* cliente = arbolClientes.buscar(idCliente);
+    MatrizCine* matriz = arbolFunciones.buscar(codigoFuncion);
+    if (cliente == nullptr || matriz == nullptr || !matriz->liberarAsiento(fila, columna, cliente->nombre)) return false;
+    Reserva* encontrada = nullptr;
+    tablaReservas.recorrer([&](const Reserva& reserva) {
+        if (encontrada == nullptr && reserva.idCliente == idCliente && reserva.codigoFuncion == codigoFuncion && reserva.fila == static_cast<int>(fila[0] - 'A') + 1 && reserva.columna == std::stoi(columna)) encontrada = const_cast<Reserva*>(&reserva);
+    });
+    if (encontrada != nullptr) tablaReservas.eliminar(encontrada->codigoReserva);
+    matriz->guardarAsientosJson(rutasReportes::directorioAsientos() + "/" + codigoFuncion + "_funcion.json");
+    return true;
+}
+
+bool guardarDatosService::eliminarFuncion(const std::string& codigoFuncion) {
+    bool tieneReservas = false;
+    tablaReservas.recorrer([&](const Reserva& reserva) {
+        if (reserva.codigoFuncion == codigoFuncion) tieneReservas = true;
+    });
+    if (tieneReservas || !arbolFunciones.CodigoExiste(codigoFuncion)) return false;
+    if (!arbolFunciones.eliminar(codigoFuncion)) return false;
+    const std::string ruta = rutasReportes::directorioAsientos() + "/" + codigoFuncion + "_funcion.json";
+    std::remove(ruta.c_str());
+    return true;
 }
 
 
@@ -223,5 +293,6 @@ void guardarDatosService::graficarReportes() {
     arbolFunciones.inOrden([](MatrizCine* matriz) { matriz->generarGraphviz(); });
     listaSolicitudes.graficar();
     arbolClientes.generarDot();
+    tablaReservas.generarDot();
 }
   

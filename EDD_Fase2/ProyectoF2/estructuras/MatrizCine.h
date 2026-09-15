@@ -47,6 +47,7 @@ public:
 
     // 2. Método para reservar un asiento con manejo de errores
     bool reservarAsiento(std::string nombre, std::string fila, std::string columna);
+    bool liberarAsiento(const std::string& fila, const std::string& columna, const std::string& propietario);
 
     // 3. Generación del reporte visual adaptado al diseño de la imagen
     bool generarGraphviz();

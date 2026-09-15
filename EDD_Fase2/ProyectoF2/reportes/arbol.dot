@@ -6,15 +6,15 @@ Node [shape=square, style=filled, fillcolor=beige, color=black, penwidth=2];
 edge [splines=polyline, arrowhead=curve];
 nodo_P010 [label="ID: P010\nTitulo: El Viaje Espacial\nGenero: Aventura\nDuracion: 120 min\nClasificacion: A\nIdioma: Espanol\nEstreno: 2026-02-01\nFin cartelera: 2026-05-01", shape=box, style=filled, fillcolor="#2ecc71"];
 nodo_P010 -> nodo_P030;
-nodo_P020 [label="ID: P020\nTitulo: Aventuras en el Mar\nGenero: Animacion\nDuracion: 90 min\nClasificacion: AA\nIdioma: Espanol\nEstreno: 2026-02-10\nFin cartelera: 2026-04-10", shape=box, style=filled, fillcolor="#2ecc71"];
-nodo_P030 [label="ID: P030\nTitulo: El Ultimo Bosque\nGenero: Drama\nDuracion: 98 min\nClasificacion: A\nIdioma: Espanol\nEstreno: 2026-01-20\nFin cartelera: 2026-02-20", shape=box, style=filled, fillcolor="#2ecc71"];
+nodo_P020 [label="ID: P020\nTitulo: Aventuras en el Mar\nGenero: Animacion\nDuracion: 90 min\nClasificacion: AA\nIdioma: Espanol\nEstreno: 2026-02-10\nFin cartelera: 2026-02-15", shape=box, style=filled, fillcolor="#f1c40f"];
+nodo_P030 [label="ID: P030\nTitulo: El Ultimo Bosque\nGenero: Drama\nDuracion: 98 min\nClasificacion: A\nIdioma: Espanol\nEstreno: 2026-01-20\nFin cartelera: 2026-01-25", shape=box, style=filled, fillcolor="#f1c40f"];
 nodo_P030 -> nodo_P020;
 nodo_P050 [label="ID: P050\nTitulo: Interstellar\nGenero: Ciencia Ficcion\nDuracion: 169 min\nClasificacion: B\nIdioma: Subtitulada\nEstreno: 2026-01-10\nFin cartelera: 2026-04-10", shape=box, style=filled, fillcolor="#2ecc71"];
 nodo_P050 -> nodo_P010;
 nodo_P050 -> nodo_P090;
 nodo_P070 [label="ID: P070\nTitulo: Robots del Futuro\nGenero: Ciencia Ficcion\nDuracion: 105 min\nClasificacion: B\nIdioma: Doblada\nEstreno: 2026-02-15\nFin cartelera: 2026-05-15", shape=box, style=filled, fillcolor="#2ecc71"];
 nodo_P070 -> nodo_P080;
-nodo_P080 [label="ID: P080\nTitulo: Misterio en la Noche\nGenero: Suspenso\nDuracion: 115 min\nClasificacion: B15\nIdioma: Subtitulada\nEstreno: 2026-03-01\nFin cartelera: 2026-06-01", shape=box, style=filled, fillcolor="#2ecc71"];
+nodo_P080 [label="ID: P080\nTitulo: Misterio en la Noche\nGenero: Suspenso\nDuracion: 115 min\nClasificacion: B15\nIdioma: Subtitulada\nEstreno: 2026-03-01\nFin cartelera: 2026-03-07", shape=box, style=filled, fillcolor="#f1c40f"];
 nodo_P090 [label="ID: P090\nTitulo: La Ciudad Perdida\nGenero: Accion\nDuracion: 110 min\nClasificacion: B12\nIdioma: Subtitulada\nEstreno: 2026-03-05\nFin cartelera: 2026-06-05", shape=box, style=filled, fillcolor="#2ecc71"];
 nodo_P090 -> nodo_P070;
 }

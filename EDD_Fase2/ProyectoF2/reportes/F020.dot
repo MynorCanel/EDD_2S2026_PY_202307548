@@ -23,7 +23,8 @@ FilaA [label="A", style="rounded,filled", fillcolor="#059669", fontcolor=white, 
 FilaB [label="B", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 FilaC [label="C", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 FilaD [label="D", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
-{ rank=same; FilaA; }
+{ rank=same; FilaA; NodoA1 [label="U005", style="rounded,filled", fillcolor="#fde68a", fontcolor="#1f2937", group=1, color="#d97706", penwidth=1.4];
+NodoA1; }
 { rank=same; FilaB; }
 { rank=same; FilaC; }
 { rank=same; FilaD; }
@@ -38,6 +39,10 @@ Col6 -> Col7 [color="#2563eb", penwidth=2, arrowhead=normal];
 FilaA -> FilaB [color="#059669", penwidth=2, arrowhead=normal];
 FilaB -> FilaC [color="#059669", penwidth=2, arrowhead=normal];
 FilaC -> FilaD [color="#059669", penwidth=2, arrowhead=normal];
-Informacion [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#64748b" BGCOLOR="#eef2ff"><TR><TD COLSPAN="2" BGCOLOR="#1e293b" ALIGN="CENTER"><FONT COLOR="white" FACE="Arial"><B>INFORMACION DE LA FUNCION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Pelicula</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>La Ciudad Perdida</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Horario</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>17:15</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Sala</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sala 3</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos libres</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>28</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos ocupados</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>0</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Total asientos</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>28</B></FONT></TD></TR></TABLE>>, shape=plain];
+FilaA -> NodoA1 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA1 -> FilaA [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+Col1 -> NodoA1 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA1 -> Col1 [color="#f97316", penwidth=1.5, arrowhead=normal];
+Informacion [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#64748b" BGCOLOR="#eef2ff"><TR><TD COLSPAN="2" BGCOLOR="#1e293b" ALIGN="CENTER"><FONT COLOR="white" FACE="Arial"><B>INFORMACION DE LA FUNCION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Pelicula</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>La Ciudad Perdida</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Horario</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>17:15</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Sala</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sala 3</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos libres</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>27</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos ocupados</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>1</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Total asientos</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>28</B></FONT></TD></TR></TABLE>>, shape=plain];
 { rank=same; Raiz; Informacion; }
 }

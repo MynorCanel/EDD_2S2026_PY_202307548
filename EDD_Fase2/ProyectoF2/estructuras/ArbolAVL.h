@@ -41,6 +41,8 @@ public:
     MatrizCine* buscar(const std::string& codigo);
     bool eliminar(const std::string& codigo);
     void inOrden(const std::function<void(MatrizCine*)>& funcion);
+    void preOrden(const std::function<void(MatrizCine*)>& funcion);
+    void postOrden(const std::function<void(MatrizCine*)>& funcion);
     void generarDot();
     
     ~ArbolAVL();

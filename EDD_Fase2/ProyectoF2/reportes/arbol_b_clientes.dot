@@ -1,8 +1,12 @@
 digraph ArbolBClientes {
 rankdir=TB;
-nodo0 [shape=record, style=filled, fillcolor="#f4a261", label="<f0> U002"];
-nodo1 [shape=record, style=filled, fillcolor="#dbeafe", label="<f0> U001"];
+nodo0 [shape=record, style=filled, fillcolor="#f4a261", label="<f0> U102 | <f1> U104 | <f2> U106"];
+nodo1 [shape=record, style=filled, fillcolor="#dbeafe", label="<f0> U101"];
 nodo0 -> nodo1;
-nodo2 [shape=record, style=filled, fillcolor="#dbeafe", label="<f0> U005 | <f1> U006"];
+nodo2 [shape=record, style=filled, fillcolor="#dbeafe", label="<f0> U103"];
 nodo0 -> nodo2;
+nodo3 [shape=record, style=filled, fillcolor="#dbeafe", label="<f0> U105"];
+nodo0 -> nodo3;
+nodo4 [shape=record, style=filled, fillcolor="#dbeafe", label="<f0> U107 | <f1> U108"];
+nodo0 -> nodo4;
 }

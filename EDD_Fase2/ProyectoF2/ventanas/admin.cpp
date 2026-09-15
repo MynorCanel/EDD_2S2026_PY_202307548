@@ -6,6 +6,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QTreeWidgetItem>
+#include <QListWidgetItem>
+#include <QtGui/QStandardItemModel>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QtWidgets/QVBoxLayout>
@@ -31,8 +33,11 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
     , comboReportes(nullptr)
     , visorReporte(nullptr)
     , scrollReporte(nullptr)
+    , loginWindow(nullptr)
+    , peliculasPorSalirModel(new QStandardItemModel(this))
 { // Inicializa la interfaz de usuario y las instancias de las ventanas secundarias
     ui->setupUi(this);
+    ui->listaPeliculasPorSalirDeCartelera->setModel(peliculasPorSalirModel);
     setWindowFlags(Qt::Window
                    | Qt::WindowTitleHint
                    | Qt::WindowSystemMenuHint
@@ -41,6 +46,14 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
                    | Qt::WindowCloseButtonHint);
     setWindowModality(Qt::NonModal);
     connect(ui->tablaFunciones, &QTableWidget::itemSelectionChanged, this, &admin::actualizarTablaFuncion);
+    connect(ui->botonBSTInorder, &QPushButton::clicked, this, &admin::mostrarRecorridoBSTInorder);
+    connect(ui->botonBSTPreorder, &QPushButton::clicked, this, &admin::mostrarRecorridoBSTPreorder);
+    connect(ui->botonBSTPostorder, &QPushButton::clicked, this, &admin::mostrarRecorridoBSTPostorder);
+    connect(ui->botonRecorridoAVLInorder, &QPushButton::clicked, this, &admin::mostrarRecorridoAVLInorder);
+    connect(ui->botonRecorridoAVLPreorder, &QPushButton::clicked, this, &admin::mostrarRecorridoAVLPreorder);
+    connect(ui->botonRecorridoAVLPostorder, &QPushButton::clicked, this, &admin::mostrarRecorridoAVLPostorder);
+    connect(ui->botonMostrarRecorridoArbolB, &QPushButton::clicked, this, &admin::mostrarRecorridoArbolB);
+    connect(ui->botonConsultarReservasCliente, &QPushButton::clicked, this, &admin::on_botonConsultarReservasCliente_clicked);
 
     QPushButton* botonSalir = findChild<QPushButton*>("botonSalir");
     if (botonSalir == nullptr) {
@@ -48,6 +61,7 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
         botonSalir->setObjectName("botonSalir");
         botonSalir->setGeometry(940, 8, 120, 30);
     }
+
     connect(botonSalir, &QPushButton::clicked, this, &admin::on_botonSalir_clicked);
 
     // Crear la instancia única de CrearPeli pasando la referencia a guardarDatosService
@@ -55,6 +69,7 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
     ventanaPromocion = new agregarPromocion(&guardar);
     ventanaBeneficio = new agregarBeneficio(&guardar);
     connect(crearPeli, &CrearPeli::peliculaGuardada, this, &admin::actualizarTabla);
+    connect(crearPeli, &CrearPeli::peliculaGuardada, this, &admin::actualizarPeliculasPorSalir);
     connect(ventanaPromocion, &agregarPromocion::promocionGuardada, this, &admin::actualizarTreePromociones);
     connect(ventanaBeneficio, &agregarBeneficio::beneficioGuardado, this, &admin::actualizarTreePromociones);
     actualizarTabla();
@@ -62,7 +77,13 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
     actualizarTablaFunciones();
     actualizarTablaClientes();
     actualizarTablaSolicitudes();
+    actualizarPeliculasPorSalir();
     inicializarTabReportes();
+}
+
+void admin::setLoginWindow(QWidget* ventana)
+{
+    loginWindow = ventana;
 }
 
 admin::~admin() // Destructor de la clase admin
@@ -110,18 +131,21 @@ void admin::inicializarTabReportes()  // Inicializa la interfaz de usuario para 
     auto* botonPeliculas = new QPushButton("Generar peliculas", ui->tab_4);
     auto* botonAVL = new QPushButton("Generar AVL", ui->tab_4);
     auto* botonArbolB = new QPushButton("Generar clientes", ui->tab_4);
+    auto* botonHash = new QPushButton("Generar reservas", ui->tab_4);
     auto* botonFuncion = new QPushButton("Generar funcion seleccionada", ui->tab_4);
     auto* layoutBotones = new QHBoxLayout();
     layoutBotones->addWidget(botonTodos);
     layoutBotones->addWidget(botonPeliculas);
     layoutBotones->addWidget(botonAVL);
     layoutBotones->addWidget(botonArbolB);
+    layoutBotones->addWidget(botonHash);
     layoutBotones->addWidget(botonFuncion);
     layoutPrincipal->addLayout(layoutBotones);
     connect(botonTodos, &QPushButton::clicked, this, [this]() { guardar.graficarReportes(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
     connect(botonPeliculas, &QPushButton::clicked, this, [this]() { guardar.arbol.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
     connect(botonAVL, &QPushButton::clicked, this, [this]() { guardar.arbolFunciones.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
     connect(botonArbolB, &QPushButton::clicked, this, [this]() { guardar.arbolClientes.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
+    connect(botonHash, &QPushButton::clicked, this, [this]() { guardar.tablaReservas.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
     connect(botonFuncion, &QPushButton::clicked, this, [this]() {
         const int fila = ui->tablaFunciones->currentRow();
         if (fila >= 0 && ui->tablaFunciones->item(fila, 0) != nullptr) {
@@ -261,6 +285,9 @@ void admin::ajustarEscalaReporte() //Se ajusta la escala del reporte visualizado
 void admin::resizeEvent(QResizeEvent* event)
 {
     QDialog::resizeEvent(event);
+    if (ui != nullptr && ui->tabWidget != nullptr) {
+        ui->tabWidget->setGeometry(10, 40, width() - 20, height() - 50);
+    }
     ajustarEscalaReporte();
 }
 
@@ -295,12 +322,81 @@ void admin::on_botonEliminar_clicked()
 }
 
 
+void admin::actualizarPeliculasPorSalir()
+{
+    peliculasPorSalirModel->clear();
+    guardar.arbol.inOrden([this](Pelicula* pelicula) {
+        if (!guardar.arbol.estaPorSalir(pelicula)) return;
+        auto* item = new QStandardItem(QString::fromStdString(pelicula->id + " - " + pelicula->titulo));
+        item->setBackground(QColor("#fff4c2"));
+        item->setForeground(QColor("#3f3f46"));
+        peliculasPorSalirModel->appendRow(item);
+    });
+}
+
+namespace {
+QString unirRecorrido(const QString& nombre, const QString& recorrido)
+{
+    return nombre + ": " + recorrido;
+}
+}
+
+void admin::mostrarRecorridoBSTInorder()
+{
+    QString recorrido;
+    guardar.arbol.inOrden([&](Pelicula* pelicula) { if (!recorrido.isEmpty()) recorrido += " -> "; recorrido += QString::fromStdString(pelicula->id); });
+    ui->textoOrdenamientos->setPlainText(unirRecorrido("Inorder", recorrido));
+}
+
+void admin::mostrarRecorridoBSTPreorder()
+{
+    QString recorrido;
+    guardar.arbol.preOrden([&](Pelicula* pelicula) { if (!recorrido.isEmpty()) recorrido += " -> "; recorrido += QString::fromStdString(pelicula->id); });
+    ui->textoOrdenamientos->setPlainText(unirRecorrido("Preorder", recorrido));
+}
+
+void admin::mostrarRecorridoBSTPostorder()
+{
+    QString recorrido;
+    guardar.arbol.postOrden([&](Pelicula* pelicula) { if (!recorrido.isEmpty()) recorrido += " -> "; recorrido += QString::fromStdString(pelicula->id); });
+    ui->textoOrdenamientos->setPlainText(unirRecorrido("Postorder", recorrido));
+}
+
+void admin::mostrarRecorridoAVLInorder()
+{
+    QString recorrido;
+    guardar.arbolFunciones.inOrden([&](MatrizCine* funcion) { if (!recorrido.isEmpty()) recorrido += " -> "; recorrido += QString::fromStdString(funcion->codigoFuncion); });
+    ui->textoOrdenamientos_2->setPlainText(unirRecorrido("Inorder", recorrido));
+}
+
+void admin::mostrarRecorridoAVLPreorder()
+{
+    QString recorrido;
+    guardar.arbolFunciones.preOrden([&](MatrizCine* funcion) { if (!recorrido.isEmpty()) recorrido += " -> "; recorrido += QString::fromStdString(funcion->codigoFuncion); });
+    ui->textoOrdenamientos_2->setPlainText(unirRecorrido("Preorder", recorrido));
+}
+
+void admin::mostrarRecorridoAVLPostorder()
+{
+    QString recorrido;
+    guardar.arbolFunciones.postOrden([&](MatrizCine* funcion) { if (!recorrido.isEmpty()) recorrido += " -> "; recorrido += QString::fromStdString(funcion->codigoFuncion); });
+    ui->textoOrdenamientos_2->setPlainText(unirRecorrido("Postorder", recorrido));
+}
+
+void admin::mostrarRecorridoArbolB()
+{
+    QString recorrido;
+    guardar.arbolClientes.recorrer([&](Cliente* cliente) { if (!recorrido.isEmpty()) recorrido += " -> "; recorrido += QString::fromStdString(cliente->id); });
+    ui->textoRecorridoArbolB->setPlainText(recorrido);
+}
+
 void admin::actualizarDefinicionesReportes()
 {
     definicionesReportes = {
         {"Arbol de peliculas", "arbol_binario_peliculas.png"},
         {"Arbol AVL de funciones", "arbol_avl.png"},
         {"Arbol B de clientes", "arbol_b_clientes.png"},
+        {"Tabla Hash de reservas", "tabla_hash_reservas.png"},
         {"Promociones y beneficios", "lista_unificada.png"},
         {"Solicitudes (lista circular doble)", "lista_circular_doble.png"}
     };
@@ -537,6 +633,7 @@ void admin::actualizarTablaFuncion()
             }
             auto* item = new QTableWidgetItem(QString::fromStdString(valor));
             item->setBackground(valor == "--" ? QColor("#c8f7c5") : QColor("#ffd8a8"));
+            item->setForeground(QColor("#3f3f46"));
             ui->tablaFuncion->setItem(r, c - 1, item);
         }
     }
@@ -544,6 +641,9 @@ void admin::actualizarTablaFuncion()
 
 void admin::actualizarTablaFunciones()
 {
+    ui->tablaFunciones->setColumnCount(7);
+    ui->tablaFunciones->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tablaFunciones->setHorizontalHeaderItem(6, new QTableWidgetItem("Acciones"));
     ui->tablaFunciones->setRowCount(0);
     guardar.arbolFunciones.inOrden([this](MatrizCine* funcion) {
         const int fila = ui->tablaFunciones->rowCount();
@@ -554,6 +654,19 @@ void admin::actualizarTablaFunciones()
         ui->tablaFunciones->setItem(fila, 3, new QTableWidgetItem(QString::fromStdString(funcion->obtenerSala())));
         ui->tablaFunciones->setItem(fila, 4, new QTableWidgetItem(QString::number(funcion->obtenerTotalFilas())));
         ui->tablaFunciones->setItem(fila, 5, new QTableWidgetItem(QString::number(funcion->obtenerTotalColumnas())));
+        auto* botonEliminar = new QPushButton("Eliminar", ui->tablaFunciones);
+        ui->tablaFunciones->setCellWidget(fila, 6, botonEliminar);
+        const QString codigo = QString::fromStdString(funcion->codigoFuncion);
+        connect(botonEliminar, &QPushButton::clicked, this, [this, codigo]() {
+            if (!guardar.eliminarFuncion(codigo.toStdString())) {
+                QMessageBox::warning(this, "Funcion", "No se puede eliminar: tiene reservas o no existe.");
+                return;
+            }
+            actualizarTablaFunciones();
+            actualizarDefinicionesReportes();
+            actualizarVigilanciaReportes();
+            refrescarReporteActual();
+        });
     });
     if (ui->tablaFunciones->rowCount() > 0) {
         ui->tablaFunciones->selectRow(0);
@@ -598,6 +711,59 @@ void admin::actualizarTablaClientes()
         ui->tablaClientes->setItem(fila, 2, new QTableWidgetItem(QString::fromStdString(cliente->correo)));
         ui->tablaClientes->setItem(fila, 3, new QTableWidgetItem(QString::fromStdString(cliente->telefono)));
     });
+}
+
+void admin::on_botonConsultarReservasCliente_clicked()
+{
+    bool ok = false;
+    const QString idCliente = QInputDialog::getText(this, "Consultar reservas", "Codigo del cliente:", QLineEdit::Normal, "", &ok).trimmed();
+    if (!ok || idCliente.isEmpty()) return;
+
+    Cliente* cliente = guardar.arbolClientes.buscar(idCliente.toStdString());
+    if (cliente == nullptr) {
+        QMessageBox::warning(this, "Cliente", "No existe un cliente con ese codigo.");
+        return;
+    }
+
+    QString texto = QString("Reservas de %1 (%2):\n\n")
+        .arg(QString::fromStdString(cliente->nombre), idCliente);
+    int cantidad = 0;
+    guardar.tablaReservas.recorrer([&](const Reserva& reserva) {
+        if (reserva.idCliente != idCliente.toStdString()) return;
+        const QString linea = QString("Reserva: %1\nFuncion: %2\nAsiento: fila %3, columna %4\nFecha: %5\n\n")
+            .arg(QString::fromStdString(reserva.codigoReserva))
+            .arg(QString::fromStdString(reserva.codigoFuncion))
+            .arg(reserva.fila)
+            .arg(reserva.columna)
+            .arg(QString::fromStdString(reserva.fechaReserva.empty() ? "No especificada" : reserva.fechaReserva));
+        texto += linea;
+        ++cantidad;
+    });
+    if (cantidad == 0) texto += "El cliente no tiene reservas registradas.";
+
+    QMessageBox dialogo(this);
+    dialogo.setWindowTitle("Reservas del cliente");
+    dialogo.setIcon(QMessageBox::Information);
+    dialogo.setText(texto);
+    dialogo.exec();
+}
+
+void admin::on_botonCargarClientesJSON_clicked()
+{
+    bool ok = false;
+    const QString ruta = QInputDialog::getText(this, "Cargar clientes", "Ingresa la ruta del JSON:", QLineEdit::Normal, "", &ok);
+    if (!ok || ruta.trimmed().isEmpty()) return;
+    if (!guardar.cargarJSONClientes(ruta.toStdString())) {
+        QMessageBox::warning(this, "Error", "No se pudo cargar el JSON de clientes.");
+        return;
+    }
+    actualizarTablaClientes();
+    guardar.tablaReservas.generarDot();
+    guardar.arbolClientes.generarDot();
+    actualizarDefinicionesReportes();
+    actualizarVigilanciaReportes();
+    refrescarReporteActual();
+    QMessageBox::information(this, "Clientes cargados", "Clientes y reservas cargados correctamente.");
 }
 
 
@@ -729,7 +895,6 @@ void admin::on_botonSalir_clicked()
         ventanaBeneficio->close();
     }
 
-    QWidget* loginWindow = parentWidget();
     if (loginWindow != nullptr) {
         loginWindow->show();
         loginWindow->raise();
@@ -754,6 +919,7 @@ void admin::on_botonCargarJSON_clicked()
     if (ok && guardar.cargarJSONPeliculas(ruta.toStdString())){
         QMessageBox::information(this, "Accion Completada","Se ha cargado el archivo JSON con exito");
         actualizarTabla();
+        actualizarPeliculasPorSalir();
         actualizarTablaFunciones();
         actualizarDefinicionesReportes();
         actualizarVigilanciaReportes();

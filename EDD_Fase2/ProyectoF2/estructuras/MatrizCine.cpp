@@ -450,3 +450,32 @@ bool MatrizCine::guardarAsientosJson(const std::string& ruta) const {
     archivo << datos.dump(2) << '\n';
     return true;
 }
+
+bool MatrizCine::liberarAsiento(const std::string& f, const std::string& c, const std::string& propietario)
+{
+    Nodo* cabeceraFila = buscarCabeceraVertical(f);
+    if (cabeceraFila == nullptr) return false;
+    Nodo* anterior = cabeceraFila;
+    Nodo* actual = cabeceraFila->derecha;
+    while (actual != nullptr && actual->columna != c) {
+        anterior = actual;
+        actual = actual->derecha;
+    }
+    if (actual == nullptr || actual->valor != propietario) return false;
+    Nodo* cabeceraColumna = buscarCabeceraHorizontal(c);
+    Nodo* anteriorVertical = cabeceraColumna;
+    Nodo* actualVertical = cabeceraColumna == nullptr ? nullptr : cabeceraColumna->abajo;
+    while (actualVertical != nullptr && actualVertical != actual) {
+        anteriorVertical = actualVertical;
+        actualVertical = actualVertical->abajo;
+    }
+    anterior->derecha = actual->derecha;
+    if (actual->derecha != nullptr) actual->derecha->izquierda = anterior;
+    if (actualVertical == actual) {
+        anteriorVertical->abajo = actual->abajo;
+        if (actual->abajo != nullptr) actual->abajo->arriba = anteriorVertical;
+    }
+    delete actual;
+    --asientosOcupados;
+    return true;
+}

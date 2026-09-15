@@ -200,6 +200,24 @@ void ArbolAVL::inOrden(const std::function<void(MatrizCine*)>& funcion) {
     inOrdenAux(raiz, funcion);
 }
 
+namespace {
+void preOrdenFunciones(NodoFuncion* nodo, const std::function<void(MatrizCine*)>& funcion) {
+    if (nodo == nullptr) return;
+    funcion(nodo->funcion);
+    preOrdenFunciones(nodo->izquierdo, funcion);
+    preOrdenFunciones(nodo->derecho, funcion);
+}
+void postOrdenFunciones(NodoFuncion* nodo, const std::function<void(MatrizCine*)>& funcion) {
+    if (nodo == nullptr) return;
+    postOrdenFunciones(nodo->izquierdo, funcion);
+    postOrdenFunciones(nodo->derecho, funcion);
+    funcion(nodo->funcion);
+}
+}
+
+void ArbolAVL::preOrden(const std::function<void(MatrizCine*)>& funcion) { preOrdenFunciones(raiz, funcion); }
+void ArbolAVL::postOrden(const std::function<void(MatrizCine*)>& funcion) { postOrdenFunciones(raiz, funcion); }
+
 void ArbolAVL::generarDotAux(NodoFuncion* nodo, std::ofstream& archivo) {
     if (nodo == nullptr) return;
     const std::string id = "funcion_" + nodo->funcion->codigoFuncion;

@@ -15,6 +15,7 @@ class QComboBox;
 class QLabel;
 class QScrollArea;
 class QResizeEvent;
+class QStandardItemModel;
 
 
 extern std::string codigoPromocion; // Variable global para almacenar el código de promoción
@@ -30,6 +31,7 @@ class admin : public QDialog
 public:
     explicit admin(guardarDatosService& servicio, QWidget *parent = nullptr);
     ~admin();
+    void setLoginWindow(QWidget* ventana);
     
 
 
@@ -55,6 +57,16 @@ private slots:
     void actualizarTablaFunciones();
     void on_botonAgregarCliente_clicked();
     void actualizarTablaClientes();
+    void on_botonCargarClientesJSON_clicked();
+    void on_botonConsultarReservasCliente_clicked();
+    void mostrarRecorridoBSTInorder();
+    void mostrarRecorridoBSTPreorder();
+    void mostrarRecorridoBSTPostorder();
+    void mostrarRecorridoAVLInorder();
+    void mostrarRecorridoAVLPreorder();
+    void mostrarRecorridoAVLPostorder();
+    void mostrarRecorridoArbolB();
+    void actualizarPeliculasPorSalir();
 
     void on_botonCrearSolicitud_clicked();
     void actualizarTablaSolicitudes();
@@ -89,6 +101,8 @@ private:
     QPixmap reporteOriginal;
     QString directorioReportes;
     std::vector<std::pair<QString, QString>> definicionesReportes;
+    QWidget* loginWindow;
+    QStandardItemModel* peliculasPorSalirModel;
 };
 
 #endif // ADMIN_H

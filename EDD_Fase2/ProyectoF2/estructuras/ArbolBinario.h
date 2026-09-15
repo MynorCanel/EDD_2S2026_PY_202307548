@@ -36,6 +36,9 @@ public:
     bool cargarCSV(const std::string& ruta);
     void inOrden(); // imprime por consola (como antes)
     void inOrden(const std::function<void(Pelicula*)>& funcion); // recorre y ejecuta funcion() con cada pelicula (ej. llenar una tabla)
+    void preOrden(const std::function<void(Pelicula*)>& funcion);
+    void postOrden(const std::function<void(Pelicula*)>& funcion);
+    bool estaPorSalir(const Pelicula* pelicula) const;
     void generarDot();
     ~ArbolBinario();
 };

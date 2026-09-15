@@ -20,8 +20,17 @@ Col5 [label="5", style="rounded,filled", fillcolor="#2563eb", fontcolor=white, f
 FilaA [label="A", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 FilaB [label="B", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
 FilaC [label="C", style="rounded,filled", fillcolor="#059669", fontcolor=white, fontsize=12, group=0, color="#047857", penwidth=1.5];
-{ rank=same; FilaA; }
-{ rank=same; FilaB; }
+{ rank=same; FilaA; NodoA1 [label="Cliente Uno", style="rounded,filled", fillcolor="#fde68a", fontcolor="#1f2937", group=1, color="#d97706", penwidth=1.4];
+NodoA1; NodoA2 [label="Cliente Dos", style="rounded,filled", fillcolor="#fef3c7", fontcolor="#1f2937", group=2, color="#d97706", penwidth=1.4];
+NodoA2; NodoA3 [label="Cliente Tres", style="rounded,filled", fillcolor="#fde68a", fontcolor="#1f2937", group=3, color="#d97706", penwidth=1.4];
+NodoA3; NodoA4 [label="Cliente Cuatro", style="rounded,filled", fillcolor="#fef3c7", fontcolor="#1f2937", group=4, color="#d97706", penwidth=1.4];
+NodoA4; NodoA5 [label="Cliente Cinco", style="rounded,filled", fillcolor="#fde68a", fontcolor="#1f2937", group=5, color="#d97706", penwidth=1.4];
+NodoA5; }
+{ rank=same; FilaB; NodoB1 [label="Cliente Seis", style="rounded,filled", fillcolor="#fef3c7", fontcolor="#1f2937", group=1, color="#d97706", penwidth=1.4];
+NodoB1; NodoB2 [label="Cliente Siete", style="rounded,filled", fillcolor="#fde68a", fontcolor="#1f2937", group=2, color="#d97706", penwidth=1.4];
+NodoB2; NodoB3 [label="Cliente Ocho", style="rounded,filled", fillcolor="#fef3c7", fontcolor="#1f2937", group=3, color="#d97706", penwidth=1.4];
+NodoB3; NodoB4 [label="U001", style="rounded,filled", fillcolor="#fde68a", fontcolor="#1f2937", group=4, color="#d97706", penwidth=1.4];
+NodoB4; }
 { rank=same; FilaC; }
 Raiz -> FilaA [color="#0f172a", penwidth=2, arrowhead=normal];
 Raiz -> Col1 [color="#0f172a", penwidth=2, arrowhead=normal];
@@ -31,6 +40,42 @@ Col3 -> Col4 [color="#2563eb", penwidth=2, arrowhead=normal];
 Col4 -> Col5 [color="#2563eb", penwidth=2, arrowhead=normal];
 FilaA -> FilaB [color="#059669", penwidth=2, arrowhead=normal];
 FilaB -> FilaC [color="#059669", penwidth=2, arrowhead=normal];
-Informacion [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#64748b" BGCOLOR="#eef2ff"><TR><TD COLSPAN="2" BGCOLOR="#1e293b" ALIGN="CENTER"><FONT COLOR="white" FACE="Arial"><B>INFORMACION DE LA FUNCION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Pelicula</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>El Viaje Espacial</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Horario</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>14:00</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Sala</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sala 1</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos libres</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>15</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos ocupados</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>0</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Total asientos</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>15</B></FONT></TD></TR></TABLE>>, shape=plain];
+FilaA -> NodoA1 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA1 -> FilaA [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+FilaB -> NodoB1 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB1 -> FilaB [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA1 -> NodoB1 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoB1 -> NodoA1 [color="#f97316", penwidth=1.5, arrowhead=normal];
+Col1 -> NodoA1 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA1 -> Col1 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA2 -> NodoB2 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoB2 -> NodoA2 [color="#f97316", penwidth=1.5, arrowhead=normal];
+Col2 -> NodoA2 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA2 -> Col2 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA3 -> NodoB3 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoB3 -> NodoA3 [color="#f97316", penwidth=1.5, arrowhead=normal];
+Col3 -> NodoA3 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA3 -> Col3 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA4 -> NodoB4 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoB4 -> NodoA4 [color="#f97316", penwidth=1.5, arrowhead=normal];
+Col4 -> NodoA4 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA4 -> Col4 [color="#f97316", penwidth=1.5, arrowhead=normal];
+Col5 -> NodoA5 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA5 -> Col5 [color="#f97316", penwidth=1.5, arrowhead=normal];
+NodoA1 -> NodoA2 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA2 -> NodoA1 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA2 -> NodoA3 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA3 -> NodoA2 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA3 -> NodoA4 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA4 -> NodoA3 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA4 -> NodoA5 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoA5 -> NodoA4 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB1 -> NodoB2 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB2 -> NodoB1 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB2 -> NodoB3 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB3 -> NodoB2 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB3 -> NodoB4 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+NodoB4 -> NodoB3 [color="#0ea5e9", penwidth=1.5, arrowhead=normal];
+Informacion [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#64748b" BGCOLOR="#eef2ff"><TR><TD COLSPAN="2" BGCOLOR="#1e293b" ALIGN="CENTER"><FONT COLOR="white" FACE="Arial"><B>INFORMACION DE LA FUNCION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Pelicula</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>El Viaje Espacial</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Horario</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>14:00</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Sala</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>Sala 1</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos libres</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>6</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Asientos ocupados</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>9</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><FONT FACE="Arial">Total asientos</FONT></TD><TD ALIGN="RIGHT"><FONT FACE="Arial"><B>15</B></FONT></TD></TR></TABLE>>, shape=plain];
 { rank=same; Raiz; Informacion; }
 }

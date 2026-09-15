@@ -9,6 +9,7 @@
 #include "../estructuras/ListaCircularDoble.h"
 #include "../estructuras/ArbolAVL.h"
 #include "../estructuras/ArbolB.h"
+#include "../estructuras/TablaHash.h"
 
 class guardarDatosService {
 private:
@@ -20,6 +21,7 @@ public:
     ListaCircular listaPromociones; //Lista circular para almacenar promociones
     ArbolAVL arbolFunciones; //AVL de funciones, cada nodo posee su matriz
     ArbolB arbolClientes; //Arbol B de orden 4 para clientes
+    TablaHash tablaReservas; //Reservas indexadas por codigo_reserva
     ListaCircularDoble listaSolicitudes; // Lista circular doble para almacenar solicitudes
     guardarDatosService();
     ~guardarDatosService();
@@ -40,6 +42,12 @@ public:
     void cargarAsientos(const std::string& codigoFuncion, const std::string& archivoAsientos = "");
     bool guardarCliente(const std::string& id, const std::string& nombre, const std::string& correo, const std::string& telefono, const std::string& password);
     bool cargarJSONClientes(const std::string& ruta);
+    bool guardarReserva(const Reserva& reserva);
+    Reserva* buscarReserva(const std::string& codigoReserva);
+    bool eliminarReserva(const std::string& codigoReserva);
+    bool reservarAsientoCliente(const std::string& idCliente, const std::string& codigoFuncion, const std::string& fila, const std::string& columna);
+    bool cancelarAsientoCliente(const std::string& idCliente, const std::string& codigoFuncion, const std::string& fila, const std::string& columna);
+    bool eliminarFuncion(const std::string& codigoFuncion);
 };
 
 #endif // GUARDARDATOSSERVICE_H

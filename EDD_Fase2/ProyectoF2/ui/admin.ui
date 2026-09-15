@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="tab_1">
     <attribute name="title">
@@ -883,8 +883,8 @@
     <widget class="QPushButton" name="botonAgregarCliente">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>570</y>
+       <x>180</x>
+       <y>530</y>
        <width>141</width>
        <height>41</height>
       </rect>
@@ -1045,7 +1045,7 @@
       <string>CLIENTES REGISTRADOS</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="botonCargarClientes">
+    <widget class="QPushButton" name="botonCargarClientesJSON">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -1056,6 +1056,42 @@
      </property>
      <property name="text">
       <string>Cargar clientes</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonMostrarRecorridoArbolB">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>600</y>
+       <width>151</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Mostrar recorrido</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="textoRecorridoArbolB">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>630</y>
+       <width>421</width>
+       <height>101</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonConsultarReservasCliente">
+     <property name="geometry">
+      <rect>
+       <x>940</x>
+       <y>50</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Consultar reservas</string>
      </property>
     </widget>
    </widget>

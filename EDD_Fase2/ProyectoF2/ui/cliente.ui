@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>932</width>
-    <height>625</height>
+    <width>1071</width>
+    <height>741</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>911</width>
-      <height>551</height>
+      <width>1041</width>
+      <height>661</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -35,8 +35,8 @@
        <rect>
         <x>20</x>
         <y>160</y>
-        <width>851</width>
-        <height>341</height>
+        <width>991</width>
+        <height>441</height>
        </rect>
       </property>
       <attribute name="horizontalHeaderCascadingSectionResizes">
@@ -88,7 +88,7 @@
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
-        <x>680</x>
+        <x>810</x>
         <y>10</y>
         <width>181</width>
         <height>31</height>
@@ -101,7 +101,7 @@
      <widget class="QLineEdit" name="textoCodigoPelicula">
       <property name="geometry">
        <rect>
-        <x>680</x>
+        <x>810</x>
         <y>50</y>
         <width>181</width>
         <height>28</height>
@@ -111,7 +111,7 @@
      <widget class="QPushButton" name="botonBuscarPeli">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>860</x>
         <y>90</y>
         <width>90</width>
         <height>29</height>
@@ -126,47 +126,11 @@
      <attribute name="title">
       <string>Funciones</string>
      </attribute>
-     <widget class="QTableWidget" name="tableWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>150</y>
-        <width>871</width>
-        <height>351</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>10</y>
-        <width>141</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Nombre del cliente: </string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelNombreCliente">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>10</y>
-        <width>141</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
      <widget class="QPushButton" name="botonReservarAsiento">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>100</y>
+        <x>200</x>
+        <y>120</y>
         <width>121</width>
         <height>31</height>
        </rect>
@@ -179,7 +143,7 @@
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>40</y>
+        <y>60</y>
         <width>49</width>
         <height>16</height>
        </rect>
@@ -192,7 +156,7 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>60</y>
+        <y>80</y>
         <width>113</width>
         <height>24</height>
        </rect>
@@ -202,7 +166,7 @@
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>60</y>
+        <y>80</y>
         <width>113</width>
         <height>24</height>
        </rect>
@@ -212,7 +176,7 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>40</y>
+        <y>60</y>
         <width>71</width>
         <height>16</height>
        </rect>
@@ -224,14 +188,128 @@
      <widget class="QPushButton" name="botonCancelarReserva">
       <property name="geometry">
        <rect>
-        <x>730</x>
-        <y>90</y>
-        <width>141</width>
-        <height>41</height>
+        <x>30</x>
+        <y>120</y>
+        <width>131</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>Cancelar Reservas</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tablaFunciones_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>230</y>
+        <width>441</width>
+        <height>361</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>Codigo</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Pelicula</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Horario</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Sala</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Filas</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Columnas</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QLabel" name="label_32">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>190</y>
+        <width>201</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Funciones Disponibles</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_33">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>190</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Visualizar Sala</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tablaFuncion_2">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>230</y>
+        <width>511</width>
+        <height>361</height>
+       </rect>
+      </property>
+      <row>
+       <property name="text">
+        <string>B</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>A</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>10</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Reservar Asiento</string>
       </property>
      </widget>
     </widget>
@@ -244,8 +322,8 @@
        <rect>
         <x>30</x>
         <y>70</y>
-        <width>851</width>
-        <height>421</height>
+        <width>981</width>
+        <height>521</height>
        </rect>
       </property>
      </widget>
@@ -276,8 +354,8 @@
      <widget class="QLabel" name="label_25">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>50</y>
+        <x>40</x>
+        <y>80</y>
         <width>141</width>
         <height>21</height>
        </rect>
@@ -302,8 +380,8 @@
      <widget class="QLabel" name="label_26">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>10</y>
+        <x>180</x>
+        <y>40</y>
         <width>171</width>
         <height>31</height>
        </rect>
@@ -321,8 +399,8 @@
      <widget class="QComboBox" name="comboBoxTipoSolicitud">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>170</y>
+        <x>40</x>
+        <y>200</y>
         <width>411</width>
         <height>31</height>
        </rect>
@@ -356,8 +434,8 @@
      <widget class="QLineEdit" name="textoTelefonoSolicitud">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>110</y>
+        <x>40</x>
+        <y>140</y>
         <width>411</width>
         <height>31</height>
        </rect>
@@ -369,8 +447,8 @@
      <widget class="QLabel" name="label_27">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>90</y>
+        <x>40</x>
+        <y>120</y>
         <width>151</width>
         <height>16</height>
        </rect>
@@ -382,8 +460,8 @@
      <widget class="QLabel" name="label_28">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>150</y>
+        <x>40</x>
+        <y>180</y>
         <width>121</width>
         <height>16</height>
        </rect>
@@ -395,8 +473,8 @@
      <widget class="QLineEdit" name="textoDescripcionSolicitud">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>230</y>
+        <x>40</x>
+        <y>260</y>
         <width>411</width>
         <height>51</height>
        </rect>
@@ -408,8 +486,8 @@
      <widget class="QPushButton" name="botonCrearSolicitud">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>330</y>
+        <x>170</x>
+        <y>360</y>
         <width>141</width>
         <height>41</height>
        </rect>
@@ -421,8 +499,8 @@
      <widget class="QLabel" name="label_29">
       <property name="geometry">
        <rect>
-        <x>610</x>
-        <y>10</y>
+        <x>720</x>
+        <y>20</y>
         <width>171</width>
         <height>31</height>
        </rect>
@@ -440,10 +518,10 @@
      <widget class="QTableWidget" name="tablaSolicitudes">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>70</y>
+        <x>600</x>
+        <y>80</y>
         <width>381</width>
-        <height>371</height>
+        <height>491</height>
        </rect>
       </property>
       <column>
@@ -480,7 +558,7 @@
    <widget class="QPushButton" name="botonSalir">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>930</x>
       <y>0</y>
       <width>101</width>
       <height>31</height>
@@ -490,13 +568,39 @@
      <string>Salir a Login</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nombre del cliente: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelNombreCliente">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>0</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>932</width>
+     <width>1071</width>
      <height>25</height>
     </rect>
    </property>

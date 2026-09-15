@@ -159,6 +159,37 @@ void ArbolBinario::inOrden(const std::function<void(Pelicula*)>& funcion) {
     inOrdenAux(raiz, funcion);
 }
 
+namespace {
+void preOrdenPeliculas(NodoPelicula* nodo, const std::function<void(Pelicula*)>& funcion) {
+    if (nodo == nullptr) return;
+    funcion(nodo->pelicula);
+    preOrdenPeliculas(nodo->izq, funcion);
+    preOrdenPeliculas(nodo->der, funcion);
+}
+void postOrdenPeliculas(NodoPelicula* nodo, const std::function<void(Pelicula*)>& funcion) {
+    if (nodo == nullptr) return;
+    postOrdenPeliculas(nodo->izq, funcion);
+    postOrdenPeliculas(nodo->der, funcion);
+    funcion(nodo->pelicula);
+}
+}
+
+void ArbolBinario::preOrden(const std::function<void(Pelicula*)>& funcion) { preOrdenPeliculas(raiz, funcion); }
+void ArbolBinario::postOrden(const std::function<void(Pelicula*)>& funcion) { postOrdenPeliculas(raiz, funcion); }
+
+bool ArbolBinario::estaPorSalir(const Pelicula* pelicula) const
+{
+    if (pelicula == nullptr) return false;
+    std::tm inicio = {};
+    std::tm fin = {};
+    std::istringstream(pelicula->fechaEstreno) >> std::get_time(&inicio, "%Y-%m-%d");
+    std::istringstream(pelicula->fechaFinCartelera) >> std::get_time(&fin, "%Y-%m-%d");
+    const std::time_t fechaInicio = std::mktime(&inicio);
+    const std::time_t fechaFin = std::mktime(&fin);
+    if (fechaInicio == static_cast<std::time_t>(-1) || fechaFin == static_cast<std::time_t>(-1)) return false;
+    return std::difftime(fechaFin, fechaInicio) / (60.0 * 60.0 * 24.0) <= 7.0;
+}
+
 
 
 std::string ArbolBinario::colorSegunFecha(const std::string& fechaInicioCartelera, const std::string& fechaFinCartelera) {

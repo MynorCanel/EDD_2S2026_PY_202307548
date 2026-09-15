@@ -1,4 +1,110 @@
 {
-  "codigo_funcion": "F010",
-  "asientos_ocupados": []
+  "asientos_ocupados": [
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 1,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "U001",
+      "columna": 2,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "U002",
+      "columna": 3,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 4,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 5,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Cliente Seis",
+      "columna": 6,
+      "fila": 1
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 1,
+      "fila": 2
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 2,
+      "fila": 2
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 3,
+      "fila": 2
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 4,
+      "fila": 2
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 5,
+      "fila": 2
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 1,
+      "fila": 3
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 2,
+      "fila": 3
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 3,
+      "fila": 3
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 4,
+      "fila": 3
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 5,
+      "fila": 3
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 1,
+      "fila": 4
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 2,
+      "fila": 4
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 3,
+      "fila": 4
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 4,
+      "fila": 4
+    },
+    {
+      "codigo_reserva": "Luis Hernandez",
+      "columna": 5,
+      "fila": 4
+    }
+  ],
+  "codigo_funcion": "F010"
 }
