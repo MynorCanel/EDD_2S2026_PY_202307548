@@ -38,6 +38,7 @@ set(PROJECT_SOURCES
     modelos/Beneficio.h
     modelos/NodoBeneficio.h
     modelos/NodoPelicula.h
+    modelos/NodoCliente.h
     modelos/NodoPromocion.h
     modelos/NodoSolicitud.h
     modelos/Pelicula.h

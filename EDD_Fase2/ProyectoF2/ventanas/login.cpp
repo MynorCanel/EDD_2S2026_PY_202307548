@@ -11,6 +11,14 @@ MainWindow::MainWindow(QWidget *parent)
     , clienteWindow(nullptr)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window
+                   | Qt::WindowTitleHint
+                   | Qt::WindowSystemMenuHint
+                   | Qt::WindowMinimizeButtonHint
+                   | Qt::WindowMaximizeButtonHint
+                   | Qt::WindowCloseButtonHint);
+    setAttribute(Qt::WA_QuitOnClose, true);
+    setWindowModality(Qt::NonModal);
 }
 
 MainWindow::~MainWindow()

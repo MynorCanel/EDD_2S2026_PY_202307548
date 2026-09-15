@@ -158,6 +158,16 @@ void guardarDatosService::guardarSolicitud(const std::string& nombreCliente, con
     listaSolicitudes.insertarSolicitud(nombreCliente, telefonoContacto, tipoSolicitud, descripcion);
 }
 
+bool guardarDatosService::guardarCliente(const std::string& id, const std::string& nombre, const std::string& correo, const std::string& telefono, const std::string& password) {
+    if (id.empty() || nombre.empty() || correo.empty() || telefono.empty() || password.empty()) return false;
+    if (arbolClientes.existe(id) || arbolClientes.correoExiste(correo)) return false;
+    return arbolClientes.insertar(Cliente(id, nombre, correo, telefono, password, "cliente"));
+}
+
+bool guardarDatosService::cargarJSONClientes(const std::string& ruta) {
+    return arbolClientes.cargarJSON(ruta);
+}
+
 
 
 
@@ -212,5 +222,6 @@ void guardarDatosService::graficarReportes() {
     listaPromociones.graficar();
     arbolFunciones.inOrden([](MatrizCine* matriz) { matriz->generarGraphviz(); });
     listaSolicitudes.graficar();
+    arbolClientes.generarDot();
 }
   

@@ -60,6 +60,7 @@ admin::admin(guardarDatosService& servicio, QWidget *parent) // Constructor de l
     actualizarTabla();
     actualizarTreePromociones();
     actualizarTablaFunciones();
+    actualizarTablaClientes();
     actualizarTablaSolicitudes();
     inicializarTabReportes();
 }
@@ -108,16 +109,19 @@ void admin::inicializarTabReportes()  // Inicializa la interfaz de usuario para 
     auto* botonTodos = new QPushButton("Generar todos", ui->tab_4);
     auto* botonPeliculas = new QPushButton("Generar peliculas", ui->tab_4);
     auto* botonAVL = new QPushButton("Generar AVL", ui->tab_4);
+    auto* botonArbolB = new QPushButton("Generar clientes", ui->tab_4);
     auto* botonFuncion = new QPushButton("Generar funcion seleccionada", ui->tab_4);
     auto* layoutBotones = new QHBoxLayout();
     layoutBotones->addWidget(botonTodos);
     layoutBotones->addWidget(botonPeliculas);
     layoutBotones->addWidget(botonAVL);
+    layoutBotones->addWidget(botonArbolB);
     layoutBotones->addWidget(botonFuncion);
     layoutPrincipal->addLayout(layoutBotones);
     connect(botonTodos, &QPushButton::clicked, this, [this]() { guardar.graficarReportes(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
     connect(botonPeliculas, &QPushButton::clicked, this, [this]() { guardar.arbol.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
     connect(botonAVL, &QPushButton::clicked, this, [this]() { guardar.arbolFunciones.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
+    connect(botonArbolB, &QPushButton::clicked, this, [this]() { guardar.arbolClientes.generarDot(); actualizarVigilanciaReportes(); refrescarReporteActual(); });
     connect(botonFuncion, &QPushButton::clicked, this, [this]() {
         const int fila = ui->tablaFunciones->currentRow();
         if (fila >= 0 && ui->tablaFunciones->item(fila, 0) != nullptr) {
@@ -296,6 +300,7 @@ void admin::actualizarDefinicionesReportes()
     definicionesReportes = {
         {"Arbol de peliculas", "arbol_binario_peliculas.png"},
         {"Arbol AVL de funciones", "arbol_avl.png"},
+        {"Arbol B de clientes", "arbol_b_clientes.png"},
         {"Promociones y beneficios", "lista_unificada.png"},
         {"Solicitudes (lista circular doble)", "lista_circular_doble.png"}
     };
@@ -554,6 +559,45 @@ void admin::actualizarTablaFunciones()
         ui->tablaFunciones->selectRow(0);
         actualizarTablaFuncion();
     }
+}
+
+void admin::on_botonAgregarCliente_clicked()
+{
+    const QString id = ui->textoIDCliente->text().trimmed();
+    const QString nombre = ui->textoNombreCliente->text().trimmed();
+    const QString correo = ui->textoCorreoCliente->text().trimmed();
+    const QString telefono = ui->textoTelefonoCliente->text().trimmed();
+    const QString password = ui->textoContraCliente->text();
+    if (id.isEmpty() || nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty() || password.isEmpty()) {
+        QMessageBox::information(this, "Error", "Completa todos los datos del cliente.");
+        return;
+    }
+    if (!guardar.guardarCliente(id.toStdString(), nombre.toStdString(), correo.toStdString(), telefono.toStdString(), password.toStdString())) {
+        QMessageBox::information(this, "Error", "El ID o el correo ya existe, o los datos no son validos.");
+        return;
+    }
+    actualizarTablaClientes();
+    guardar.arbolClientes.generarDot();
+    actualizarDefinicionesReportes();
+    actualizarVigilanciaReportes();
+    refrescarReporteActual();
+    QMessageBox::information(this, "Exito", "Cliente agregado correctamente.");
+}
+
+void admin::actualizarTablaClientes()
+{
+    ui->tablaClientes->setColumnCount(4);
+    ui->tablaClientes->setHorizontalHeaderLabels({"ID", "Nombre", "Correo", "Telefono"});
+    ui->tablaClientes->setRowCount(0);
+    ui->tablaClientes->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    guardar.arbolClientes.recorrer([this](Cliente* cliente) {
+        const int fila = ui->tablaClientes->rowCount();
+        ui->tablaClientes->insertRow(fila);
+        ui->tablaClientes->setItem(fila, 0, new QTableWidgetItem(QString::fromStdString(cliente->id)));
+        ui->tablaClientes->setItem(fila, 1, new QTableWidgetItem(QString::fromStdString(cliente->nombre)));
+        ui->tablaClientes->setItem(fila, 2, new QTableWidgetItem(QString::fromStdString(cliente->correo)));
+        ui->tablaClientes->setItem(fila, 3, new QTableWidgetItem(QString::fromStdString(cliente->telefono)));
+    });
 }
 
 

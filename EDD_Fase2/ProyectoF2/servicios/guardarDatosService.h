@@ -8,6 +8,7 @@
 #include "../estructuras/MatrizCine.h"
 #include "../estructuras/ListaCircularDoble.h"
 #include "../estructuras/ArbolAVL.h"
+#include "../estructuras/ArbolB.h"
 
 class guardarDatosService {
 private:
@@ -18,6 +19,7 @@ public:
     ArbolBinario arbol; //Arbolbinario para almacenar peliculas
     ListaCircular listaPromociones; //Lista circular para almacenar promociones
     ArbolAVL arbolFunciones; //AVL de funciones, cada nodo posee su matriz
+    ArbolB arbolClientes; //Arbol B de orden 4 para clientes
     ListaCircularDoble listaSolicitudes; // Lista circular doble para almacenar solicitudes
     guardarDatosService();
     ~guardarDatosService();
@@ -36,6 +38,8 @@ public:
     bool crearFuncion(const std::string& codigoFuncion, const std::string& codigoPelicula, int filas, int columnas, const std::string& horario, const std::string& sala, const std::string& archivoAsientos = "");
     bool reservarAsientoFuncion(const std::string& codigoFuncion, const std::string& nombreCliente, const std::string& fila, const std::string& columna);
     void cargarAsientos(const std::string& codigoFuncion, const std::string& archivoAsientos = "");
+    bool guardarCliente(const std::string& id, const std::string& nombre, const std::string& correo, const std::string& telefono, const std::string& password);
+    bool cargarJSONClientes(const std::string& ruta);
 };
 
 #endif // GUARDARDATOSSERVICE_H

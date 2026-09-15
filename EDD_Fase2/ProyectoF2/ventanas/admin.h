@@ -53,6 +53,8 @@ private slots:
     void on_botonReservarAsiento_clicked();
     void actualizarTablaFuncion();
     void actualizarTablaFunciones();
+    void on_botonAgregarCliente_clicked();
+    void actualizarTablaClientes();
 
     void on_botonCrearSolicitud_clicked();
     void actualizarTablaSolicitudes();
